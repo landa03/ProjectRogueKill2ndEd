@@ -1,3 +1,17 @@
 [gd_scene format=3 uid="uid://brcxr3vj4o027"]
 
+[ext_resource type="PackedScene" uid="uid://c3mpsm7g88rxm" path="res://Assets/LowPolyDud.glb" id="1_3qydi"]
+[ext_resource type="Script" uid="uid://dm2cdo2h67ea4" path="res://Player/player.gd" id="1_q3lat"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_tok1r"]
+
 [node name="Player" type="CharacterBody3D" unique_id=1031037784]
+script = ExtResource("1_q3lat")
+
+[node name="Pivot" type="Node3D" parent="." unique_id=342364878]
+
+[node name="LowPolyDud" parent="Pivot" unique_id=723560283 instance=ExtResource("1_3qydi")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=2111387121]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_tok1r")
