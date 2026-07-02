@@ -25,16 +25,13 @@ mesh = SubResource("QuadMesh_4osw0")
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=92698724]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 3.6855707, 0)
 
-[node name="Player" parent="." unique_id=1031037784 node_paths=PackedStringArray("camera_pivot", "camera") instance=ExtResource("1_kkogj")]
+[node name="Player" parent="." unique_id=1031037784 instance=ExtResource("1_kkogj")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.598255, 0)
-camera_pivot = NodePath("Marker3D")
-camera = NodePath("Marker3D/Camera3D")
 
 [node name="Marker3D" type="Marker3D" parent="Player" unique_id=1616989042]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6794755, 0)
 
 [node name="Camera3D" type="Camera3D" parent="Player/Marker3D" unique_id=14727301]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.658258)
 
 [node name="Blok" type="Node3D" parent="." unique_id=1422033149]
 transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, -17.414015)
@@ -43,22 +40,4 @@ transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, -17.414015)
 shape = SubResource("BoxShape3D_kkogj")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Blok" unique_id=365456968]
-mesh = SubResource("BoxMesh_ekipt")
-
-[node name="Blok2" type="Node3D" parent="." unique_id=61696526]
-transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 10, -17.414015)
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Blok2" unique_id=375459990]
-shape = SubResource("BoxShape3D_kkogj")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Blok2" unique_id=410867669]
-mesh = SubResource("BoxMesh_ekipt")
-
-[node name="Blok3" type="Node3D" parent="." unique_id=110417267]
-transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 24.045965, -17.414015)
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Blok3" unique_id=406072281]
-shape = SubResource("BoxShape3D_kkogj")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Blok3" unique_id=377973790]
 mesh = SubResource("BoxMesh_ekipt")
