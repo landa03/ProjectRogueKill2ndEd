@@ -4,7 +4,7 @@ extends CharacterBody3D
 var walking_speed: float = 0 
 #The downward acceleration when in the air, in meters per second squared.
 @export var fall_acceleration: float = 50
-@export var jump_strength: float = 50
+@export var jump_strength: float = 20
 @export var max_jumps: int =  3
 var remaining_jumps: int = 3
 
@@ -25,7 +25,8 @@ func _physics_process(delta: float) -> void:
 	walking_speed = max_walking_speed * direction.length()
 	#print(walking_speed)
 	if direction != Vector3.ZERO:
-		direction = direction.normalized()
+		#direction = direction.normalized()
+		direction = direction.rotated(self.up_direction, self.rotation.y).normalized()
 #PLAYER MOOVMENT/ DIRECTION
 	
 	
@@ -36,6 +37,7 @@ func _physics_process(delta: float) -> void:
 	if not is_on_floor():
 		target_velocity.y = target_velocity.y - (fall_acceleration * delta)
 	else :
+		target_velocity.y = 0
 		remaining_jumps = max_jumps
 	
 	if Input.is_action_just_pressed("jump") and remaining_jumps > 0:
@@ -48,6 +50,8 @@ func _physics_process(delta: float) -> void:
 	
 
 #func _process(delta: float) -> void:
+	#print(self.velocity.length())
+	#print(self.is_on_floor())
 
 func _ready():
 	# Makes your mouse disappear from the screen
@@ -57,6 +61,6 @@ func _input(event):
 	print(event is InputEventMouseMotion)
 	if event is InputEventMouseMotion:
 		var camera_rotation = event.relative * camera_rotation_sensitivity
-		camera_pivot.rotate(Vector3.DOWN, deg_to_rad(camera_rotation.x))
-		camera.rotate(Vector3.RIGHT, deg_to_rad(camera_rotation.y))
-# TODO : encontrar forma de hacer que la camara / personaje gire conforme a el movimiento del mouse 
+		self.rotate(Vector3.DOWN, deg_to_rad(camera_rotation.x))
+		camera_pivot.rotate(Vector3.RIGHT, deg_to_rad(-camera_rotation.y))
+# TODO : areglar como se maneja la gravedad 

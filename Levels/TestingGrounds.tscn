@@ -34,9 +34,9 @@ camera = NodePath("Marker3D/Camera3D")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6794755, 0)
 
 [node name="Camera3D" type="Camera3D" parent="Player/Marker3D" unique_id=14727301]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.658258)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9875221, 3.6259155)
 
-[node name="Blok" type="Node3D" parent="." unique_id=1422033149]
+[node name="Blok" type="StaticBody3D" parent="." unique_id=10096196]
 transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, -17.414015)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Blok" unique_id=61442014]
@@ -45,7 +45,7 @@ shape = SubResource("BoxShape3D_kkogj")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Blok" unique_id=365456968]
 mesh = SubResource("BoxMesh_ekipt")
 
-[node name="Blok2" type="Node3D" parent="." unique_id=61696526]
+[node name="Blok2" type="StaticBody3D" parent="." unique_id=1813557320]
 transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 10, -17.414015)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Blok2" unique_id=375459990]
@@ -54,11 +54,44 @@ shape = SubResource("BoxShape3D_kkogj")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Blok2" unique_id=410867669]
 mesh = SubResource("BoxMesh_ekipt")
 
-[node name="Blok3" type="Node3D" parent="." unique_id=110417267]
+[node name="Blok3" type="StaticBody3D" parent="." unique_id=415071319]
 transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 24.045965, -17.414015)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Blok3" unique_id=406072281]
 shape = SubResource("BoxShape3D_kkogj")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Blok3" unique_id=377973790]
+mesh = SubResource("BoxMesh_ekipt")
+
+[node name="Blok4" type="StaticBody3D" parent="." unique_id=1210867776]
+transform = Transform3D(2.8977776, 0.77645713, 0, -0.77645713, 2.8977776, 0, 0, 0, 3, -33.11249, 0.8308015, -17.414015)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Blok4" unique_id=1665096713]
+transform = Transform3D(6, -1.4901161e-07, 0, -2.3841858e-07, 0.9999999, 0, 0, 0, 5.9999986, 0, 0, 0)
+shape = SubResource("BoxShape3D_kkogj")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Blok4" unique_id=718233122]
+transform = Transform3D(6, 0, 0, 0, 1, 0, 0, 0, 6, 0, 0, 0)
+mesh = SubResource("BoxMesh_ekipt")
+
+[node name="Blok5" type="StaticBody3D" parent="." unique_id=74138882]
+transform = Transform3D(2.598076, 1.4999999, 0, -1.4999999, 2.598076, 0, 0, 0, 2.9999998, -49.76481, 7.7271485, -17.414015)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Blok5" unique_id=1064364214]
+transform = Transform3D(6, -1.4901161e-07, 0, -2.3841858e-07, 0.9999999, 0, 0, 0, 5.9999986, 0, 0, 0)
+shape = SubResource("BoxShape3D_kkogj")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Blok5" unique_id=2066907955]
+transform = Transform3D(6, 0, 0, 0, 1, 0, 0, 0, 6, 0, 0, 0)
+mesh = SubResource("BoxMesh_ekipt")
+
+[node name="Blok6" type="StaticBody3D" parent="." unique_id=1521218015]
+transform = Transform3D(2.1213202, 2.1213202, 0, -2.1213202, 2.1213202, 0, 0, 0, 2.9999998, -63.982334, 18.64557, -17.414015)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Blok6" unique_id=696103150]
+transform = Transform3D(6, -1.4901161e-07, 0, -2.3841858e-07, 0.9999999, 0, 0, 0, 5.9999986, 0, 0, 0)
+shape = SubResource("BoxShape3D_kkogj")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Blok6" unique_id=1186011078]
+transform = Transform3D(6, 0, 0, 0, 1, 0, 0, 0, 6, 0, 0, 0)
 mesh = SubResource("BoxMesh_ekipt")
