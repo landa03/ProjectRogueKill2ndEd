@@ -2,7 +2,10 @@ extends CharacterBody3D
 #Player walking speed
 @export var max_walking_speed: float = 14 
 var walking_speed: float = 0
-@export var ari_controll: float = 0.8 
+@export var air_controll: float = 2 
+@export var air_controll_acceleration: float = 0.1
+const ground_friction: float = 8
+
 #The downward acceleration when in the air, in meters per second squared.
 @export var fall_acceleration: float = 50
 @export var jump_strength: float = 20
@@ -14,11 +17,14 @@ var remaining_jumps: int = 3
 @export var camera_pivot: Node3D
 @export var camera: Camera3D
 
+@export var terminal_velocity: Vector3 = Vector3(50, 50, 50)
+
 var target_velocity = Vector3.ZERO
+var direction = Vector3.ZERO
+
 func _physics_process(delta: float) -> void:
 
 #PLAYER MOOVMENT/ DIRECTION
-	var direction = Vector3.ZERO
 	direction.x = Input.get_axis("move_left", "move_right")
 	#print(Input.get_axis("move_left", "move_right"))
 	direction.z = Input.get_axis("move_forward" , "move_back")
@@ -32,26 +38,32 @@ func _physics_process(delta: float) -> void:
 	
 	
 	
-	target_velocity.x = direction.x * walking_speed
-	target_velocity.z = direction.z * walking_speed
+	#target_velocity.x = direction.x * walking_speed
+	#target_velocity.z = direction.z * walking_speed
 	
 	if not is_on_floor():
 		target_velocity.y = target_velocity.y - (fall_acceleration * delta)
 		
-		#target_velocity.x = direction.x * walking_speed / ari_controll
-		#target_velocity.z = direction.z * walking_speed / ari_controll
-		target_velocity.x = self.velocity.x + direction.x * walking_speed * ari_controll / 10
-		target_velocity.z = self.velocity.z + direction.z * walking_speed * ari_controll / 10
+		#target_velocity.x = lerpf(self.velocity.x ,direction.x * walking_speed, delta * air_controll)
+		#target_velocity.z = lerpf(self.velocity.z ,direction.z * walking_speed, delta * air_controll)
+		target_velocity.x = velocity.x + direction.x * walking_speed * delta * air_controll
+		target_velocity.z = velocity.z + direction.z * walking_speed * delta * air_controll
 	else :
 		target_velocity.y = 0
 		remaining_jumps = max_jumps
-	
+		#target_velocity.x = target_velocity.x + self.velocity.x / 1.1
+		target_velocity.x = lerpf(self.velocity.x ,direction.x * walking_speed, delta * ground_friction)
+		target_velocity.z = lerpf(self.velocity.z ,direction.z * walking_speed, delta * ground_friction)
+
 	if Input.is_action_just_pressed("jump") and remaining_jumps > 0:
 		#target_velocity.y = target_velocity.y + jump_strength
 		target_velocity.y = jump_strength
 		remaining_jumps -= 1
-		
+	if target_velocity.length() > terminal_velocity.length():
+		target_velocity = target_velocity.clamp(-terminal_velocity, terminal_velocity)
+	
 	velocity = target_velocity
+	#velocity.move_toward(Vector3.ZERO, delta)
 	move_and_slide()
 	
 
