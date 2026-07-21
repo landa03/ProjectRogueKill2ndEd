@@ -22,6 +22,9 @@ var remaining_jumps: int = 3
 var target_velocity = Vector3.ZERO
 var direction = Vector3.ZERO
 
+@export var character_visuals : CharacterVisuals
+
+
 func _physics_process(delta: float) -> void:
 
 #PLAYER MOOVMENT/ DIRECTION
@@ -66,6 +69,15 @@ func _physics_process(delta: float) -> void:
 	#velocity.move_toward(Vector3.ZERO, delta)
 	move_and_slide()
 	
+#	ANIMATION
+	
+	if is_on_floor():
+		character_visuals.character_animation_player.play("Idle")
+#	separarle por parte de ariba y parte de abajo
+#	tenerlos por booleanos con prioridades, de ariba asia abajo en orden de mayor prio a menor prio
+	
+	
+#	ANIMATION
 
 func _process(delta: float) -> void:
 	print(self.velocity.length())
