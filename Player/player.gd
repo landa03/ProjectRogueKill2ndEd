@@ -71,8 +71,13 @@ func _physics_process(delta: float) -> void:
 	
 #	ANIMATION
 	
-	if is_on_floor():
-		character_visuals.character_animation_player.play("Idle")
+	
+	
+	#if is_on_floor():
+		#character_visuals.character_animation_player.play("Idle")
+	#else :
+		#character_visuals.character_animation_player.stop(true)
+		
 #	separarle por parte de ariba y parte de abajo
 #	tenerlos por booleanos con prioridades, de ariba asia abajo en orden de mayor prio a menor prio
 	

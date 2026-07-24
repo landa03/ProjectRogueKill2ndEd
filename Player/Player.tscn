@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://brcxr3vj4o027"]
 
 [ext_resource type="Script" uid="uid://dm2cdo2h67ea4" path="res://Player/player.gd" id="1_q3lat"]
-[ext_resource type="PackedScene" uid="uid://bbu75dab2e12h" path="res://Assets/low_poly_dud_1_1.tscn" id="2_q3lat"]
+[ext_resource type="PackedScene" uid="uid://bbu75dab2e12h" path="res://Player/low_poly_dud_1_1.tscn" id="2_q3lat"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_tok1r"]
 
