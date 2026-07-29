@@ -1,19 +1,175 @@
 [gd_scene format=3 uid="uid://brcxr3vj4o027"]
 
 [ext_resource type="Script" uid="uid://dm2cdo2h67ea4" path="res://Player/player.gd" id="1_q3lat"]
-[ext_resource type="PackedScene" uid="uid://bbu75dab2e12h" path="res://Player/low_poly_dud_1_1.tscn" id="2_q3lat"]
+[ext_resource type="PackedScene" uid="uid://v4sj2v4v5824" path="res://Player/low_poly_dud_1_1.tscn" id="2_q3lat"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_tok1r"]
+
+[sub_resource type="AnimationNodeBlend2" id="AnimationNodeBlend2_cpdxi"]
+filter_enabled = true
+filters = ["Armature", "Armature/Skeleton3D:LowerSpine"]
+
+[sub_resource type="AnimationNodeBlend2" id="AnimationNodeBlend2_2qvod"]
+filter_enabled = true
+filters = ["", "Armature/Skeleton3D:Head", "Armature/Skeleton3D:LeftFingerGrup1", "Armature/Skeleton3D:LeftFingerGrup2", "Armature/Skeleton3D:LeftFingerGrup3", "Armature/Skeleton3D:LeftIndex1", "Armature/Skeleton3D:LeftIndex2", "Armature/Skeleton3D:LeftIndex3", "Armature/Skeleton3D:LeftLowerArm", "Armature/Skeleton3D:LeftShoulder", "Armature/Skeleton3D:LeftThumb1", "Armature/Skeleton3D:LeftThumb2", "Armature/Skeleton3D:LeftThumb3", "Armature/Skeleton3D:LeftUperArm", "Armature/Skeleton3D:RighUperArm", "Armature/Skeleton3D:RightFingerGrup1", "Armature/Skeleton3D:RightFingerGrup2", "Armature/Skeleton3D:RightFingerGrup3", "Armature/Skeleton3D:RightHand", "Armature/Skeleton3D:RightIndex1", "Armature/Skeleton3D:RightIndex2", "Armature/Skeleton3D:RightIndex3", "Armature/Skeleton3D:RightLowerArm", "Armature/Skeleton3D:RightShoulder", "Armature/Skeleton3D:RightThumb1", "Armature/Skeleton3D:RightThumb2", "Armature/Skeleton3D:RightThumb3", "Armature/Skeleton3D:UperSpine"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_3pb1w"]
+animation = &"Falling"
+use_custom_timeline = true
+timeline_length = 0.3
+stretch_time_scale = true
+start_offset = 0.0
+loop_mode = 1
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_w17u5"]
+animation = &"Grab"
+use_custom_timeline = true
+timeline_length = 1.0
+stretch_time_scale = true
+start_offset = 0.0
+loop_mode = 1
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_yc8pt"]
+animation = &"Idle"
+use_custom_timeline = true
+timeline_length = 1.0
+stretch_time_scale = true
+start_offset = 0.0
+loop_mode = 1
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_gbpsf"]
+animation = &"Jump"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_6yfu4"]
+animation = &"Landing"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_3fa2y"]
+animation = &"PunchL"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_4eq0h"]
+animation = &"PunchR"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_erl5x"]
+animation = &"RuningLeft"
+use_custom_timeline = true
+timeline_length = 1.0
+stretch_time_scale = true
+start_offset = 0.0
+loop_mode = 1
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_lo1ys"]
+animation = &"RuningRight"
+use_custom_timeline = true
+timeline_length = 1.0
+stretch_time_scale = true
+start_offset = 0.0
+loop_mode = 1
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_cpdxi"]
+animation = &"SlideBegin"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_6er7b"]
+animation = &"Sliding"
+use_custom_timeline = true
+timeline_length = 1.0
+stretch_time_scale = true
+start_offset = 0.0
+loop_mode = 1
+
+[sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_cpdxi"]
+
+[sub_resource type="AnimationNodeTransition" id="AnimationNodeTransition_5fobx"]
+xfade_time = 0.3
+input_0/name = "Falling"
+input_0/auto_advance = false
+input_0/break_loop_at_end = false
+input_0/reset = true
+input_1/name = "Idle"
+input_1/auto_advance = false
+input_1/break_loop_at_end = false
+input_1/reset = true
+input_2/name = "Jump"
+input_2/auto_advance = false
+input_2/break_loop_at_end = false
+input_2/reset = true
+input_3/name = "Landing"
+input_3/auto_advance = false
+input_3/break_loop_at_end = false
+input_3/reset = true
+input_4/name = "Runing"
+input_4/auto_advance = false
+input_4/break_loop_at_end = false
+input_4/reset = true
+input_5/name = "Slide Begin"
+input_5/auto_advance = false
+input_5/break_loop_at_end = false
+input_5/reset = true
+input_6/name = "Sliding"
+input_6/auto_advance = false
+input_6/break_loop_at_end = false
+input_6/reset = true
+
+[sub_resource type="AnimationNodeTransition" id="AnimationNodeTransition_k8fo1"]
+xfade_time = 0.3
+input_0/name = "Grab"
+input_0/auto_advance = false
+input_0/break_loop_at_end = false
+input_0/reset = true
+input_1/name = "PunchL"
+input_1/auto_advance = false
+input_1/break_loop_at_end = false
+input_1/reset = true
+input_2/name = "PunchR"
+input_2/auto_advance = false
+input_2/break_loop_at_end = false
+input_2/reset = true
+
+[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_q3lat"]
+graph_offset = Vector2(-859.69855, 231.77678)
+nodes/output/position = Vector2(506.66666, 133.33333)
+"nodes/Transition Lower Half/node" = SubResource("AnimationNodeTransition_5fobx")
+"nodes/Transition Lower Half/position" = Vector2(-120, 93.333336)
+"nodes/Transition Uper Half/node" = SubResource("AnimationNodeTransition_k8fo1")
+"nodes/Transition Uper Half/position" = Vector2(80, 706.6667)
+nodes/Blend2/node = SubResource("AnimationNodeBlend2_2qvod")
+nodes/Blend2/position = Vector2(293.33334, 146.66667)
+nodes/Falling/node = SubResource("AnimationNodeAnimation_3pb1w")
+nodes/Falling/position = Vector2(-506.66666, -426.66666)
+nodes/Grab/node = SubResource("AnimationNodeAnimation_w17u5")
+nodes/Grab/position = Vector2(-66.666664, 600)
+nodes/Idle/node = SubResource("AnimationNodeAnimation_yc8pt")
+nodes/Idle/position = Vector2(-506.66666, -253.33333)
+nodes/Jump/node = SubResource("AnimationNodeAnimation_gbpsf")
+nodes/Jump/position = Vector2(-506.66666, -80)
+nodes/Landing/node = SubResource("AnimationNodeAnimation_6yfu4")
+nodes/Landing/position = Vector2(-506.66666, 93.333336)
+nodes/PunchL/node = SubResource("AnimationNodeAnimation_3fa2y")
+nodes/PunchL/position = Vector2(-66.666664, 773.3333)
+nodes/PunchR/node = SubResource("AnimationNodeAnimation_4eq0h")
+nodes/PunchR/position = Vector2(-66.666664, 946.6667)
+nodes/TimeScale/node = SubResource("AnimationNodeTimeScale_cpdxi")
+nodes/TimeScale/position = Vector2(-453.33334, 346.66666)
+"nodes/Runing Left/node" = SubResource("AnimationNodeAnimation_erl5x")
+"nodes/Runing Left/position" = Vector2(-1213.3334, 480)
+"nodes/Runing Right/node" = SubResource("AnimationNodeAnimation_lo1ys")
+"nodes/Runing Right/position" = Vector2(-1226.6666, 653.3333)
+"nodes/Slide Begin/node" = SubResource("AnimationNodeAnimation_cpdxi")
+"nodes/Slide Begin/position" = Vector2(-506.66666, 786.6667)
+nodes/Sliding/node = SubResource("AnimationNodeAnimation_6er7b")
+nodes/Sliding/position = Vector2(-506.66666, 960)
+"nodes/Blend Movment Direction/node" = SubResource("AnimationNodeBlend2_cpdxi")
+"nodes/Blend Movment Direction/position" = Vector2(-746.6667, 413.33334)
+node_connections = [&"output", 0, &"Blend2", &"Transition Lower Half", 0, &"Falling", &"Transition Lower Half", 1, &"Idle", &"Transition Lower Half", 2, &"Jump", &"Transition Lower Half", 3, &"Landing", &"Transition Lower Half", 4, &"TimeScale", &"Transition Lower Half", 5, &"Slide Begin", &"Transition Lower Half", 6, &"Sliding", &"Transition Uper Half", 0, &"Grab", &"Transition Uper Half", 1, &"PunchL", &"Transition Uper Half", 2, &"PunchR", &"Blend2", 0, &"Transition Lower Half", &"Blend2", 1, &"Transition Uper Half", &"TimeScale", 0, &"Blend Movment Direction", &"Blend Movment Direction", 0, &"Runing Left", &"Blend Movment Direction", 1, &"Runing Right"]
 
 [node name="Player" type="CharacterBody3D" unique_id=1031037784 node_paths=PackedStringArray("camera_pivot", "camera", "character_visuals")]
 script = ExtResource("1_q3lat")
 camera_pivot = NodePath("CameraPivot")
 camera = NodePath("CameraPivot/Camera3D")
-character_visuals = NodePath("Pivot/LowPolyDud1_2")
+character_visuals = NodePath("Pivot/LowPolyDud1_1")
 
 [node name="Pivot" type="Node3D" parent="." unique_id=342364878]
 
-[node name="LowPolyDud1_2" parent="Pivot" unique_id=987289055 instance=ExtResource("2_q3lat")]
+[node name="LowPolyDud1_1" parent="Pivot" unique_id=1201977854 instance=ExtResource("2_q3lat")]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=2111387121]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -24,3 +180,16 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6794755, 0)
 
 [node name="Camera3D" type="Camera3D" parent="CameraPivot" unique_id=1685079530]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9875221, 3.6259155)
+
+[node name="AnimationTree" type="AnimationTree" parent="." unique_id=230362088]
+tree_root = SubResource("AnimationNodeBlendTree_q3lat")
+anim_player = NodePath("../AnimationPlayer")
+"parameters/Transition Lower Half/current_state" = "Runing"
+"parameters/Transition Lower Half/transition_request" = ""
+"parameters/Transition Lower Half/current_index" = 4
+"parameters/Transition Uper Half/current_state" = "Grab"
+"parameters/Transition Uper Half/transition_request" = ""
+"parameters/Transition Uper Half/current_index" = 0
+parameters/Blend2/blend_amount = 0.0
+parameters/TimeScale/scale = 1.0
+"parameters/Blend Movment Direction/blend_amount" = 0.5

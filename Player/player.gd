@@ -21,7 +21,7 @@ var remaining_jumps: int = 3
 
 var target_velocity = Vector3.ZERO
 var direction = Vector3.ZERO
-
+var anim_direction = Vector2.ZERO
 @export var character_visuals : CharacterVisuals
 
 
@@ -70,9 +70,22 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 	
 #	ANIMATION
-	
-	
-	
+#	ANIMATIONNODEBLENDTREE
+	if direction == Vector3.ZERO:
+		character_visuals.character_animation_tree.set("parameters/Transition Lower Half/transition_request", "Idle")
+	else:
+		character_visuals.character_animation_tree.set("parameters/Transition Lower Half/transition_request", "Runing")
+		# parameters/TimeScale/scale
+		character_visuals.character_animation_tree.set("parameters/TimeScale/scale", (Input.get_axis("move_forward" , "move_back"))*-1)
+	#var testikles: float = Vector2(Input.get_axis("move_left", "move_right"), Input.get_axis("move_forward" , "move_back")).angle()
+	#character_visuals.character_animation_tree.set("parameters/Blend Movment Direction/blend_amount", (Input.get_axis("move_left", "move_right")+1)/2)
+	character_visuals.character_animation_tree.set("parameters/Blend Movment Direction/blend_amount", 0.5+(Input.get_axis("move_left", "move_right") * -Input.get_axis("move_forward" , "move_back") * 0.25))
+#	ANIMATIONNODEBLENDTREE
+
+#BlendSpace2D
+	#POOP
+#BlendSpace2D
+		
 	#if is_on_floor():
 		#character_visuals.character_animation_player.play("Idle")
 	#else :
@@ -85,7 +98,10 @@ func _physics_process(delta: float) -> void:
 #	ANIMATION
 
 func _process(delta: float) -> void:
-	print(self.velocity.length())
+	print(direction)
+	#print(Input.get_axis("move_forward" , "move_back"))
+	#print((Input.get_axis("move_left", "move_right")+1)/2)
+	#print(self.velocity.length())
 	#print(self.is_on_floor())
 
 func _ready():
