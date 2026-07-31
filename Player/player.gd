@@ -24,6 +24,15 @@ var direction = Vector3.ZERO
 var anim_direction = Vector2.ZERO
 @export var character_visuals : CharacterVisuals
 
+var pivot_bone_id: int
+var pivot_bone_pose: Transform3D
+var forward
+#forward = -camera.global_transform.basis.z
+
+func _ready():
+	# Makes your mouse disappear from the screen
+	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	pivot_bone_id = character_visuals.character_skeleton.find_bone("LowerSpine")
 
 func _physics_process(delta: float) -> void:
 
@@ -71,20 +80,29 @@ func _physics_process(delta: float) -> void:
 	
 #	ANIMATION
 #	ANIMATIONNODEBLENDTREE
-	if direction == Vector3.ZERO:
-		character_visuals.character_animation_tree.set("parameters/Transition Lower Half/transition_request", "Idle")
-	else:
-		character_visuals.character_animation_tree.set("parameters/Transition Lower Half/transition_request", "Runing")
+	#if direction == Vector3.ZERO:
+		#character_visuals.character_animation_tree.set("parameters/Transition Lower Half/transition_request", "Idle")
+	#else:
+		#character_visuals.character_animation_tree.set("parameters/Transition Lower Half/transition_request", "Runing")
+		
 		# parameters/TimeScale/scale
-		character_visuals.character_animation_tree.set("parameters/TimeScale/scale", (Input.get_axis("move_forward" , "move_back"))*-1)
+		
+		#character_visuals.character_animation_tree.set("parameters/TimeScale/scale", (Input.get_axis("move_forward" , "move_back"))*-1)
 	#var testikles: float = Vector2(Input.get_axis("move_left", "move_right"), Input.get_axis("move_forward" , "move_back")).angle()
 	#character_visuals.character_animation_tree.set("parameters/Blend Movment Direction/blend_amount", (Input.get_axis("move_left", "move_right")+1)/2)
-	character_visuals.character_animation_tree.set("parameters/Blend Movment Direction/blend_amount", 0.5+(Input.get_axis("move_left", "move_right") * -Input.get_axis("move_forward" , "move_back") * 0.25))
+	
+	#character_visuals.character_animation_tree.set("parameters/Blend Movment Direction/blend_amount", 0.5+(Input.get_axis("move_left", "move_right") * -Input.get_axis("move_forward" , "move_back") * 0.25))
+	
+	character_visuals.character_animation_tree.set("parameters/Blend Movment Direction/blend_amount", ((((-character_visuals.rotation.y * 1) / 1.570796)/2)+0.5))
+	
+
 #	ANIMATIONNODEBLENDTREE
 
-#BlendSpace2D
-	#POOP
-#BlendSpace2D
+#Rotate towards moovment
+	
+	character_visuals.global_rotation.y = atan2(-velocity.x, -velocity.z)
+
+#Rotate towards moovment
 		
 	#if is_on_floor():
 		#character_visuals.character_animation_player.play("Idle")
@@ -98,15 +116,17 @@ func _physics_process(delta: float) -> void:
 #	ANIMATION
 
 func _process(delta: float) -> void:
-	print(direction)
+	#print(direction)
+	print((((character_visuals.rotation.y * 1) / 1.570796)/2)+0.5)
+	#print(character_visuals.rotation.y)
+	#print(forward)
+	#print(pivot_bone_pose)
+	#print(0.5+(Input.get_axis("move_left", "move_right") * -Input.get_axis("move_forward" , "move_back") * 0.25))
 	#print(Input.get_axis("move_forward" , "move_back"))
 	#print((Input.get_axis("move_left", "move_right")+1)/2)
+	#print(Input.get_axis("move_left", "move_right"))
 	#print(self.velocity.length())
 	#print(self.is_on_floor())
-
-func _ready():
-	# Makes your mouse disappear from the screen
-	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 func _input(event):
 	#print(event is InputEventMouseMotion)

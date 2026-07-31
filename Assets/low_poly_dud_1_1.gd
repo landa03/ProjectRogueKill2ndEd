@@ -3,3 +3,4 @@ extends Node3D
 
 @export var character_animation_player : AnimationPlayer
 @export var character_animation_tree : AnimationTree
+@export var character_skeleton : Skeleton3D

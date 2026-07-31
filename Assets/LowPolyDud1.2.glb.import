@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://c8qgr3j0mkb8m"
-path="res://.godot/imported/LowPolyDud1.1.glb-b191392da4e61180aa9a5f1d7a90c1c0.scn"
+uid="uid://dnawcwcqxdvcu"
+path="res://.godot/imported/LowPolyDud1.2.glb-1c46f868d8dad3af6e22a99b630b5ea3.scn"
 
 [deps]
 
-source_file="res://Assets/LowPolyDud1.1.glb"
-dest_files=["res://.godot/imported/LowPolyDud1.1.glb-b191392da4e61180aa9a5f1d7a90c1c0.scn"]
+source_file="res://Assets/LowPolyDud1.2.glb"
+dest_files=["res://.godot/imported/LowPolyDud1.2.glb-1c46f868d8dad3af6e22a99b630b5ea3.scn"]
 
 [params]
 
