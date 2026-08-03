@@ -27,6 +27,8 @@ var anim_direction = Vector2.ZERO
 var pivot_bone_id: int
 var pivot_bone_pose: Transform3D
 var forward
+#var moovment_direction_blend_amount = ((-character_visuals.rotation.y / 1.570796) / 2) + 0.5
+var moovment_direction_blend_amount : float
 #forward = -camera.global_transform.basis.z
 
 func _ready():
@@ -90,17 +92,22 @@ func _physics_process(delta: float) -> void:
 		#character_visuals.character_animation_tree.set("parameters/TimeScale/scale", (Input.get_axis("move_forward" , "move_back"))*-1)
 	#var testikles: float = Vector2(Input.get_axis("move_left", "move_right"), Input.get_axis("move_forward" , "move_back")).angle()
 	#character_visuals.character_animation_tree.set("parameters/Blend Movment Direction/blend_amount", (Input.get_axis("move_left", "move_right")+1)/2)
-	
+	character_visuals.global_rotation.y = atan2(-velocity.x, -velocity.z)
+	print(character_visuals.rotation.y)
+	if character_visuals.rotation.y > 1.570796 or character_visuals.rotation.y < -1.570796 :
+		moovment_direction_blend_amount = (((-character_visuals.rotation.y / 1.570796) / 2) + 0.5) * -1
+		#character_visuals.global_rotation.y = atan2(-velocity.x, -velocity.z)
+	else :
+		character_visuals.global_rotation.y = atan2(-velocity.x, -velocity.z)
+		moovment_direction_blend_amount = ((-character_visuals.rotation.y / 1.570796) / 2) + 0.5
 	#character_visuals.character_animation_tree.set("parameters/Blend Movment Direction/blend_amount", 0.5+(Input.get_axis("move_left", "move_right") * -Input.get_axis("move_forward" , "move_back") * 0.25))
-	
-	character_visuals.character_animation_tree.set("parameters/Blend Movment Direction/blend_amount", ((((-character_visuals.rotation.y * 1) / 1.570796)/2)+0.5))
-	
+	character_visuals.character_animation_tree.set("parameters/Blend Movment Direction/blend_amount", moovment_direction_blend_amount)
+	#print(moovment_direction_blend_amount)
 
 #	ANIMATIONNODEBLENDTREE
 
 #Rotate towards moovment
 	
-	character_visuals.global_rotation.y = atan2(-velocity.x, -velocity.z)
 
 #Rotate towards moovment
 		
@@ -113,11 +120,11 @@ func _physics_process(delta: float) -> void:
 #	tenerlos por booleanos con prioridades, de ariba asia abajo en orden de mayor prio a menor prio
 	
 	
-#	ANIMATION
+#	ANIMATION/
 
-func _process(delta: float) -> void:
+#func _process(delta: float) -> void:
 	#print(direction)
-	print((((character_visuals.rotation.y * 1) / 1.570796)/2)+0.5)
+	#print((((character_visuals.rotation.y * 1) / 1.570796)/2)+0.5)
 	#print(character_visuals.rotation.y)
 	#print(forward)
 	#print(pivot_bone_pose)
