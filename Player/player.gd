@@ -24,17 +24,21 @@ var direction = Vector3.ZERO
 var anim_direction = Vector2.ZERO
 @export var character_visuals : CharacterVisuals
 
-var pivot_bone_id: int
-var pivot_bone_pose: Transform3D
-var forward
-#var moovment_direction_blend_amount = ((-character_visuals.rotation.y / 1.570796) / 2) + 0.5
+#var forward
+
 var moovment_direction_blend_amount : float
-#forward = -camera.global_transform.basis.z
+var character_visual_rotation : float
 
 func _ready():
 	# Makes your mouse disappear from the screen
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-	pivot_bone_id = character_visuals.character_skeleton.find_bone("LowerSpine")
+	character_visuals.character_animation_tree.animation_finished.connect(play_animation_after_jump)
+
+func play_animation_after_jump(anim_name: StringName):
+	match anim_name :
+		"Jump":
+			character_visuals.character_animation_tree.set("parameters/Transition Lower Half/transition_request", "Falling")
+	#print(anim_name)
 
 func _physics_process(delta: float) -> void:
 
@@ -73,6 +77,8 @@ func _physics_process(delta: float) -> void:
 		#target_velocity.y = target_velocity.y + jump_strength
 		target_velocity.y = jump_strength
 		remaining_jumps -= 1
+		character_visuals.character_animation_tree.set("parameters/Transition Lower Half/transition_request", "Jump")
+		character_visuals.character_animation_tree.set("parameters/TimeScale Lower Half/scale", 1)
 	if target_velocity.length() > terminal_velocity.length():
 		target_velocity = target_velocity.clamp(-terminal_velocity, terminal_velocity)
 	
@@ -82,44 +88,40 @@ func _physics_process(delta: float) -> void:
 	
 #	ANIMATION
 #	ANIMATIONNODEBLENDTREE
-	#if direction == Vector3.ZERO:
-		#character_visuals.character_animation_tree.set("parameters/Transition Lower Half/transition_request", "Idle")
-	#else:
-		#character_visuals.character_animation_tree.set("parameters/Transition Lower Half/transition_request", "Runing")
-		
-		# parameters/TimeScale/scale
-		
-		#character_visuals.character_animation_tree.set("parameters/TimeScale/scale", (Input.get_axis("move_forward" , "move_back"))*-1)
-	#var testikles: float = Vector2(Input.get_axis("move_left", "move_right"), Input.get_axis("move_forward" , "move_back")).angle()
-	#character_visuals.character_animation_tree.set("parameters/Blend Movment Direction/blend_amount", (Input.get_axis("move_left", "move_right")+1)/2)
-	character_visuals.global_rotation.y = atan2(-velocity.x, -velocity.z)
-	print(character_visuals.rotation.y)
-	if character_visuals.rotation.y > 1.570796 or character_visuals.rotation.y < -1.570796 :
-		moovment_direction_blend_amount = (((-character_visuals.rotation.y / 1.570796) / 2) + 0.5) * -1
-		#character_visuals.global_rotation.y = atan2(-velocity.x, -velocity.z)
-	else :
-		character_visuals.global_rotation.y = atan2(-velocity.x, -velocity.z)
-		moovment_direction_blend_amount = ((-character_visuals.rotation.y / 1.570796) / 2) + 0.5
-	#character_visuals.character_animation_tree.set("parameters/Blend Movment Direction/blend_amount", 0.5+(Input.get_axis("move_left", "move_right") * -Input.get_axis("move_forward" , "move_back") * 0.25))
-	character_visuals.character_animation_tree.set("parameters/Blend Movment Direction/blend_amount", moovment_direction_blend_amount)
-	#print(moovment_direction_blend_amount)
+	print(velocity.length() / max_walking_speed)
+	#var character_visual_rotation = atan2(-velocity.x, -velocity.z)
 
-#	ANIMATIONNODEBLENDTREE
-
-#Rotate towards moovment
-	
-
-#Rotate towards moovment
 		
-	#if is_on_floor():
-		#character_visuals.character_animation_player.play("Idle")
-	#else :
-		#character_visuals.character_animation_player.stop(true)
-		
-#	separarle por parte de ariba y parte de abajo
-#	tenerlos por booleanos con prioridades, de ariba asia abajo en orden de mayor prio a menor prio
 	
+	if is_on_floor():
+		if velocity.length() > 0.2 :
+			character_visuals.character_animation_tree.set("parameters/Transition Lower Half/transition_request", "Runing")
+			
+			
+			character_visual_rotation = atan2(-velocity.x, -velocity.z)
+			character_visuals.global_rotation.y = character_visual_rotation
+			moovment_direction_blend_amount = ((-character_visuals.rotation.y / (PI / 2)) / 2) + 0.5
+			character_visuals.character_animation_tree.set("parameters/TimeScale Lower Half/scale", velocity.length() / 10)#14 = max walking speed
+			
+			if abs(angle_difference(character_visual_rotation, rotation.y)) > 1.58:
+				character_visuals.global_rotation.y = character_visual_rotation - PI
+				moovment_direction_blend_amount = (((-character_visuals.rotation.y / (PI / 2)) / 2) + 0.5) * 1
+				character_visuals.character_animation_tree.set("parameters/TimeScale Lower Half/scale", -(velocity.length() / 10))#14 = max walking speed
+
+			character_visuals.character_animation_tree.set("parameters/Blend Movment Direction/blend_amount", moovment_direction_blend_amount)
+
 	
+			#character_visuals.character_animation_tree.set("parameters/TimeScale Lower Half/scale", 1)
+		else :
+			character_visuals.character_animation_tree.set("parameters/Transition Lower Half/transition_request", "Idle")
+			character_visuals.character_animation_tree.set("parameters/TimeScale Lower Half/scale", 1)
+	else : 
+		pass
+		#print("air born")
+		#character_visuals.character_animation_tree.set("parameters/Transition Lower Half/transition_request", "Falling")
+
+
+#	ANIMATIONNODEBLENDTREE/
 #	ANIMATION/
 
 #func _process(delta: float) -> void:
