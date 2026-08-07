@@ -88,7 +88,7 @@ func _physics_process(delta: float) -> void:
 	
 #	ANIMATION
 #	ANIMATIONNODEBLENDTREE
-	print(velocity.length() / max_walking_speed)
+	#print(velocity.length() / max_walking_speed)
 	#var character_visual_rotation = atan2(-velocity.x, -velocity.z)
 
 		
@@ -115,8 +115,7 @@ func _physics_process(delta: float) -> void:
 		else :
 			character_visuals.character_animation_tree.set("parameters/Transition Lower Half/transition_request", "Idle")
 			character_visuals.character_animation_tree.set("parameters/TimeScale Lower Half/scale", 1)
-	else : 
-		pass
+
 		#print("air born")
 		#character_visuals.character_animation_tree.set("parameters/Transition Lower Half/transition_request", "Falling")
 
