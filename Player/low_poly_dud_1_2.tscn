@@ -123,7 +123,7 @@ input_2/break_loop_at_end = false
 input_2/reset = true
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_my528"]
-graph_offset = Vector2(-875.9633, -384.60254)
+graph_offset = Vector2(-610.5183, -129.35533)
 nodes/output/position = Vector2(666.6667, 146.66667)
 "nodes/Transition Lower Half/node" = SubResource("AnimationNodeTransition_5fobx")
 "nodes/Transition Lower Half/position" = Vector2(-120, 93.333336)

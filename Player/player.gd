@@ -49,6 +49,7 @@ func _physics_process(delta: float) -> void:
 
 	walking_speed = max_walking_speed * direction.length()
 	#print(walking_speed)
+#	might be an error, aprox zero
 	if direction != Vector3.ZERO:
 		#direction = direction.normalized()
 		direction = direction.rotated(self.up_direction, self.rotation.y).normalized()
@@ -85,6 +86,13 @@ func _physics_process(delta: float) -> void:
 	velocity = target_velocity
 	#velocity.move_toward(Vector3.ZERO, delta)
 	move_and_slide()
+	
+#	ATAKS
+	
+	
+	
+#	ATAKS/
+	
 	
 #	ANIMATION
 #	ANIMATIONNODEBLENDTREE
