@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://8oipc7kclskg"]
 
 [ext_resource type="PackedScene" uid="uid://brcxr3vj4o027" path="res://Player/Player.tscn" id="1_kkogj"]
+[ext_resource type="PackedScene" uid="uid://cp8clsy7w4fw" path="res://Components/Projectiles/BaseProjectil.tscn" id="2_ekipt"]
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_4osw0"]
 
@@ -108,3 +109,6 @@ transform = Transform3D(6, 0, 0, 0, 1, 0, 0, 0, 6, 0, 0, 0)
 mesh = SubResource("BoxMesh_ekipt")
 
 [node name="Player" parent="." unique_id=1031037784 instance=ExtResource("1_kkogj")]
+
+[node name="Projectil" parent="." unique_id=118986489 instance=ExtResource("2_ekipt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.18266869, 2, -17.558138)

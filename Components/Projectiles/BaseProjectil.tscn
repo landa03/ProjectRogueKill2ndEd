@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://cp8clsy7w4fw"]
+
+[ext_resource type="Script" uid="uid://c3jyp4dqmnwvg" path="res://Components/Projectiles/projectil.gd" id="1_lrl6f"]
+[ext_resource type="PackedScene" uid="uid://d3mepayau0ejd" path="res://Components/Hazard/hazard.tscn" id="2_7kvnh"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_s3c3i"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_s3c3i"]
+
+[node name="Projectil" type="RigidBody3D" unique_id=118986489 node_paths=PackedStringArray("mesh_instance", "collision_shape", "hazard")]
+script = ExtResource("1_lrl6f")
+mesh_instance = NodePath("MeshInstance3D")
+collision_shape = NodePath("CollisionShape3D")
+speed = 1.0
+hazard = NodePath("Hazard")
+
+[node name="Hazard" parent="." unique_id=1690427051 instance=ExtResource("2_7kvnh")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=433013993]
+shape = SubResource("SphereShape3D_s3c3i")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=962894280]
+mesh = SubResource("SphereMesh_s3c3i")
