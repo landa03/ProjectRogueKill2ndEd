@@ -19,11 +19,15 @@ var forward_vector : Vector3
 func _ready() -> void:
 	forward_vector = self.get_global_transform_interpolated().basis.x
 	gravity_scale = gravity
-	body_entered.connect(_on_body_entered)
+	self.contact_monitor = true
+	self.max_contacts_reported = 10
+	self.body_entered.connect(on_body_entered)
+	
+func on_body_entered (body: Node):
+	print(body)
+	if body.is_in_group("Ally"):
+		print("Ally")
 	
 func _physics_process(delta: float) -> void:
 	apply_central_force(forward_vector * speed)
 	#print(forward_vector * speed)
-
-func _on_body_entered (body : Node3D):
-	pass

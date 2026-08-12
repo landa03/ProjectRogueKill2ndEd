@@ -5,7 +5,7 @@
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_tok1r"]
 
-[node name="Player" type="CharacterBody3D" unique_id=1031037784 node_paths=PackedStringArray("camera_pivot", "camera", "character_visuals")]
+[node name="Player" type="CharacterBody3D" unique_id=1031037784 node_paths=PackedStringArray("camera_pivot", "camera", "character_visuals") groups=["Ally"]]
 script = ExtResource("1_q3lat")
 camera_pivot = NodePath("CameraPivot")
 camera = NodePath("CameraPivot/Camera3D")
