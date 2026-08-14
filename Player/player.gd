@@ -133,16 +133,6 @@ func _physics_process(delta: float) -> void:
 
 #func _process(delta: float) -> void:
 	#print(direction)
-	#print((((character_visuals.rotation.y * 1) / 1.570796)/2)+0.5)
-	#print(character_visuals.rotation.y)
-	#print(forward)
-	#print(pivot_bone_pose)
-	#print(0.5+(Input.get_axis("move_left", "move_right") * -Input.get_axis("move_forward" , "move_back") * 0.25))
-	#print(Input.get_axis("move_forward" , "move_back"))
-	#print((Input.get_axis("move_left", "move_right")+1)/2)
-	#print(Input.get_axis("move_left", "move_right"))
-	#print(self.velocity.length())
-	#print(self.is_on_floor())
 
 func _input(event):
 	#print(event is InputEventMouseMotion)

@@ -111,4 +111,5 @@ mesh = SubResource("BoxMesh_ekipt")
 [node name="Player" parent="." unique_id=1031037784 instance=ExtResource("1_kkogj")]
 
 [node name="Projectil" parent="." unique_id=118986489 instance=ExtResource("2_ekipt")]
-transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -0.18266869, 2, -17.558138)
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -0.18266869, 2.6502867, -17.558138)
+time_limit = 60.0

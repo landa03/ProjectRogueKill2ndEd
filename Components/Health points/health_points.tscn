@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://c2ambxwkvfm0x"]
+
+[ext_resource type="Script" uid="uid://bcoejpkh6aewp" path="res://Components/Health points/health_points.gd" id="1_81eru"]
+
+[node name="HealthPoints" type="Node3D" unique_id=1223148422]
+script = ExtResource("1_81eru")
+max_health_points = 10.0

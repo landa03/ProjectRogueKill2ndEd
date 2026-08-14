@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dm2cdo2h67ea4" path="res://Player/player.gd" id="1_q3lat"]
 [ext_resource type="PackedScene" uid="uid://346av5s5ihg4" path="res://Player/low_poly_dud_1_2.tscn" id="2_q3lat"]
+[ext_resource type="PackedScene" uid="uid://c2ambxwkvfm0x" path="res://Components/Health points/health_points.tscn" id="2_tok1r"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_tok1r"]
 
@@ -10,6 +11,8 @@ script = ExtResource("1_q3lat")
 camera_pivot = NodePath("CameraPivot")
 camera = NodePath("CameraPivot/Camera3D")
 character_visuals = NodePath("Pivot/LowPolyDud1_2")
+
+[node name="HealthPoints" parent="." unique_id=1016236729 instance=ExtResource("2_tok1r")]
 
 [node name="Pivot" type="Node3D" parent="." unique_id=342364878]
 

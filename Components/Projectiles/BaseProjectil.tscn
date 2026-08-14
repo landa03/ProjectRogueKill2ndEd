@@ -7,19 +7,28 @@
 
 [sub_resource type="SphereMesh" id="SphereMesh_s3c3i"]
 
-[node name="Projectil" type="RigidBody3D" unique_id=118986489 node_paths=PackedStringArray("mesh_instance", "collision_shape", "hazard")]
+[node name="Projectil" type="RigidBody3D" unique_id=118986489 node_paths=PackedStringArray("mesh_instance", "collision_shape", "time_limit_timer", "hazard")]
 script = ExtResource("1_lrl6f")
 mesh_instance = NodePath("MeshInstance3D")
 collision_shape = NodePath("CollisionShape3D")
+time_limit_timer = NodePath("TimeLimitTimer")
 speed = 1.0
 hazard = NodePath("Hazard")
 
 [node name="Hazard" parent="." unique_id=1690427051 instance=ExtResource("2_7kvnh")]
+faction = 1
+damage_type = 1
+dmage_amount = 1.0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=433013993]
 shape = SubResource("SphereShape3D_s3c3i")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=962894280]
 mesh = SubResource("SphereMesh_s3c3i")
+
+[node name="TimeLimitTimer" type="Timer" parent="." unique_id=800534777]
+process_callback = 0
+wait_time = 60.0
+one_shot = true
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

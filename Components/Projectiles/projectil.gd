@@ -4,6 +4,7 @@ extends RigidBody3D
 @export var mesh_instance : MeshInstance3D
 #@export var rigid_body : RigidBody3D
 @export var collision_shape : CollisionShape3D
+@export var time_limit_timer : Timer
 
 @export var speed : float
 @export var gravity : float
@@ -11,10 +12,10 @@ var forward_vector : Vector3
 
 @export var hazard : Hazard
 
-#enum DisipationMethod{TYME, BOUNCE}
-#@export var disipation_method : DisipationMethod #enum
-@export var time_limit : float
-@export var bounce_limit : int
+@export var time_limit : float = 60
+@export var bounce_limit : int = 10
+var current_bounces : int = 0
+@export var is_explosive : bool
 
 func _ready() -> void:
 	forward_vector = self.get_global_transform_interpolated().basis.x
@@ -22,11 +23,28 @@ func _ready() -> void:
 	self.contact_monitor = true
 	self.max_contacts_reported = 10
 	self.body_entered.connect(on_body_entered)
+	time_limit_timer.start(time_limit)
+	time_limit_timer.timeout.connect(on_time_limit_timer_timeout)
+	
+func destroy_projectile():
+	queue_free()
+#	TODO: hecer que explote si es explosivo
+	
+func on_time_limit_timer_timeout():
+	print("time out")
+	destroy_projectile()
 	
 func on_body_entered (body: Node):
-	print(body)
-	if body.is_in_group("Ally"):
-		print("Ally")
+	for child in body.get_children():
+		if child is HealthPoints:
+			child.receive_damage(hazard.faction, hazard.damage_type, hazard.dmage_amount)
+			
+	if current_bounces >= bounce_limit:
+		print("pop")
+		destroy_projectile()
+	else :
+		current_bounces += 1
+		print(current_bounces, " boing")
 	
 func _physics_process(delta: float) -> void:
 	apply_central_force(forward_vector * speed)
