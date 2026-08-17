@@ -12,7 +12,6 @@ script = ExtResource("1_lrl6f")
 mesh_instance = NodePath("MeshInstance3D")
 collision_shape = NodePath("CollisionShape3D")
 time_limit_timer = NodePath("TimeLimitTimer")
-speed = 1.0
 hazard = NodePath("Hazard")
 
 [node name="Hazard" parent="." unique_id=1690427051 instance=ExtResource("2_7kvnh")]

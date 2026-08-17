@@ -6,19 +6,24 @@ extends RigidBody3D
 @export var collision_shape : CollisionShape3D
 @export var time_limit_timer : Timer
 
-@export var speed : float
-@export var gravity : float
+var speed : float = 1
+var gravity : float = 0
 var forward_vector : Vector3
 
 @export var hazard : Hazard
 
-@export var time_limit : float = 60
-@export var bounce_limit : int = 10
+var time_limit : float = 60
+var bounce_limit : int = 10
 var current_bounces : int = 0
-@export var is_explosive : bool
+
+var is_explosive : bool = false
+#TODO : add explosion and its data variables
+#@esport var explosion : Explosion
+
+var parent_weapon
 
 func _ready() -> void:
-	forward_vector = self.get_global_transform_interpolated().basis.x
+	forward_vector = -self.get_global_transform_interpolated().basis.z
 	gravity_scale = gravity
 	self.contact_monitor = true
 	self.max_contacts_reported = 10
