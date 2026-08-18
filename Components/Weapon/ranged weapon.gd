@@ -5,6 +5,8 @@ extends Node3D
 @export var projectile_instance : Projectil
 @export var projectile_egress : Node3D
 
+var forward_vector : Vector3
+
 @export var projectil_speed : float
 @export var projectil_gravity : float
 var projectil_forward_vector : Vector3
@@ -18,13 +20,12 @@ var projectil_forward_vector : Vector3
 #TODO : add explosion data variables
 
 
-#func _ready() -> void:
-	#projectile_scene
+func _ready() -> void:
+	forward_vector = -self.get_global_transform_interpolated().basis.z
 
 
 func atak():
 	projectile_instance = projectile_scene.instantiate()
-	projectile_instance.initialize()
 	projectile_instance.speed = projectil_speed
 	projectile_instance.gravity = projectil_gravity
 	projectile_instance.forward_vector = projectil_forward_vector
@@ -32,4 +33,6 @@ func atak():
 	projectile_instance.time_limit = projectil_time_limit
 	projectile_instance.bounce_limit = projectil_bounce_limit
 	projectile_instance.bounce_limit = projectil_bounce_limit
+	projectile_instance.parent_weapon = self
+	projectile_instance.initialize()
 	

@@ -20,7 +20,7 @@ var is_explosive : bool = false
 #TODO : add explosion and its data variables
 #@esport var explosion : Explosion
 
-var parent_weapon
+var parent_weapon : RangedWeapon
 
 func _ready() -> void:
 	forward_vector = -self.get_global_transform_interpolated().basis.z
@@ -53,4 +53,5 @@ func on_body_entered (body: Node):
 	
 func _physics_process(delta: float) -> void:
 	apply_central_force(forward_vector * speed)
+	#apply_central_force(forward_vector * parent_weapon.projectil_speed)
 	#print(forward_vector * speed)

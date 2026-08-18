@@ -10,3 +10,5 @@ projectile_scene = ExtResource("2_wn64y")
 hazard = NodePath("Hazard")
 
 [node name="Hazard" parent="." unique_id=1690427051 instance=ExtResource("3_wn64y")]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=488571273]
