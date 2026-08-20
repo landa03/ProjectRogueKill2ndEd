@@ -20,6 +20,7 @@ transform = Transform3D(-0.04974552, 0, 4.3488915e-09, 0, 0.04974552, 0, -4.3488
 
 [node name="Timer" type="Timer" parent="." unique_id=1437674625]
 wait_time = 0.5
+autostart = true
 
 [node name="ProjectileEgress" type="Marker3D" parent="." unique_id=505683265]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.23432466, -0.67251533)
