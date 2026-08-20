@@ -7,7 +7,7 @@
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_tok1r"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_s3c3i"]
-size = Vector3(1.8203125, 2.0675201, 1.6037598)
+size = Vector3(1.3674316, 1.9807434, 1.3344727)
 
 [node name="Player" type="CharacterBody3D" unique_id=1031037784 node_paths=PackedStringArray("camera_pivot", "camera", "character_visuals", "interaction_area") groups=["Ally"]]
 script = ExtResource("1_q3lat")
@@ -35,8 +35,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9875221, 3.6259155)
 [node name="InteractionArea3D" type="Area3D" parent="." unique_id=554150638]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.39210975)
 collision_layer = 2
-collision_mask = 2
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="InteractionArea3D" unique_id=117875319]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.94838715, -0.30187988)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9917755, -0.16723633)
 shape = SubResource("BoxShape3D_s3c3i")

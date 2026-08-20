@@ -1,5 +1,5 @@
 class_name RangedWeapon
-extends Node3D
+extends Weapon
 
 @export var projectile_scene : PackedScene
 #@export var projectile_instance : Projectil
@@ -11,8 +11,6 @@ var forward_vector : Vector3
 @export var projectil_speed : float
 @export var projectil_gravity : float
 var projectil_forward_vector : Vector3
-
-@export var hazard : Hazard
 
 @export var projectil_time_limit : float = 60
 @export var projectil_bounce_limit : int = 10

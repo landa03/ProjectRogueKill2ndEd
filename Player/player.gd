@@ -29,10 +29,25 @@ var anim_direction = Vector2.ZERO
 var moovment_direction_blend_amount : float
 var character_visual_rotation : float
 
+@export var weapon_inventory : Array [Weapon]
+@export var interaction_area : Area3D
+
+
 func _ready():
 	# Makes your mouse disappear from the screen
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	character_visuals.character_animation_tree.animation_finished.connect(play_animation_after_jump)
+
+func on_interaction():
+	if interaction_area.get_overlapping_bodies().has(Weapon):
+		weapon_inventory.append(interaction_area.get_overlapping_bodies().find(Weapon))
+		#print(interaction_area.find(Weapon))
+	#print(weapon_inventory)
+	#print(interaction_area.get_overlapping_bodies())
+	#print(interaction_area.get_overlapping_bodies().find(Weapon))
+	#print(weapon_inventory)
+	for body in interaction_area.get_overlapping_bodies() :
+		print(body.is_class("Weapon"))
 
 func play_animation_after_jump(anim_name: StringName):
 	match anim_name :
@@ -41,6 +56,10 @@ func play_animation_after_jump(anim_name: StringName):
 	#print(anim_name)
 
 func _physics_process(delta: float) -> void:
+
+	if Input.is_action_just_pressed("interact"):
+		on_interaction()
+		print("interaction presed")
 
 #PLAYER MOOVMENT/ DIRECTION
 	direction.x = Input.get_axis("move_left", "move_right")

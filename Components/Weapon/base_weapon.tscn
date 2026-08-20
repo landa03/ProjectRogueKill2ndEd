@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://djtj5mnerudp2"]
+
+[ext_resource type="Script" uid="uid://bn43otmgsbngg" path="res://Components/Weapon/base_weapon.gd" id="1_jo3p6"]
+
+[node name="BaseWeapon" type="StaticBody3D" unique_id=1857207399]
+script = ExtResource("1_jo3p6")

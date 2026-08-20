@@ -5,13 +5,19 @@
 [ext_resource type="PackedScene" uid="uid://d3mepayau0ejd" path="res://Components/Hazard/hazard.tscn" id="3_wn64y"]
 [ext_resource type="PackedScene" uid="uid://dgtg1fn4mobwq" path="res://Assets/3DMeshes/crossbow.glb" id="4_8xjf2"]
 
-[node name="RangedWeapon" type="Node3D" unique_id=295167970 node_paths=PackedStringArray("projectile_egress", "hazard", "timer")]
+[sub_resource type="BoxShape3D" id="BoxShape3D_s3c3i"]
+size = Vector3(0.5761719, 0.265625, 1.3261719)
+
+[node name="RangedWeapon" type="StaticBody3D" unique_id=339456081 node_paths=PackedStringArray("projectile_egress", "timer", "hazard")]
+collision_layer = 2
+collision_mask = 2
 script = ExtResource("1_72ajs")
 projectile_scene = ExtResource("2_wn64y")
 projectile_egress = NodePath("ProjectileEgress")
 projectil_speed = 10.0
-hazard = NodePath("Hazard")
 timer = NodePath("Timer")
+hazard = NodePath("Hazard")
+metadata/_custom_type_script = "uid://bn43otmgsbngg"
 
 [node name="Hazard" parent="." unique_id=1690427051 instance=ExtResource("3_wn64y")]
 
@@ -23,3 +29,7 @@ wait_time = 0.5
 
 [node name="ProjectileEgress" type="Marker3D" parent="." unique_id=505683265]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.23432466, -0.67251533)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=42176055]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.12402344, -0.16308594)
+shape = SubResource("BoxShape3D_s3c3i")
