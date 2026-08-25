@@ -2,5 +2,6 @@
 
 [ext_resource type="Script" uid="uid://bn43otmgsbngg" path="res://Components/Weapon/base_weapon.gd" id="1_jo3p6"]
 
-[node name="BaseWeapon" type="StaticBody3D" unique_id=1857207399]
+[node name="BaseWeapon" type="StaticBody3D" unique_id=1975771855]
 script = ExtResource("1_jo3p6")
+metadata/_custom_type_script = "uid://bn43otmgsbngg"

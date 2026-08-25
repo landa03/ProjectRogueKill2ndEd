@@ -47,7 +47,7 @@ func on_interaction():
 	#print(interaction_area.get_overlapping_bodies().find(Weapon))
 	#print(weapon_inventory)
 	for body in interaction_area.get_overlapping_bodies() :
-		print(body.is_class("Weapon"))
+		print(body.is_in_group("Weapon"))
 
 func play_animation_after_jump(anim_name: StringName):
 	match anim_name :

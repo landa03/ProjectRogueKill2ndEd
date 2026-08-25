@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cc3c304pk7vvs"]
 
-[ext_resource type="Script" uid="uid://b546iown1ohj0" path="res://Components/Weapon/ranged weapon.gd" id="1_72ajs"]
+[ext_resource type="Script" uid="uid://b546iown1ohj0" path="res://Components/Weapon/ranged_weapon.gd" id="1_72ajs"]
 [ext_resource type="PackedScene" uid="uid://cp8clsy7w4fw" path="res://Components/Projectiles/BaseProjectil.tscn" id="2_wn64y"]
 [ext_resource type="PackedScene" uid="uid://d3mepayau0ejd" path="res://Components/Hazard/hazard.tscn" id="3_wn64y"]
 [ext_resource type="PackedScene" uid="uid://dgtg1fn4mobwq" path="res://Assets/3DMeshes/crossbow.glb" id="4_8xjf2"]
@@ -8,7 +8,7 @@
 [sub_resource type="BoxShape3D" id="BoxShape3D_s3c3i"]
 size = Vector3(0.5761719, 0.265625, 1.3261719)
 
-[node name="RangedWeapon" type="StaticBody3D" unique_id=339456081 node_paths=PackedStringArray("projectile_egress", "timer", "hazard")]
+[node name="RangedWeapon" type="StaticBody3D" unique_id=13054028 node_paths=PackedStringArray("projectile_egress", "timer", "hazard") groups=["Weapon"]]
 collision_layer = 2
 collision_mask = 2
 script = ExtResource("1_72ajs")
@@ -17,7 +17,7 @@ projectile_egress = NodePath("ProjectileEgress")
 projectil_speed = 10.0
 timer = NodePath("Timer")
 hazard = NodePath("Hazard")
-metadata/_custom_type_script = "uid://bn43otmgsbngg"
+metadata/_custom_type_script = "uid://b546iown1ohj0"
 
 [node name="Hazard" parent="." unique_id=1690427051 instance=ExtResource("3_wn64y")]
 

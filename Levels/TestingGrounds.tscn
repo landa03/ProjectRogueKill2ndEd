@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://8oipc7kclskg"]
 
 [ext_resource type="PackedScene" uid="uid://brcxr3vj4o027" path="res://Player/Player.tscn" id="1_kkogj"]
-[ext_resource type="PackedScene" uid="uid://cc3c304pk7vvs" path="res://Components/Weapon/ranged weapon.tscn" id="2_ekipt"]
+[ext_resource type="PackedScene" uid="uid://cc3c304pk7vvs" path="res://Components/Weapon/ranged_weapon.tscn" id="2_ekipt"]
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_4osw0"]
 
