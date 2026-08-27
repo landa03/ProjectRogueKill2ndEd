@@ -31,6 +31,7 @@ var character_visual_rotation : float
 
 @export var weapon_inventory : Array [Weapon]
 @export var interaction_area : Area3D
+#var interactions_available : Array [Interactable]
 
 
 func _ready():
@@ -39,15 +40,24 @@ func _ready():
 	character_visuals.character_animation_tree.animation_finished.connect(play_animation_after_jump)
 
 func on_interaction():
-	if interaction_area.get_overlapping_bodies().has(Weapon):
-		weapon_inventory.append(interaction_area.get_overlapping_bodies().find(Weapon))
-		#print(interaction_area.find(Weapon))
-	#print(weapon_inventory)
-	#print(interaction_area.get_overlapping_bodies())
-	#print(interaction_area.get_overlapping_bodies().find(Weapon))
-	#print(weapon_inventory)
+	#if interaction_area.get_overlapping_bodies().has(Weapon):
+		#weapon_inventory.append(interaction_area.get_overlapping_bodies().find(Weapon))
+	
 	for body in interaction_area.get_overlapping_bodies() :
-		print(body.is_in_group("Weapon"))
+		print("is interactable? : ", body.is_in_group("Interactable"), ", ", "is weapon? : ", body.is_in_group("Weapon"))
+		if body.is_in_group("Interactable") :
+			if body.is_in_group("Weapon") :
+				weapon_inventory.append(body)
+				on_weapon_added_to_inventory(body)
+				#character_visuals.back_attachment.add_child(body)
+				
+		
+
+func on_weapon_added_to_inventory(weapon : Weapon) :
+	weapon.is_interactable = false
+	weapon.reparent(character_visuals.back_attachment)
+	weapon.position = character_visuals.back_attachment.position
+	weapon.rotation = Vector3(0,0,0)
 
 func play_animation_after_jump(anim_name: StringName):
 	match anim_name :

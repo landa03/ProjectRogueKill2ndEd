@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cc3c304pk7vvs"]
 
-[ext_resource type="Script" uid="uid://b546iown1ohj0" path="res://Components/Weapon/ranged_weapon.gd" id="1_72ajs"]
+[ext_resource type="Script" uid="uid://b546iown1ohj0" path="res://Components/Interactables/Weapon/ranged_weapon.gd" id="1_72ajs"]
 [ext_resource type="PackedScene" uid="uid://cp8clsy7w4fw" path="res://Components/Projectiles/BaseProjectil.tscn" id="2_wn64y"]
 [ext_resource type="PackedScene" uid="uid://d3mepayau0ejd" path="res://Components/Hazard/hazard.tscn" id="3_wn64y"]
 [ext_resource type="PackedScene" uid="uid://dgtg1fn4mobwq" path="res://Assets/3DMeshes/crossbow.glb" id="4_8xjf2"]

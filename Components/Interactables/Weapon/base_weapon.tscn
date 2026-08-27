@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://djtj5mnerudp2"]
+
+[ext_resource type="Script" uid="uid://bn43otmgsbngg" path="res://Components/Interactables/Weapon/base_weapon.gd" id="1_l8i02"]
+
+[node name="BaseWeapon" type="StaticBody3D" unique_id=1975771855 groups=["Weapon"]]
+script = ExtResource("1_l8i02")
+is_interactable = true
+metadata/_custom_type_script = "uid://bn43otmgsbngg"

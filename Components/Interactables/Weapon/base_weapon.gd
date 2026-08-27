@@ -1,4 +1,4 @@
 class_name Weapon
-extends StaticBody3D
+extends Interactable
 
 @export var hazard : Hazard

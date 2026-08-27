@@ -23,6 +23,7 @@ var projectil_forward_vector : Vector3
 func _ready() -> void:
 	forward_vector = -self.get_global_transform_interpolated().basis.z
 	timer.timeout.connect(on_timer_time_out)
+	self.is_interactable = true
 
 func on_timer_time_out():
 	atak()
