@@ -31,6 +31,7 @@ var character_visual_rotation : float
 
 @export var weapon_inventory : Array [Weapon]
 @export var interaction_area : Area3D
+@export var equipped_weapon : Weapon
 #var interactions_available : Array [Interactable]
 
 
@@ -47,17 +48,31 @@ func on_interaction():
 		print("is interactable? : ", body.is_in_group("Interactable"), ", ", "is weapon? : ", body.is_in_group("Weapon"))
 		if body.is_in_group("Interactable") :
 			if body.is_in_group("Weapon") :
-				weapon_inventory.append(body)
-				on_weapon_added_to_inventory(body)
+				
+				add_weapon_to_inventory(body)
 				#character_visuals.back_attachment.add_child(body)
 				
 		
 
-func on_weapon_added_to_inventory(weapon : Weapon) :
+func add_weapon_to_inventory(weapon : Weapon) :
+	weapon_inventory.append(weapon)
 	weapon.is_interactable = false
 	weapon.reparent(character_visuals.back_attachment)
 	weapon.position = character_visuals.back_attachment.position
-	weapon.rotation = Vector3(0,0,0)
+	weapon.rotation = Vector3(0,0,0) #stored_position (deve venir del weapon)
+	
+#TODO : hacer que el arma apunte a donde apunta la camara
+#TODO : hacer armas melee
+#TODO : implementar veneficios por movimiento
+
+func swap_weapon() :
+	if equipped_weapon != null :
+		add_weapon_to_inventory(equipped_weapon)
+	weapon_inventory[0].reparent(character_visuals.right_hand_attachment)
+	weapon_inventory[0].position = character_visuals.right_hand_attachment.position
+	weapon_inventory[0].rotation = Vector3(90,-90,0) #held_position (deve venir del weapon)
+	equipped_weapon = weapon_inventory[0]
+	weapon_inventory.remove_at(0)
 
 func play_animation_after_jump(anim_name: StringName):
 	match anim_name :
@@ -70,7 +85,16 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("interact"):
 		on_interaction()
 		print("interaction presed")
-
+	
+	if Input.is_action_just_pressed("swap_weapon"):
+		swap_weapon()
+		print("swap weapon presed")
+	
+	if Input.is_action_just_pressed("held_item_action_1"):
+		if equipped_weapon != null :
+			equipped_weapon.atak()
+		print("held_item_action_1 presed")
+	
 #PLAYER MOOVMENT/ DIRECTION
 	direction.x = Input.get_axis("move_left", "move_right")
 	#print(Input.get_axis("move_left", "move_right"))

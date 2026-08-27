@@ -8,7 +8,7 @@ extends RigidBody3D
 
 var speed : float = 1
 var gravity : float = 0
-var forward_vector : Vector3
+var movment_direction : Vector3
 
 @export var hazard : Hazard
 
@@ -23,7 +23,7 @@ var is_explosive : bool = false
 var parent_weapon : RangedWeapon
 
 func _ready() -> void:
-	forward_vector = -self.get_global_transform_interpolated().basis.z
+	movment_direction = -self.get_global_transform_interpolated().basis.z
 	gravity_scale = gravity
 	self.contact_monitor = true
 	self.max_contacts_reported = 10
@@ -52,6 +52,6 @@ func on_body_entered (body: Node):
 		print(current_bounces, " boing")
 	
 func _physics_process(delta: float) -> void:
-	apply_central_force(forward_vector * speed)
-	#apply_central_force(forward_vector * parent_weapon.projectil_speed)
-	#print(forward_vector * speed)
+	apply_central_force(movment_direction * speed)
+	#apply_central_force(movment_direction * parent_weapon.projectil_speed)
+	#print(movment_direction * speed)

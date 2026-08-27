@@ -21,7 +21,7 @@ var projectil_forward_vector : Vector3
 @export var timer : Timer
 
 func _ready() -> void:
-	forward_vector = -self.get_global_transform_interpolated().basis.z
+	#forward_vector = -self.get_global_transform_interpolated().basis.z
 	timer.timeout.connect(on_timer_time_out)
 	self.is_interactable = true
 
@@ -33,13 +33,14 @@ func atak():
 	projectile_instance = projectile_scene.instantiate()
 	projectile_instance.speed = projectil_speed
 	projectile_instance.gravity = projectil_gravity
-	projectile_instance.forward_vector = projectil_forward_vector
+	projectile_instance.movment_direction = projectil_forward_vector
 	projectile_instance.hazard = hazard
 	projectile_instance.time_limit = projectil_time_limit
 	projectile_instance.bounce_limit = projectil_bounce_limit
 	projectile_instance.bounce_limit = projectil_bounce_limit
 	projectile_instance.parent_weapon = self
-	projectile_instance.position = projectile_egress.position
-	self.add_child(projectile_instance)
-	projectile_instance.apply_central_impulse(forward_vector * projectil_speed)
+	projectile_instance.position = projectile_egress.global_position
+	projectile_instance.basis = Basis.from_euler(projectile_egress.global_rotation) 
+	self.get_tree().root.add_child(projectile_instance)
+	projectile_instance.apply_central_impulse(projectile_instance.movment_direction * projectil_speed)
 	
