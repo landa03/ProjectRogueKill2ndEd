@@ -166,13 +166,13 @@ nodes/RangedWeaponHold/node = SubResource("AnimationNodeAnimation_g6p7e")
 nodes/RangedWeaponHold/position = Vector2(-146.66667, 1120)
 node_connections = [&"output", 0, &"Blend2", &"Transition Lower Half", 0, &"Falling", &"Transition Lower Half", 1, &"Idle", &"Transition Lower Half", 2, &"Jump", &"Transition Lower Half", 3, &"Landing", &"Transition Lower Half", 4, &"Blend Movment Direction", &"Transition Lower Half", 5, &"Slide Begin", &"Transition Lower Half", 6, &"Sliding", &"Transition Uper Half 2", 0, &"Grab", &"Transition Uper Half 2", 1, &"PunchL", &"Transition Uper Half 2", 2, &"PunchR", &"Transition Uper Half 2", 3, &"RangedWeaponHold", &"Blend2", 0, &"TimeScale Lower Half", &"Blend2", 1, &"Transition Uper Half 2", &"TimeScale Lower Half", 0, &"Transition Lower Half", &"Blend Movment Direction", 0, &"Runing Left", &"Blend Movment Direction", 1, &"Runing Right"]
 
-[node name="LowPolyDud1_2" unique_id=1577442555 node_paths=PackedStringArray("character_animation_player", "character_animation_tree", "character_skeleton", "right_hand_attachment", "left_hand_attachment", "back_attachment") instance=ExtResource("1_g6p7e")]
+[node name="LowPolyDud1_2" unique_id=1577442555 node_paths=PackedStringArray("character_animation_player", "character_animation_tree", "character_skeleton", "right_hand_attachment", "left_hand_ik", "back_attachment") instance=ExtResource("1_g6p7e")]
 script = ExtResource("2_c15l7")
 character_animation_player = NodePath("AnimationPlayer")
 character_animation_tree = NodePath("AnimationTree")
 character_skeleton = NodePath("Armature/Skeleton3D")
 right_hand_attachment = NodePath("Armature/Skeleton3D/RightHandAttachment3D/RightHandAttachmentMarker3D")
-left_hand_attachment = NodePath("Armature/Skeleton3D/LeftHandAttachment3D/LeftHandAttachmentMarker3D")
+left_hand_ik = NodePath("Armature/Skeleton3D/FABRIK3D")
 back_attachment = NodePath("Armature/Skeleton3D/BackAttachment3D2/BackAttachmentMarker3D")
 
 [node name="Skeleton3D" parent="Armature" parent_id_path=PackedInt32Array(1622861820) index="0" unique_id=832995680]
@@ -226,7 +226,7 @@ bone_idx = 26
 [node name="RightHandAttachmentMarker3D" type="Marker3D" parent="Armature/Skeleton3D/RightHandAttachment3D" index="0" unique_id=204785854]
 
 [node name="LeftHandAttachment3D" type="BoneAttachment3D" parent="Armature/Skeleton3D" index="2" unique_id=1140502552]
-transform = Transform3D(0.013190731, 0.7280009, -0.685449, 0.9995334, -0.028485192, -0.0110186115, -0.027546667, -0.6849836, -0.7280372, 0.19790646, 0.34979475, -0.6195606)
+transform = Transform3D(0.100626245, -0.030641131, -0.9944521, 0.9031685, -0.41644222, 0.104220994, -0.41732538, -0.9086454, -0.014230885, 1.1734664e-06, 0.21600565, -0.4980413)
 bone_name = "LeftHand"
 bone_idx = 13
 
@@ -239,6 +239,23 @@ bone_idx = 8
 
 [node name="BackAttachmentMarker3D" type="Marker3D" parent="Armature/Skeleton3D/BackAttachment3D2" index="0" unique_id=24496607]
 transform = Transform3D(-0.70710677, -0.047155175, 0.70553285, 0.7055328, -0.11358926, 0.699515, 0.047155164, 0.9924088, 0.113589264, 0.05741393, 0.15699995, 0.18374959)
+
+[node name="FABRIK3D" type="FABRIK3D" parent="Armature/Skeleton3D" index="4" unique_id=441006379]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.21601284, -0.49804398)
+setting_count = 1
+settings/0/target_node = NodePath(".")
+settings/0/root_bone_name = "LeftUperArm"
+settings/0/root_bone = 11
+settings/0/end_bone_name = "LeftHand"
+settings/0/end_bone = 13
+settings/0/extend_end_bone = false
+settings/0/joint_count = 3
+settings/0/joints/0/rotation_axis = 3
+settings/0/joints/0/limitation = null
+settings/0/joints/1/rotation_axis = 0
+settings/0/joints/1/limitation = null
+settings/0/joints/2/rotation_axis = 3
+settings/0/joints/2/limitation = null
 
 [node name="AnimationTree" type="AnimationTree" parent="." index="2" unique_id=1582878350]
 tree_root = SubResource("AnimationNodeBlendTree_fok46")

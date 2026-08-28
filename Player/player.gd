@@ -60,6 +60,8 @@ func add_weapon_to_inventory(weapon : Weapon) :
 	weapon.reparent(character_visuals.back_attachment)
 	weapon.position = character_visuals.back_attachment.position
 	weapon.rotation = Vector3(0,0,0) #stored_position (deve venir del weapon)
+	#weapon.basis = Basis.from_euler(camera.basis.get_euler())
+#	Basis.from_euler(projectile_egress.global_rotation) 
 	
 #TODO : hacer que el arma apunte a donde apunta la camara
 #TODO : hacer armas melee
@@ -94,6 +96,16 @@ func _physics_process(delta: float) -> void:
 		if equipped_weapon != null :
 			equipped_weapon.atak()
 		print("held_item_action_1 presed")
+	
+	if equipped_weapon != null :
+		#equipped_weapon.basis = Basis.from_euler(camera.global_rotation)
+		equipped_weapon.global_rotation = camera.global_rotation
+		if equipped_weapon.second_hand_position != null :
+			#character_visuals.left_hand_ik.deterministic = true
+			character_visuals.left_hand_ik.global_position = equipped_weapon.second_hand_position.global_position
+		#else :
+			#character_visuals.left_hand_ik.deterministic = false
+			
 	
 #PLAYER MOOVMENT/ DIRECTION
 	direction.x = Input.get_axis("move_left", "move_right")
