@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://b53e2c2q8sb4q"]
+
+[ext_resource type="Script" uid="uid://cfvmsouoq4076" path="res://Components/Character Skills/base_character_skill.gd" id="1_u3tsa"]
+
+[node name="BaseCharacterSkill" type="Node" unique_id=501221027]
+script = ExtResource("1_u3tsa")

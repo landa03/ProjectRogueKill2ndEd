@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://b65xibnyafbyg"]
+
+[ext_resource type="Script" uid="uid://b21tr4uvc4eps" path="res://Components/Character Skills/Movment/dash.gd" id="1_d0h3a"]
+
+[node name="Dash" type="Node" unique_id=1232227137]
+script = ExtResource("1_d0h3a")
+skill_category = 1

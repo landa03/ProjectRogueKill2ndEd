@@ -34,6 +34,20 @@ var character_visual_rotation : float
 @export var equipped_weapon : Weapon
 #var interactions_available : Array [Interactable]
 
+#TODO : dash
+#	stamina
+#		costo, current & max
+#	timeline
+#		duration
+#	last direction input
+#	dash speed
+var is_mid_dash : bool = false
+@export var max_stamina : int = 5
+var curent_stamina : float = max_stamina
+
+
+
+
 
 func _ready():
 	# Makes your mouse disappear from the screen
@@ -63,13 +77,15 @@ func add_weapon_to_inventory(weapon : Weapon) :
 	#weapon.basis = Basis.from_euler(camera.basis.get_euler())
 #	Basis.from_euler(projectile_egress.global_rotation) 
 	
-#TODO : hacer que el arma apunte a donde apunta la camara
+#TODO : mejorar el ik y agregar el ik de la otra mano
 #TODO : hacer armas melee
 #TODO : implementar veneficios por movimiento
 
 func swap_weapon() :
 	if equipped_weapon != null :
 		add_weapon_to_inventory(equipped_weapon)
+		if equipped_weapon.second_hand_position != null:
+			character_visuals.left_hand_ik.influence = 1
 	weapon_inventory[0].reparent(character_visuals.right_hand_attachment)
 	weapon_inventory[0].position = character_visuals.right_hand_attachment.position
 	weapon_inventory[0].rotation = Vector3(90,-90,0) #held_position (deve venir del weapon)
@@ -89,13 +105,18 @@ func _physics_process(delta: float) -> void:
 		print("interaction presed")
 	
 	if Input.is_action_just_pressed("swap_weapon"):
-		swap_weapon()
+		if weapon_inventory.size() > 0:
+			swap_weapon()
+			
 		print("swap weapon presed")
 	
 	if Input.is_action_just_pressed("held_item_action_1"):
 		if equipped_weapon != null :
 			equipped_weapon.atak()
 		print("held_item_action_1 presed")
+	
+	if Input.is_action_just_pressed("dash"):
+		print("dash presed")
 	
 	if equipped_weapon != null :
 		#equipped_weapon.basis = Basis.from_euler(camera.global_rotation)

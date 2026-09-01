@@ -3,6 +3,10 @@
 [ext_resource type="PackedScene" uid="uid://h0btmwjg5spm" path="res://Assets/Smoothies/LowPolyDud1.2.blend" id="1_g6p7e"]
 [ext_resource type="Script" uid="uid://b24spb3eqylhj" path="res://Assets/low_poly_dud_1_1.gd" id="2_c15l7"]
 
+[sub_resource type="JointLimitationCone3D" id="JointLimitationCone3D_5guys"]
+resource_local_to_scene = true
+angle = 2.9670596
+
 [sub_resource type="AnimationNodeBlend2" id="AnimationNodeBlend2_cpdxi"]
 filter_enabled = true
 filters = ["Armature", "Armature/Skeleton3D:LowerSpine"]
@@ -172,7 +176,7 @@ character_animation_player = NodePath("AnimationPlayer")
 character_animation_tree = NodePath("AnimationTree")
 character_skeleton = NodePath("Armature/Skeleton3D")
 right_hand_attachment = NodePath("Armature/Skeleton3D/RightHandAttachment3D/RightHandAttachmentMarker3D")
-left_hand_ik = NodePath("Armature/Skeleton3D/FABRIK3D")
+left_hand_ik = NodePath("Armature/Skeleton3D/LeftArmIK")
 back_attachment = NodePath("Armature/Skeleton3D/BackAttachment3D2/BackAttachmentMarker3D")
 
 [node name="Skeleton3D" parent="Armature" parent_id_path=PackedInt32Array(1622861820) index="0" unique_id=832995680]
@@ -226,7 +230,7 @@ bone_idx = 26
 [node name="RightHandAttachmentMarker3D" type="Marker3D" parent="Armature/Skeleton3D/RightHandAttachment3D" index="0" unique_id=204785854]
 
 [node name="LeftHandAttachment3D" type="BoneAttachment3D" parent="Armature/Skeleton3D" index="2" unique_id=1140502552]
-transform = Transform3D(0.100626245, -0.030641131, -0.9944521, 0.9031685, -0.41644222, 0.104220994, -0.41732538, -0.9086454, -0.014230885, 1.1734664e-06, 0.21600565, -0.4980413)
+transform = Transform3D(0.01319056, 0.7280011, -0.685449, 0.9995335, -0.02848509, -0.011018753, -0.027546637, -0.6849836, -0.72803724, 0.19790666, 0.3497948, -0.6195606)
 bone_name = "LeftHand"
 bone_idx = 13
 
@@ -240,8 +244,9 @@ bone_idx = 8
 [node name="BackAttachmentMarker3D" type="Marker3D" parent="Armature/Skeleton3D/BackAttachment3D2" index="0" unique_id=24496607]
 transform = Transform3D(-0.70710677, -0.047155175, 0.70553285, 0.7055328, -0.11358926, 0.699515, 0.047155164, 0.9924088, 0.113589264, 0.05741393, 0.15699995, 0.18374959)
 
-[node name="FABRIK3D" type="FABRIK3D" parent="Armature/Skeleton3D" index="4" unique_id=441006379]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.21601284, -0.49804398)
+[node name="LeftArmIK" type="CCDIK3D" parent="Armature/Skeleton3D" index="4" unique_id=883904372]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.19839393, 0.4925319, -0.6049674)
+influence = 0.0
 setting_count = 1
 settings/0/target_node = NodePath(".")
 settings/0/root_bone_name = "LeftUperArm"
@@ -252,8 +257,10 @@ settings/0/extend_end_bone = false
 settings/0/joint_count = 3
 settings/0/joints/0/rotation_axis = 3
 settings/0/joints/0/limitation = null
-settings/0/joints/1/rotation_axis = 0
-settings/0/joints/1/limitation = null
+settings/0/joints/1/rotation_axis = 2
+settings/0/joints/1/limitation = SubResource("JointLimitationCone3D_5guys")
+settings/0/joints/1/limitation/right_axis = 0
+settings/0/joints/1/limitation/rotation_offset = Quaternion(0, 0, -0.555, 1)
 settings/0/joints/2/rotation_axis = 3
 settings/0/joints/2/limitation = null
 
