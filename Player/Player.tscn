@@ -3,18 +3,20 @@
 [ext_resource type="Script" uid="uid://dm2cdo2h67ea4" path="res://Player/player.gd" id="1_q3lat"]
 [ext_resource type="PackedScene" uid="uid://c2ambxwkvfm0x" path="res://Components/Health points/health_points.tscn" id="2_tok1r"]
 [ext_resource type="PackedScene" uid="uid://xii7367hqpah" path="res://Player/low_poly_dud.tscn" id="3_ddoul"]
+[ext_resource type="PackedScene" uid="uid://b65xibnyafbyg" path="res://Components/Character Skills/Movment/dash.tscn" id="4_ddoul"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_tok1r"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_s3c3i"]
 size = Vector3(1.8203125, 2.0675201, 2.3277588)
 
-[node name="Player" type="CharacterBody3D" unique_id=1031037784 node_paths=PackedStringArray("camera_pivot", "camera", "character_visuals", "interaction_area") groups=["Ally"]]
+[node name="Player" type="CharacterBody3D" unique_id=1031037784 node_paths=PackedStringArray("camera_pivot", "camera", "character_visuals", "interaction_area", "dash_skill") groups=["Ally"]]
 script = ExtResource("1_q3lat")
 camera_pivot = NodePath("CameraPivot")
 camera = NodePath("CameraPivot/Camera3D")
 character_visuals = NodePath("Pivot/LowPolyDud1_2")
 interaction_area = NodePath("InteractionArea3D")
+dash_skill = NodePath("Dash")
 
 [node name="HealthPoints" parent="." unique_id=1016236729 instance=ExtResource("2_tok1r")]
 
@@ -40,3 +42,10 @@ collision_mask = 2
 [node name="CollisionShape3D" type="CollisionShape3D" parent="InteractionArea3D" unique_id=117875319]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.94838715, -0.6638794)
 shape = SubResource("BoxShape3D_s3c3i")
+
+[node name="Dash" parent="." unique_id=1232227137 node_paths=PackedStringArray("skill_owner") instance=ExtResource("4_ddoul")]
+dash_speed = 10.0
+skill_max_duration = 1.0
+cooldown = 60.0
+max_use_charges = 5
+skill_owner = NodePath("..")

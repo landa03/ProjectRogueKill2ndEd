@@ -45,6 +45,7 @@ var is_mid_dash : bool = false
 @export var max_stamina : int = 5
 var curent_stamina : float = max_stamina
 
+@export var dash_skill : DashSkill
 
 
 
@@ -116,6 +117,8 @@ func _physics_process(delta: float) -> void:
 		print("held_item_action_1 presed")
 	
 	if Input.is_action_just_pressed("dash"):
+		dash_skill.dash_direction = direction
+		dash_skill.activate_skill()
 		print("dash presed")
 	
 	if equipped_weapon != null :
