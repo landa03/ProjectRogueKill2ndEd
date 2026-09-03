@@ -9,10 +9,10 @@ skill_category = 1
 skill_duration_timer = NodePath("SkillDurationTimer")
 skill_cooldown_timer = NodePath("SkillCooldownTimer")
 
-[node name="SkillDurationTimer" type="Timer" parent="." unique_id=1697420742]
-wait_time = 0.5
+[node name="SkillDurationTimer" type="Timer" parent="." unique_id=1323959907]
+wait_time = 0.1
 one_shot = true
 
-[node name="SkillCooldownTimer" type="Timer" parent="." unique_id=371907125]
+[node name="SkillCooldownTimer" type="Timer" parent="." unique_id=387148827]
 wait_time = 0.1
 one_shot = true

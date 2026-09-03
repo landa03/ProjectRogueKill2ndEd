@@ -44,8 +44,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.94838715, -0.6638794)
 shape = SubResource("BoxShape3D_s3c3i")
 
 [node name="Dash" parent="." unique_id=1232227137 node_paths=PackedStringArray("skill_owner") instance=ExtResource("4_ddoul")]
-dash_speed = 10.0
-skill_max_duration = 1.0
-cooldown = 60.0
-max_use_charges = 5
+dash_speed = 300.0
 skill_owner = NodePath("..")
+skill_duration_wait_time = 0.1
