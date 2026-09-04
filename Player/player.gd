@@ -189,7 +189,7 @@ func _physics_process(delta: float) -> void:
 	#var character_visual_rotation = atan2(-velocity.x, -velocity.z)
 
 		
-	
+#	TODO : hacer que jire el cuerpo en todo momento asia donde apunta la camara
 	if is_on_floor():
 		if velocity.length() > 0.2 :
 			character_visuals.character_animation_tree.set("parameters/Transition Lower Half/transition_request", "Runing")

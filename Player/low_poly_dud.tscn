@@ -133,6 +133,7 @@ input_3/break_loop_at_end = false
 input_3/reset = true
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_fok46"]
+graph_offset = Vector2(-617.60986, 67.92037)
 nodes/output/position = Vector2(666.6667, 146.66667)
 "nodes/Transition Lower Half/node" = SubResource("AnimationNodeTransition_5fobx")
 "nodes/Transition Lower Half/position" = Vector2(-120, 93.333336)
@@ -188,9 +189,11 @@ bones/3/rotation = Quaternion(-0.67102885, 0.0005311103, 0.07175324, 0.737951)
 bones/4/rotation = Quaternion(-0.15006055, 0.025777256, -0.013736796, 0.9882453)
 bones/5/rotation = Quaternion(0.77258706, -0.009524689, -0.035701405, 0.6338329)
 bones/6/position = Vector3(0.018426424, 0.40724927, 0.5913223)
+bones/7/position = Vector3(-2.019484e-28, 0.29999998, 0)
 bones/7/rotation = Quaternion(0.7632944, 0, 0, 0.6460509)
-bones/8/rotation = Quaternion(-0.15660411, -0.15643103, 0.0010321885, 0.97519404)
-bones/9/rotation = Quaternion(0.0752177, 0.15598018, 0.011913314, 0.98482007)
+bones/7/scale = Vector3(1, 0.9999998, 0.9999998)
+bones/8/rotation = Quaternion(-0.15481548, -0.15643269, 0.00074531336, 0.97547966)
+bones/9/rotation = Quaternion(0.073414184, 0.15600175, 0.011627667, 0.9849562)
 bones/10/rotation = Quaternion(0.6363981, -0.3074596, -0.44708064, -0.5482564)
 bones/11/rotation = Quaternion(-0.5873234, -0.2376381, -0.41061315, 0.6557258)
 bones/12/rotation = Quaternion(0.08839206, -0.045103267, -0.30370292, 0.94758487)
@@ -223,21 +226,21 @@ bones/38/rotation = Quaternion(0.77258813, 0.009521997, 0.035704847, 0.6338313)
 bones/39/position = Vector3(-0.018438207, 0.4072035, 0.5915374)
 
 [node name="RightHandAttachment3D" type="BoneAttachment3D" parent="Armature/Skeleton3D" index="1" unique_id=450251308]
-transform = Transform3D(0.059957936, 0.31707716, 0.9465021, -0.955628, -0.25573096, 0.14620599, 0.28840864, -0.91327, 0.2876746, 0.42628545, 0.39413688, -0.32237357)
+transform = Transform3D(0.05995792, 0.3170772, 0.946502, -0.9566791, -0.2523797, 0.14514983, 0.2849018, -0.91420186, 0.28820902, 0.42628545, 0.39550212, -0.32215995)
 bone_name = "RightHand"
 bone_idx = 26
 
 [node name="RightHandAttachmentMarker3D" type="Marker3D" parent="Armature/Skeleton3D/RightHandAttachment3D" index="0" unique_id=204785854]
 
 [node name="LeftHandAttachment3D" type="BoneAttachment3D" parent="Armature/Skeleton3D" index="2" unique_id=1140502552]
-transform = Transform3D(0.01319056, 0.7280011, -0.685449, 0.9995335, -0.02848509, -0.011018753, -0.027546637, -0.6849836, -0.72803724, 0.19790666, 0.3497948, -0.6195606)
+transform = Transform3D(0.0131905, 0.7280013, -0.685449, 0.9996277, -0.025972638, -0.00834845, -0.023880512, -0.6850834, -0.7280727, 0.1979067, 0.35225037, -0.6195076)
 bone_name = "LeftHand"
 bone_idx = 13
 
 [node name="LeftHandAttachmentMarker3D" type="Marker3D" parent="Armature/Skeleton3D/LeftHandAttachment3D" index="0" unique_id=1026191637]
 
 [node name="BackAttachment3D2" type="BoneAttachment3D" parent="Armature/Skeleton3D" index="3" unique_id=1166258344]
-transform = Transform3D(0.95105636, 0.04698231, -0.30542445, -5.2943826e-05, 0.98839915, 0.15187685, 0.3090168, -0.14442731, 0.9400258, -2.0194838e-28, 0.3365829, 0.049999937)
+transform = Transform3D(0.9510564, 0.046982322, -0.30542448, -0.001186341, 0.98892206, 0.14842811, 0.30901456, -0.14080119, 0.9405765, -2.0194838e-28, 0.33658284, 0.049999934)
 bone_name = "UperSpine"
 bone_idx = 8
 
@@ -264,6 +267,12 @@ settings/0/joints/1/limitation/rotation_offset = Quaternion(0, 0, -0.555, 1)
 settings/0/joints/2/rotation_axis = 3
 settings/0/joints/2/limitation = null
 
+[node name="BoneAttachment3D" type="BoneAttachment3D" parent="Armature/Skeleton3D" index="5" unique_id=1586821436]
+transform = Transform3D(0.9999999, 0, 0, 0, 0.9862537, -0.16523644, 0, 0.16523644, 0.9862537, -2.0194838e-28, 0.03814648, 5.9604645e-08)
+bone_name = "LowerSpine"
+bone_idx = 7
+override_pose = true
+
 [node name="AnimationTree" type="AnimationTree" parent="." index="2" unique_id=1582878350]
 tree_root = SubResource("AnimationNodeBlendTree_fok46")
 anim_player = NodePath("../AnimationPlayer")
@@ -274,5 +283,5 @@ anim_player = NodePath("../AnimationPlayer")
 "parameters/Transition Uper Half 2/transition_request" = ""
 "parameters/Transition Uper Half 2/current_index" = 3
 parameters/Blend2/blend_amount = 0.9
-"parameters/TimeScale Lower Half/scale" = 0.0
+"parameters/TimeScale Lower Half/scale" = 1.0
 "parameters/Blend Movment Direction/blend_amount" = 0.5

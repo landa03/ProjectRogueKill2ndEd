@@ -8,3 +8,5 @@ extends Node3D
 @export var right_hand_attachment : Marker3D
 @export var left_hand_ik : CCDIK3D
 @export var back_attachment : Marker3D
+
+@export var spine_turner_bone : BoneAttachment3D
