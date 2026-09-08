@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://dm2cdo2h67ea4" path="res://Player/player.gd" id="1_q3lat"]
 [ext_resource type="PackedScene" uid="uid://c2ambxwkvfm0x" path="res://Components/Health points/health_points.tscn" id="2_tok1r"]
 [ext_resource type="PackedScene" uid="uid://xii7367hqpah" path="res://Player/low_poly_dud.tscn" id="3_ddoul"]
-[ext_resource type="PackedScene" uid="uid://b65xibnyafbyg" path="res://Components/Character Skills/Movment/dash.tscn" id="4_ddoul"]
+[ext_resource type="PackedScene" uid="uid://b65xibnyafbyg" path="res://Components/Character Skills/Movment/Dash/dash.tscn" id="4_ddoul"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_tok1r"]
 
@@ -47,3 +47,4 @@ shape = SubResource("BoxShape3D_s3c3i")
 dash_speed = 300.0
 skill_owner = NodePath("..")
 skill_duration_wait_time = 0.1
+skill_cooldown_wait_time = 0.1

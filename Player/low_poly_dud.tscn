@@ -180,7 +180,7 @@ right_hand_attachment = NodePath("Armature/Skeleton3D/RightHandAttachment3D/Righ
 left_hand_ik = NodePath("Armature/Skeleton3D/LeftArmIK")
 back_attachment = NodePath("Armature/Skeleton3D/BackAttachment3D2/BackAttachmentMarker3D")
 
-[node name="Skeleton3D" parent="Armature" parent_id_path=PackedInt32Array(1622861820) index="0" unique_id=832995680]
+[node name="Skeleton3D" parent="Armature" parent_id_path=PackedInt32Array(441060399) index="0" unique_id=1041556885]
 bones/0/position = Vector3(0, 0.03814648, 0.3)
 bones/1/position = Vector3(0.1881973, 0.23721279, -1.0531121)
 bones/2/position = Vector3(-0.1881973, 0.23721279, -1.0531121)
@@ -192,8 +192,8 @@ bones/6/position = Vector3(0.018426424, 0.40724927, 0.5913223)
 bones/7/position = Vector3(-2.019484e-28, 0.29999998, 0)
 bones/7/rotation = Quaternion(0.7632944, 0, 0, 0.6460509)
 bones/7/scale = Vector3(1, 0.9999998, 0.9999998)
-bones/8/rotation = Quaternion(-0.15481548, -0.15643269, 0.00074531336, 0.97547966)
-bones/9/rotation = Quaternion(0.073414184, 0.15600175, 0.011627667, 0.9849562)
+bones/8/rotation = Quaternion(-0.15636435, -0.15643129, 0.0009937285, 0.9752325)
+bones/9/rotation = Quaternion(0.07497556, 0.1559831, 0.0118749635, 0.98483855)
 bones/10/rotation = Quaternion(0.6363981, -0.3074596, -0.44708064, -0.5482564)
 bones/11/rotation = Quaternion(-0.5873234, -0.2376381, -0.41061315, 0.6557258)
 bones/12/rotation = Quaternion(0.08839206, -0.045103267, -0.30370292, 0.94758487)
@@ -226,21 +226,21 @@ bones/38/rotation = Quaternion(0.77258813, 0.009521997, 0.035704847, 0.6338313)
 bones/39/position = Vector3(-0.018438207, 0.4072035, 0.5915374)
 
 [node name="RightHandAttachment3D" type="BoneAttachment3D" parent="Armature/Skeleton3D" index="1" unique_id=450251308]
-transform = Transform3D(0.05995792, 0.3170772, 0.946502, -0.9566791, -0.2523797, 0.14514983, 0.2849018, -0.91420186, 0.28820902, 0.42628545, 0.39550212, -0.32215995)
+transform = Transform3D(0.05995792, 0.3170772, 0.946502, -0.95576966, -0.2552819, 0.1460645, 0.28793874, -0.9133957, 0.28774655, 0.42628545, 0.39431983, -0.32234526)
 bone_name = "RightHand"
 bone_idx = 26
 
 [node name="RightHandAttachmentMarker3D" type="Marker3D" parent="Armature/Skeleton3D/RightHandAttachment3D" index="0" unique_id=204785854]
 
 [node name="LeftHandAttachment3D" type="BoneAttachment3D" parent="Armature/Skeleton3D" index="2" unique_id=1140502552]
-transform = Transform3D(0.0131905, 0.7280013, -0.685449, 0.9996277, -0.025972638, -0.00834845, -0.023880512, -0.6850834, -0.7280727, 0.1979067, 0.35225037, -0.6195076)
+transform = Transform3D(0.0131905, 0.7280013, -0.685449, 0.9995469, -0.028148323, -0.010660805, -0.027055152, -0.6849975, -0.72804254, 0.1979067, 0.3501239, -0.61955404)
 bone_name = "LeftHand"
 bone_idx = 13
 
 [node name="LeftHandAttachmentMarker3D" type="Marker3D" parent="Armature/Skeleton3D/LeftHandAttachment3D" index="0" unique_id=1026191637]
 
 [node name="BackAttachment3D2" type="BoneAttachment3D" parent="Armature/Skeleton3D" index="3" unique_id=1166258344]
-transform = Transform3D(0.9510564, 0.046982322, -0.30542448, -0.001186341, 0.98892206, 0.14842811, 0.30901456, -0.14080119, 0.9405765, -2.0194838e-28, 0.33658284, 0.049999934)
+transform = Transform3D(0.9510564, 0.046982322, -0.30542448, -0.00020489097, 0.98846996, 0.15141465, 0.30901673, -0.14394133, 0.9401004, -2.0194838e-28, 0.33658284, 0.049999934)
 bone_name = "UperSpine"
 bone_idx = 8
 
@@ -266,12 +266,6 @@ settings/0/joints/1/limitation/right_axis = 0
 settings/0/joints/1/limitation/rotation_offset = Quaternion(0, 0, -0.555, 1)
 settings/0/joints/2/rotation_axis = 3
 settings/0/joints/2/limitation = null
-
-[node name="BoneAttachment3D" type="BoneAttachment3D" parent="Armature/Skeleton3D" index="5" unique_id=1586821436]
-transform = Transform3D(0.9999999, 0, 0, 0, 0.9862537, -0.16523644, 0, 0.16523644, 0.9862537, -2.0194838e-28, 0.03814648, 5.9604645e-08)
-bone_name = "LowerSpine"
-bone_idx = 7
-override_pose = true
 
 [node name="AnimationTree" type="AnimationTree" parent="." index="2" unique_id=1582878350]
 tree_root = SubResource("AnimationNodeBlendTree_fok46")

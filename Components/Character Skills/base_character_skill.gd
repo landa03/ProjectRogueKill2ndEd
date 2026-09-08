@@ -7,6 +7,8 @@ signal skill_finished
 enum SkillCategory {UNKNOWN,MOVMENT}
 @export var skill_category : SkillCategory = SkillCategory.UNKNOWN
 
+#enum MoovmentState
+
 @export var cost_per_use : float = 1
 @export var cost_per_second : float = 0
 

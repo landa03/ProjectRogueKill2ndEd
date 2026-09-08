@@ -45,8 +45,12 @@ var is_mid_dash : bool = false
 @export var max_stamina : int = 5
 var curent_stamina : float = max_stamina
 
-@export var dash_skill : DashSkill
+enum MovmentState {UNKNOUN, IDLE, RUNING, DASHING, SLIDING, SLAMING, MID_AIR}
+var current_movment_state : MovmentState = MovmentState.IDLE
 
+@export var dash_skill : DashSkill
+@export var Slide_skill : CharacterSkill
+#@export var skill_type : CharacterSkill.SkillCategory
 
 
 
@@ -98,18 +102,24 @@ func play_animation_after_jump(anim_name: StringName):
 		"Jump":
 			character_visuals.character_animation_tree.set("parameters/Transition Lower Half/transition_request", "Falling")
 	#print(anim_name)
-
+#TODO
+func solve_movment_state(new_movment_state : MovmentState):
+	print(MovmentState.find_key(current_movment_state))
+	#CANCELA UN ESTADO AL INGRESAR UNO NUEVO, AL TERMINAR UN ESTADO CAMBIA A OTRO DEPENDIENDO DE LAS CONDICIONES	
+#	MOOVMENT STATE SULVA
+	current_movment_state = new_movment_state
+#	MOOVMENT STATE SULVA/
 func _physics_process(delta: float) -> void:
-
+	
 	if Input.is_action_just_pressed("interact"):
 		on_interaction()
-		print("interaction presed")
+		#print("interaction presed")
 	
 	if Input.is_action_just_pressed("swap_weapon"):
 		if weapon_inventory.size() > 0:
 			swap_weapon()
 			
-		print("swap weapon presed")
+		#print("swap weapon presed")
 	
 	if Input.is_action_just_pressed("held_item_action_1"):
 		if equipped_weapon != null :
@@ -142,6 +152,7 @@ func _physics_process(delta: float) -> void:
 	if direction != Vector3.ZERO:
 		#direction = direction.normalized()
 		direction = direction.rotated(self.up_direction, self.rotation.y).normalized()
+			
 #PLAYER MOOVMENT/ DIRECTION
 	
 	
@@ -156,6 +167,7 @@ func _physics_process(delta: float) -> void:
 		#target_velocity.z = lerpf(self.velocity.z ,direction.z * walking_speed, delta * air_controll)
 		target_velocity.x = velocity.x + direction.x * walking_speed * delta * air_controll
 		target_velocity.z = velocity.z + direction.z * walking_speed * delta * air_controll
+		
 	else :
 		target_velocity.y = 0
 		remaining_jumps = max_jumps

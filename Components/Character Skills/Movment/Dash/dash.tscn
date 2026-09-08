@@ -1,9 +1,9 @@
 [gd_scene format=3 uid="uid://b65xibnyafbyg"]
 
-[ext_resource type="Script" uid="uid://b21tr4uvc4eps" path="res://Components/Character Skills/Movment/dash.gd" id="1_d0h3a"]
+[ext_resource type="Script" uid="uid://b21tr4uvc4eps" path="res://Components/Character Skills/Movment/Dash/dash.gd" id="1_c8e7w"]
 
 [node name="Dash" type="Node" unique_id=1232227137 node_paths=PackedStringArray("skill_duration_timer", "skill_cooldown_timer")]
-script = ExtResource("1_d0h3a")
+script = ExtResource("1_c8e7w")
 dash_speed = 100.0
 skill_category = 1
 skill_duration_timer = NodePath("SkillDurationTimer")

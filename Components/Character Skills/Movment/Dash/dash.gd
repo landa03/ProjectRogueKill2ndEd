@@ -5,7 +5,6 @@ extends CharacterSkill
 var dash_direction: Vector3 = Vector3(0,0,-1)
 
 #TODO : la direccion no jala bien
-#func _ready():
 
 func _physics_process(delta: float) -> void:
 	if self.is_skill_active :
