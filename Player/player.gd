@@ -104,11 +104,22 @@ func play_animation_after_jump(anim_name: StringName):
 	#print(anim_name)
 #TODO
 func solve_movment_state(new_movment_state : MovmentState):
-	print(MovmentState.find_key(current_movment_state))
 	#CANCELA UN ESTADO AL INGRESAR UNO NUEVO, AL TERMINAR UN ESTADO CAMBIA A OTRO DEPENDIENDO DE LAS CONDICIONES	
-#	MOOVMENT STATE SULVA
+	print(MovmentState.find_key(current_movment_state))
 	current_movment_state = new_movment_state
-#	MOOVMENT STATE SULVA/
+	if  new_movment_state == MovmentState.UNKNOUN:
+		match Input.is_action_pressed("slide") and is_on_floor() and direction.length() < 0:
+			true and true:
+				new_movment_state = MovmentState.SLIDING
+			true and false:
+				new_movment_state = MovmentState.SLAMING
+			false and false:
+				new_movment_state = MovmentState.MID_AIR
+			false and true and true:
+				new_movment_state = MovmentState.RUNING
+			false and true and false:
+				new_movment_state = MovmentState.IDLE
+
 func _physics_process(delta: float) -> void:
 	
 	if Input.is_action_just_pressed("interact"):
