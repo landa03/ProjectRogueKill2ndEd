@@ -3,6 +3,7 @@ extends Node
 
 signal skill_activated
 signal skill_finished
+signal skill_not_available
 
 enum SkillCategory {UNKNOWN,MOVMENT}
 @export var skill_category : SkillCategory = SkillCategory.UNKNOWN
@@ -30,12 +31,15 @@ var current_use_charges : int = max_use_charges :
 @export var skill_duration_timer : Timer
 @export var skill_duration_wait_time : float :
 	set(new_value):
-		skill_duration_timer.wait_time = new_value
+		if skill_duration_timer:
+			skill_duration_timer.wait_time = new_value
+		print("del seter", skill_duration_timer)
 		skill_duration_wait_time = new_value
 @export var skill_cooldown_timer : Timer
 @export var skill_cooldown_wait_time : float :
 	set(new_value):
-		skill_cooldown_timer.wait_time = new_value
+		if skill_cooldown_timer:
+			skill_cooldown_timer.wait_time = new_value
 		skill_cooldown_wait_time = new_value
 #)timers
 
@@ -43,13 +47,18 @@ var is_skill_active : bool = false
 var is_skill_available : bool = true
 
 func _ready():
-	if not is_active_hold :
+	print("del ready", skill_duration_timer)
+	#if not is_active_hold :
+	if skill_duration_timer:
 		skill_duration_timer.timeout.connect(_on_skill_duration_timer_timeout)
-	skill_duration_timer.wait_time = skill_duration_wait_time
-	skill_cooldown_timer.timeout.connect(_on_skill_cooldown_timer_timeout)
-	skill_cooldown_timer.wait_time = skill_cooldown_wait_time
+		skill_duration_timer.wait_time = skill_duration_wait_time
+	if skill_cooldown_timer:
+		skill_cooldown_timer.timeout.connect(_on_skill_cooldown_timer_timeout)
+		skill_cooldown_timer.wait_time = skill_cooldown_wait_time
 
 func activate_skill():
+	if is_active_hold:
+		skill_duration_timer.start(0)
 	if is_skill_available:
 		current_use_charges -= 1
 		is_skill_active = true
@@ -58,11 +67,13 @@ func activate_skill():
 		skill_cooldown_timer.start()
 		#if current_use_charges <= 0 :
 			#is_skill_available = false
-			
+	else:
+		skill_not_available.emit()
 	
 #	phisics dont run
 func _on_skill_duration_timer_timeout():
 	is_skill_active = false
+	skill_finished.emit()
 
 func _on_skill_cooldown_timer_timeout():
 	if current_use_charges < max_use_charges :

@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://dr8170gfwl4ak"]
+
+[ext_resource type="Script" uid="uid://dhxq0e0lxy2l1" path="res://Components/Character Skills/Movment/Slide/slide.gd" id="1_5t7j1"]
+
+[node name="Slide" type="Node" unique_id=1232227137 node_paths=PackedStringArray("skill_duration_timer", "skill_cooldown_timer")]
+script = ExtResource("1_5t7j1")
+skill_category = 1
+skill_duration_timer = NodePath("SkillDurationTimer")
+skill_duration_wait_time = 0.1
+skill_cooldown_timer = NodePath("SkillCooldownTimer")
+skill_cooldown_wait_time = 0.1
+
+[node name="SkillDurationTimer" type="Timer" parent="." unique_id=1323959907]
+wait_time = 0.1
+one_shot = true
+
+[node name="SkillCooldownTimer" type="Timer" parent="." unique_id=387148827]
+wait_time = 0.1
+one_shot = true

@@ -7,6 +7,7 @@ var walking_speed: float = 0
 const ground_friction: float = 8
 
 #The downward acceleration when in the air, in meters per second squared.
+var is_afected_by_gravity : bool = true
 @export var fall_acceleration: float = 50
 @export var jump_strength: float = 20
 @export var max_jumps: int =  3
@@ -49,7 +50,8 @@ enum MovmentState {UNKNOUN, IDLE, RUNING, DASHING, SLIDING, SLAMING, MID_AIR}
 var current_movment_state : MovmentState = MovmentState.IDLE
 
 @export var dash_skill : DashSkill
-@export var Slide_skill : CharacterSkill
+@export var slam_skill : SlamSkill
+#@export var slide_skill : SlideSkill
 #@export var skill_type : CharacterSkill.SkillCategory
 
 
@@ -58,6 +60,13 @@ func _ready():
 	# Makes your mouse disappear from the screen
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	character_visuals.character_animation_tree.animation_finished.connect(play_animation_after_jump)
+	#dash_skill.skill_finished.connect(on_dash_skill_finished)
+	#dash_skill.skill_activated.connect(solve_movment_state.bind(MovmentState.DASHING))
+	#dash_skill.skill_finished.connect(solve_movment_state.bind(MovmentState.UNKNOUN))
+	slam_skill.skill_finished.connect(set_is_afected_by_gravity.bind(true))
+
+func set_is_afected_by_gravity(new_value : bool):
+	is_afected_by_gravity = new_value
 
 func on_interaction():
 	#if interaction_area.get_overlapping_bodies().has(Weapon):
@@ -103,22 +112,22 @@ func play_animation_after_jump(anim_name: StringName):
 			character_visuals.character_animation_tree.set("parameters/Transition Lower Half/transition_request", "Falling")
 	#print(anim_name)
 #TODO
-func solve_movment_state(new_movment_state : MovmentState):
-	#CANCELA UN ESTADO AL INGRESAR UNO NUEVO, AL TERMINAR UN ESTADO CAMBIA A OTRO DEPENDIENDO DE LAS CONDICIONES	
-	print(MovmentState.find_key(current_movment_state))
-	current_movment_state = new_movment_state
-	if  new_movment_state == MovmentState.UNKNOUN:
-		match Input.is_action_pressed("slide") and is_on_floor() and direction.length() < 0:
-			true and true:
-				new_movment_state = MovmentState.SLIDING
-			true and false:
-				new_movment_state = MovmentState.SLAMING
-			false and false:
-				new_movment_state = MovmentState.MID_AIR
-			false and true and true:
-				new_movment_state = MovmentState.RUNING
-			false and true and false:
-				new_movment_state = MovmentState.IDLE
+#func solve_movment_state(new_movment_state : MovmentState):
+	##CANCELA UN ESTADO AL INGRESAR UNO NUEVO, AL TERMINAR UN ESTADO CAMBIA A OTRO DEPENDIENDO DE LAS CONDICIONES	
+	#current_movment_state = new_movment_state
+	#if  new_movment_state == MovmentState.UNKNOUN:
+		#match Input.is_action_pressed("slide") and is_on_floor() and direction.length() < 0:
+			#true and true:
+				#new_movment_state = MovmentState.SLIDING
+			#true and false:
+				#new_movment_state = MovmentState.SLAMING
+			#false and false:
+				#new_movment_state = MovmentState.MID_AIR
+			#false and true and true:
+				#new_movment_state = MovmentState.RUNING
+			#false and true and false:
+				#new_movment_state = MovmentState.IDLE
+	#print(MovmentState.find_key(current_movment_state))
 
 func _physics_process(delta: float) -> void:
 	
@@ -140,8 +149,17 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("dash"):
 		dash_skill.dash_direction = direction
 		dash_skill.activate_skill()
+		#solve_movment_state(MovmentState.DASHING)
 		print("dash presed")
 	
+	if Input.is_action_pressed("slide"):
+		if is_on_floor():
+			pass
+		else:
+			slam_skill.activate_skill()
+			is_afected_by_gravity = false
+		print("slide/slam presed")
+		
 	if equipped_weapon != null :
 		#equipped_weapon.basis = Basis.from_euler(camera.global_rotation)
 		equipped_weapon.global_rotation = camera.global_rotation
@@ -151,7 +169,9 @@ func _physics_process(delta: float) -> void:
 		#else :
 			#character_visuals.left_hand_ik.deterministic = false
 			
-	
+	#if not dash_skill.is_skill_active:
+		#solve_movment_state(MovmentState.UNKNOUN)
+
 #PLAYER MOOVMENT/ DIRECTION
 	direction.x = Input.get_axis("move_left", "move_right")
 	#print(Input.get_axis("move_left", "move_right"))
@@ -172,7 +192,8 @@ func _physics_process(delta: float) -> void:
 	#target_velocity.z = direction.z * walking_speed
 	
 	if not is_on_floor():
-		target_velocity.y = target_velocity.y - (fall_acceleration * delta)
+		if is_afected_by_gravity:
+			target_velocity.y = target_velocity.y - (fall_acceleration * delta)
 		
 		#target_velocity.x = lerpf(self.velocity.x ,direction.x * walking_speed, delta * air_controll)
 		#target_velocity.z = lerpf(self.velocity.z ,direction.z * walking_speed, delta * air_controll)

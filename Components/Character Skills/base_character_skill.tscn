@@ -4,9 +4,12 @@
 
 [node name="BaseCharacterSkill" type="Node" unique_id=501221027 node_paths=PackedStringArray("skill_duration_timer", "skill_cooldown_timer")]
 script = ExtResource("1_u3tsa")
+skill_category = 1
+cost_per_use = 0.0
 skill_duration_timer = NodePath("SkillDurationTimer")
 skill_duration_wait_time = 0.1
 skill_cooldown_timer = NodePath("SkillCooldownTimer")
+skill_cooldown_wait_time = 0.1
 
 [node name="SkillDurationTimer" type="Timer" parent="." unique_id=1561869127]
 one_shot = true

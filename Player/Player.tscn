@@ -4,19 +4,22 @@
 [ext_resource type="PackedScene" uid="uid://c2ambxwkvfm0x" path="res://Components/Health points/health_points.tscn" id="2_tok1r"]
 [ext_resource type="PackedScene" uid="uid://xii7367hqpah" path="res://Player/low_poly_dud.tscn" id="3_ddoul"]
 [ext_resource type="PackedScene" uid="uid://b65xibnyafbyg" path="res://Components/Character Skills/Movment/Dash/dash.tscn" id="4_ddoul"]
+[ext_resource type="PackedScene" uid="uid://bqt0wr6jjr4u6" path="res://Components/Character Skills/Movment/Slam/slam.tscn" id="5_8g4oa"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_tok1r"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_s3c3i"]
 size = Vector3(1.8203125, 2.0675201, 2.3277588)
 
-[node name="Player" type="CharacterBody3D" unique_id=1031037784 node_paths=PackedStringArray("camera_pivot", "camera", "character_visuals", "interaction_area", "dash_skill") groups=["Ally"]]
+[node name="Player" type="CharacterBody3D" unique_id=1031037784 node_paths=PackedStringArray("camera_pivot", "camera", "character_visuals", "interaction_area", "dash_skill", "slam_skill") groups=["Ally"]]
 script = ExtResource("1_q3lat")
+jump_strength = 30.0
 camera_pivot = NodePath("CameraPivot")
 camera = NodePath("CameraPivot/Camera3D")
 character_visuals = NodePath("Pivot/LowPolyDud1_2")
 interaction_area = NodePath("InteractionArea3D")
 dash_skill = NodePath("Dash")
+slam_skill = NodePath("Slam")
 
 [node name="HealthPoints" parent="." unique_id=1016236729 instance=ExtResource("2_tok1r")]
 
@@ -48,3 +51,10 @@ dash_speed = 300.0
 skill_owner = NodePath("..")
 skill_duration_wait_time = 0.1
 skill_cooldown_wait_time = 0.1
+
+[node name="Slam" parent="." unique_id=1052851894 node_paths=PackedStringArray("skill_owner") instance=ExtResource("5_8g4oa")]
+slam_speed = -100.0
+cost_per_use = 0.0
+skill_owner = NodePath("..")
+is_active_hold = false
+skill_duration_wait_time = 0.1
