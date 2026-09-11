@@ -7,7 +7,7 @@ extends CharacterSkill
 #TODO : la direccion no jala bien
 
 func _physics_process(delta: float) -> void:
-	print(is_skill_active)
+	#print(is_skill_active)
 	if self.is_skill_active :
 		print("slam_speed = ", slam_speed)
 		self.skill_owner.velocity.z = 0

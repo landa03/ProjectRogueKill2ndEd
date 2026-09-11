@@ -144,21 +144,21 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("held_item_action_1"):
 		if equipped_weapon != null :
 			equipped_weapon.atak()
-		print("held_item_action_1 presed")
+		#print("held_item_action_1 presed")
 	
 	if Input.is_action_just_pressed("dash"):
 		dash_skill.dash_direction = direction
 		dash_skill.activate_skill()
 		#solve_movment_state(MovmentState.DASHING)
-		print("dash presed")
+		#print("dash presed")
 	
 	if Input.is_action_pressed("slide"):
 		if is_on_floor():
-			pass
+			pass #slide
 		else:
 			slam_skill.activate_skill()
 			is_afected_by_gravity = false
-		print("slide/slam presed")
+		#print("slide/slam presed")
 		
 	if equipped_weapon != null :
 		#equipped_weapon.basis = Basis.from_euler(camera.global_rotation)
@@ -207,7 +207,12 @@ func _physics_process(delta: float) -> void:
 		target_velocity.x = lerpf(self.velocity.x ,direction.x * walking_speed, delta * ground_friction)
 		target_velocity.z = lerpf(self.velocity.z ,direction.z * walking_speed, delta * ground_friction)
 
+#TODO : aser que al saltar interumpe el slam
 	if Input.is_action_just_pressed("jump") and remaining_jumps > 0:
+		print(slam_skill.is_skill_active)
+		if slam_skill.is_skill_active:
+			slam_skill.is_skill_available = false
+			slam_skill.is_skill_active = false
 		#target_velocity.y = target_velocity.y + jump_strength
 		target_velocity.y = jump_strength
 		remaining_jumps -= 1
