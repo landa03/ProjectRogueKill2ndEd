@@ -6,6 +6,7 @@
 script = ExtResource("1_c8e7w")
 dash_speed = 100.0
 skill_category = 1
+cost_per_use = 10.0
 skill_duration_timer = NodePath("SkillDurationTimer")
 skill_cooldown_timer = NodePath("SkillCooldownTimer")
 

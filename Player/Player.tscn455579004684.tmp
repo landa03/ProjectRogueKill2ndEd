@@ -15,11 +15,19 @@ size = Vector3(1.8203125, 2.0675201, 2.3277588)
 
 [node name="Player" type="CharacterBody3D" unique_id=1031037784 node_paths=PackedStringArray("camera_pivot", "camera", "character_visuals", "interaction_area", "dash_skill", "slam_skill", "slide_skill", "character_skills", "stamina_resource") groups=["Ally"]]
 script = ExtResource("1_q3lat")
+max_walking_speed = null
+air_controll = null
+air_controll_acceleration = null
+fall_acceleration = null
 jump_strength = 30.0
+max_jumps = null
+camera_rotation_sensitivity = null
 camera_pivot = NodePath("CameraPivot")
 camera = NodePath("CameraPivot/Camera3D")
+terminal_velocity = null
 character_visuals = NodePath("Pivot/LowPolyDud1_2")
 interaction_area = NodePath("InteractionArea3D")
+max_stamina = null
 dash_skill = NodePath("Dash")
 slam_skill = NodePath("Slam")
 slide_skill = NodePath("Slide")
@@ -59,15 +67,14 @@ skill_cooldown_wait_time = 0.1
 
 [node name="Slam" parent="." unique_id=1052851894 node_paths=PackedStringArray("skill_owner") instance=ExtResource("5_8g4oa")]
 slam_speed = -100.0
-max_use_charges = 0
+cost_per_use = 0.0
 skill_owner = NodePath("..")
 skill_duration_wait_time = 0.1
 
-[node name="Slide" parent="." unique_id=1695121388 node_paths=PackedStringArray("required_resource", "skill_owner") instance=ExtResource("6_6ysni")]
+[node name="Slide" parent="." unique_id=1695121388 node_paths=PackedStringArray("skill_owner") instance=ExtResource("6_6ysni")]
 slide_speed = 100.0
-cost_per_use = 10.0
-required_resource = NodePath("../Stamina")
 skill_owner = NodePath("..")
 
 [node name="Stamina" parent="." unique_id=1062796947 instance=ExtResource("7_vlldt")]
-max_resource_amount = 300.0
+max_resource_amount = 30.0
+change_rate = 5.0

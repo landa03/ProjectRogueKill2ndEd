@@ -42,45 +42,57 @@ var character_visual_rotation : float
 #		duration
 #	last direction input
 #	dash speed
-var is_mid_dash : bool = false
 @export var max_stamina : int = 5
 var curent_stamina : float = max_stamina
 
-enum MovmentState {UNKNOUN, IDLE, RUNING, DASHING, SLIDING, SLAMING, MID_AIR}
+enum MovmentState {UNKNOUN, IDLE, RUNING, DASHING, SLIDING, MID_AIR}
 var current_movment_state : MovmentState = MovmentState.IDLE
 
 @export var dash_skill : DashSkill
 @export var slam_skill : SlamSkill
-#@export var slide_skill : SlideSkill
-#@export var skill_type : CharacterSkill.SkillCategory
+@export var slide_skill : SlideSkill
+@export var character_skills : Array[CharacterSkill]
 
+@export var stamina_resource : CharacterResource
 
+var is_any_movment_skill_active : bool = false
 
 func _ready():
 	# Makes your mouse disappear from the screen
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	character_visuals.character_animation_tree.animation_finished.connect(play_animation_after_jump)
-	#dash_skill.skill_finished.connect(on_dash_skill_finished)
-	#dash_skill.skill_activated.connect(solve_movment_state.bind(MovmentState.DASHING))
-	#dash_skill.skill_finished.connect(solve_movment_state.bind(MovmentState.UNKNOUN))
+	slam_skill.skill_activated.connect(interupt_skills_from_category.bind(CharacterSkill.SkillCategory.MOVMENT, slam_skill))
+	slam_skill.skill_activated.connect(set_is_afected_by_gravity.bind(false))
 	slam_skill.skill_finished.connect(set_is_afected_by_gravity.bind(true))
+	
+	dash_skill.required_resource = stamina_resource
+	
+	for skill in character_skills:
+		if skill.skill_category == dash_skill.SkillCategory.MOVMENT:
+			skill.skill_activated.connect(set_is_any_movment_skill_active.bind(true))
+			skill.skill_finished.connect(set_is_any_movment_skill_active.bind(false))
+			
+	
+
+
+func set_is_any_movment_skill_active(new_value : bool):
+	is_any_movment_skill_active = new_value
+	#print(is_any_movment_skill_active)
+
+func interupt_skills_from_category(skill_category : CharacterSkill.SkillCategory, exeption : CharacterSkill):
+	for character_skill in character_skills:
+		if character_skill.skill_category == skill_category and not character_skill == exeption:
+			character_skill.is_skill_active = false
 
 func set_is_afected_by_gravity(new_value : bool):
 	is_afected_by_gravity = new_value
 
 func on_interaction():
-	#if interaction_area.get_overlapping_bodies().has(Weapon):
-		#weapon_inventory.append(interaction_area.get_overlapping_bodies().find(Weapon))
-	
 	for body in interaction_area.get_overlapping_bodies() :
 		print("is interactable? : ", body.is_in_group("Interactable"), ", ", "is weapon? : ", body.is_in_group("Weapon"))
 		if body.is_in_group("Interactable") :
 			if body.is_in_group("Weapon") :
-				
 				add_weapon_to_inventory(body)
-				#character_visuals.back_attachment.add_child(body)
-				
-		
 
 func add_weapon_to_inventory(weapon : Weapon) :
 	weapon_inventory.append(weapon)
@@ -111,25 +123,21 @@ func play_animation_after_jump(anim_name: StringName):
 		"Jump":
 			character_visuals.character_animation_tree.set("parameters/Transition Lower Half/transition_request", "Falling")
 	#print(anim_name)
-#TODO
-#func solve_movment_state(new_movment_state : MovmentState):
-	##CANCELA UN ESTADO AL INGRESAR UNO NUEVO, AL TERMINAR UN ESTADO CAMBIA A OTRO DEPENDIENDO DE LAS CONDICIONES	
-	#current_movment_state = new_movment_state
-	#if  new_movment_state == MovmentState.UNKNOUN:
-		#match Input.is_action_pressed("slide") and is_on_floor() and direction.length() < 0:
-			#true and true:
-				#new_movment_state = MovmentState.SLIDING
-			#true and false:
-				#new_movment_state = MovmentState.SLAMING
-			#false and false:
-				#new_movment_state = MovmentState.MID_AIR
-			#false and true and true:
-				#new_movment_state = MovmentState.RUNING
-			#false and true and false:
-				#new_movment_state = MovmentState.IDLE
-	#print(MovmentState.find_key(current_movment_state))
 
+func solve_movment_state(new_movment_state : MovmentState):
+	##CANCELA UN ESTADO AL INGRESAR UNO NUEVO, AL TERMINAR UN ESTADO CAMBIA A OTRO DEPENDIENDO DE LAS CONDICIONES	
+	if velocity.length() <= 1 and is_on_floor() and not is_any_movment_skill_active:
+		new_movment_state = MovmentState.IDLE
+	elif velocity.length() > 1 and is_on_floor() and not is_any_movment_skill_active:
+		new_movment_state = MovmentState.RUNING
+	elif velocity.length() >= 0 and not is_on_floor() and not is_any_movment_skill_active:
+		new_movment_state = MovmentState.MID_AIR
+	current_movment_state = new_movment_state
+	#print("current_movment_state = ", current_movment_state)
+	
 func _physics_process(delta: float) -> void:
+	if not is_any_movment_skill_active:
+		solve_movment_state(MovmentState.UNKNOUN)
 	
 	if Input.is_action_just_pressed("interact"):
 		on_interaction()
@@ -149,15 +157,31 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("dash"):
 		dash_skill.dash_direction = direction
 		dash_skill.activate_skill()
+		solve_movment_state(MovmentState.DASHING)
 		#solve_movment_state(MovmentState.DASHING)
 		#print("dash presed")
 	
-	if Input.is_action_pressed("slide"):
+#	TODO : mid slide on air = np slam
+#	TODO : slide initial speed impulse and consistant speed
+	#if Input.is_action_pressed("slide"):
+	if Input.is_action_just_pressed("slide"):
+			if is_on_floor():
+				slide_skill.slide_direction = direction
+				slide_skill.activate_skill(delta)
+				solve_movment_state(MovmentState.SLIDING)
+			else:
+				slam_skill.activate_skill(delta)
+	if Input.is_action_just_released("slide"):
 		if is_on_floor():
-			pass #slide
+			slide_skill.skill_finished.emit()
 		else:
-			slam_skill.activate_skill()
-			is_afected_by_gravity = false
+			slam_skill.skill_finished.emit()
+			
+		#if is_on_floor():
+			#pass #slide
+		#else:
+			#pass #slide
+			#is_afected_by_gravity = false
 		#print("slide/slam presed")
 		
 	if equipped_weapon != null :
@@ -209,7 +233,7 @@ func _physics_process(delta: float) -> void:
 
 #TODO : aser que al saltar interumpe el slam
 	if Input.is_action_just_pressed("jump") and remaining_jumps > 0:
-		print(slam_skill.is_skill_active)
+		#print(slam_skill.is_skill_active)
 		if slam_skill.is_skill_active:
 			slam_skill.is_skill_available = false
 			slam_skill.is_skill_active = false

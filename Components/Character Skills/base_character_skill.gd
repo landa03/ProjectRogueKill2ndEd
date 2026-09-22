@@ -11,7 +11,8 @@ enum SkillCategory {UNKNOWN,MOVMENT}
 #enum MoovmentState
 
 @export var cost_per_use : float = 1
-@export var cost_per_second : float = 0
+#@export var cost_per_second : float = 0
+@export var required_resource : CharacterResource
 
 @export var max_use_charges : int = 1
 var current_use_charges : int = max_use_charges :
@@ -55,25 +56,51 @@ func _ready():
 	if skill_cooldown_timer:
 		skill_cooldown_timer.timeout.connect(_on_skill_cooldown_timer_timeout)
 		skill_cooldown_timer.wait_time = skill_cooldown_wait_time
-
-func activate_skill():
+	skill_finished.connect(_on_skill_finished)
+	
 	if is_active_hold:
-		skill_duration_timer.start(0)
-	if is_skill_available:
-		current_use_charges -= 1
-		is_skill_active = true
-		skill_activated.emit()
-		skill_duration_timer.start()
-		skill_cooldown_timer.start()
+		skill_duration_timer.wait_time = 1
+		
+
+func activate_skill(delta:float = 1):
+#	WARNING:is_active_hold not working
+	if required_resource == null:
+		#if is_active_hold:
+			#skill_duration_timer.start(0)
+		if is_skill_available:
+			current_use_charges -= 1
+			is_skill_active = true
+			skill_activated.emit()
+			skill_duration_timer.start()
+			skill_cooldown_timer.start()
 		#if current_use_charges <= 0 :
 			#is_skill_available = false
+		else:
+			skill_not_available.emit()
 	else:
-		skill_not_available.emit()
+		if is_skill_available and required_resource.curent_resource_amount >= cost_per_use:
+			current_use_charges -= 1
+			is_skill_active = true
+			skill_activated.emit()
+			skill_duration_timer.start()
+			skill_cooldown_timer.start()
+			required_resource.curent_resource_amount -= cost_per_use
+		#if current_use_charges <= 0 :
+			#is_skill_available = false
+		else:
+			skill_not_available.emit()
 	
+func _on_skill_finished():
+	is_skill_active = false
+
 #	phisics dont run
 func _on_skill_duration_timer_timeout():
-	is_skill_active = false
-	skill_finished.emit()
+	if not is_active_hold:
+		skill_finished.emit()
+	elif is_skill_active:
+		skill_duration_timer.start(0)
+		required_resource.curent_resource_amount -= cost_per_use
+	
 
 func _on_skill_cooldown_timer_timeout():
 	if current_use_charges < max_use_charges :
