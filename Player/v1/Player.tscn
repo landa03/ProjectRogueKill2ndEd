@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://brcxr3vj4o027"]
 
-[ext_resource type="Script" uid="uid://dm2cdo2h67ea4" path="res://Player/player.gd" id="1_q3lat"]
+[ext_resource type="Script" uid="uid://dm2cdo2h67ea4" path="res://Player/v1/player.gd" id="1_q3lat"]
 [ext_resource type="PackedScene" uid="uid://c2ambxwkvfm0x" path="res://Components/Health points/health_points.tscn" id="2_tok1r"]
-[ext_resource type="PackedScene" uid="uid://xii7367hqpah" path="res://Player/low_poly_dud.tscn" id="3_ddoul"]
+[ext_resource type="PackedScene" uid="uid://xii7367hqpah" path="res://Player/v1/low_poly_dud.tscn" id="3_ddoul"]
 [ext_resource type="PackedScene" uid="uid://b65xibnyafbyg" path="res://Components/Character Skills/Movment/Dash/dash.tscn" id="4_ddoul"]
 [ext_resource type="PackedScene" uid="uid://bqt0wr6jjr4u6" path="res://Components/Character Skills/Movment/Slam/slam.tscn" id="5_8g4oa"]
 [ext_resource type="PackedScene" uid="uid://dr8170gfwl4ak" path="res://Components/Character Skills/Movment/Slide/slide.tscn" id="6_6ysni"]
@@ -57,9 +57,9 @@ skill_owner = NodePath("..")
 skill_duration_wait_time = 0.1
 skill_cooldown_wait_time = 0.1
 
-[node name="Slam" parent="." unique_id=1052851894 node_paths=PackedStringArray("skill_owner") instance=ExtResource("5_8g4oa")]
+[node name="Slam" parent="." unique_id=1052851894 node_paths=PackedStringArray("required_resource", "skill_owner") instance=ExtResource("5_8g4oa")]
 slam_speed = -100.0
-max_use_charges = 0
+required_resource = NodePath("../Stamina")
 skill_owner = NodePath("..")
 skill_duration_wait_time = 0.1
 
@@ -71,3 +71,4 @@ skill_owner = NodePath("..")
 
 [node name="Stamina" parent="." unique_id=1062796947 instance=ExtResource("7_vlldt")]
 max_resource_amount = 300.0
+change_rate = 2.0

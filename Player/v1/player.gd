@@ -77,6 +77,7 @@ func _ready():
 
 func set_is_any_movment_skill_active(new_value : bool):
 	is_any_movment_skill_active = new_value
+	stamina_resource.should_recharge = not new_value
 	#print(is_any_movment_skill_active)
 
 func interupt_skills_from_category(skill_category : CharacterSkill.SkillCategory, exeption : CharacterSkill):
@@ -172,11 +173,11 @@ func _physics_process(delta: float) -> void:
 			else:
 				slam_skill.activate_skill(delta)
 	if Input.is_action_just_released("slide"):
+		print("awdawd")
 		if is_on_floor():
 			slide_skill.skill_finished.emit()
 		else:
 			slam_skill.skill_finished.emit()
-			
 		#if is_on_floor():
 			#pass #slide
 		#else:

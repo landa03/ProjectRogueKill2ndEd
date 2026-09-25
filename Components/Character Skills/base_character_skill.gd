@@ -34,7 +34,7 @@ var current_use_charges : int = max_use_charges :
 	set(new_value):
 		if skill_duration_timer:
 			skill_duration_timer.wait_time = new_value
-		print("del seter", skill_duration_timer)
+		#print("del seter", skill_duration_timer)
 		skill_duration_wait_time = new_value
 @export var skill_cooldown_timer : Timer
 @export var skill_cooldown_wait_time : float :
@@ -48,7 +48,7 @@ var is_skill_active : bool = false
 var is_skill_available : bool = true
 
 func _ready():
-	print("del ready", skill_duration_timer)
+	#print("del ready", skill_duration_timer)
 	#if not is_active_hold :
 	if skill_duration_timer:
 		skill_duration_timer.timeout.connect(_on_skill_duration_timer_timeout)
@@ -57,9 +57,11 @@ func _ready():
 		skill_cooldown_timer.timeout.connect(_on_skill_cooldown_timer_timeout)
 		skill_cooldown_timer.wait_time = skill_cooldown_wait_time
 	skill_finished.connect(_on_skill_finished)
-	
+	print(self.name, "skill_finished.is_connected", " = ", skill_finished.is_connected(_on_skill_finished))
 	if is_active_hold:
 		skill_duration_timer.wait_time = 1
+		#skill_duration_timer.wait_time = 0.5
+		#cost_per_use = cost_per_use / 2
 		
 
 func activate_skill(delta:float = 1):
@@ -84,22 +86,28 @@ func activate_skill(delta:float = 1):
 			skill_activated.emit()
 			skill_duration_timer.start()
 			skill_cooldown_timer.start()
-			required_resource.curent_resource_amount -= cost_per_use
+			#required_resource.curent_resource_amount -= cost_per_use
+			required_resource.resource_amount_changed.emit(required_resource.curent_resource_amount, required_resource.curent_resource_amount - cost_per_use)
 		#if current_use_charges <= 0 :
 			#is_skill_available = false
 		else:
 			skill_not_available.emit()
 	
+	
 func _on_skill_finished():
 	is_skill_active = false
 
-#	phisics dont run
+
 func _on_skill_duration_timer_timeout():
-	if not is_active_hold:
+	if not is_active_hold and is_skill_active:
 		skill_finished.emit()
-	elif is_skill_active:
-		skill_duration_timer.start(0)
-		required_resource.curent_resource_amount -= cost_per_use
+	elif is_active_hold and is_skill_active:
+		if required_resource == null:
+			activate_skill()
+		elif required_resource.curent_resource_amount >= cost_per_use:
+			activate_skill()
+		elif required_resource.curent_resource_amount < cost_per_use:
+			skill_finished.emit()
 	
 
 func _on_skill_cooldown_timer_timeout():
