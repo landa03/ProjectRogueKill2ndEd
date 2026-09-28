@@ -23,9 +23,11 @@ var current_use_charges : int = max_use_charges :
 		else:
 			is_skill_available = false
 
-@export var skill_owner : CharacterBody3D
+#@export var skill_owner : CharacterBody3D
+@export var skill_owner : RigidBody3D
 
 @export var is_active_hold : bool = false
+var is_cooldown_available: bool = true #TODO : implement
 
 #timers(
 @export_group("Skill Timers")

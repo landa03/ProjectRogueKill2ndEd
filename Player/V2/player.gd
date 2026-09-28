@@ -17,14 +17,20 @@ func _ready() -> void:
 	print("poop ", body_entered.is_connected(_on_body_entered), " ", contact_monitor)
 	#pass
 	ground_collision.body_entered.connect(_on_ground_collision_body_entered)
+	ground_collision.body_exited.connect(_on_ground_collision_body_exited)
 	
 
+func _on_ground_collision_body_exited(body:Node):
+	gravity_scale = 3
+	#print(gravity_scale)
+
 func _on_ground_collision_body_entered(body:Node):
-	print(body)
+	gravity_scale = 0.5
+	#print(gravity_scale)
 
 func _on_body_entered(body:Node) :
 	#ray_cast_downwards.target_position
-	print("")
+	print("body")
 	#if is_zero_approx(linear_velocity.y):
 		#print("bonck")
 	#print(ray_cast_downwards.target_position)

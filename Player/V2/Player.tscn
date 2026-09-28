@@ -1,6 +1,9 @@
 [gd_scene format=3 uid="uid://dccrmgi3x1i4e"]
 
 [ext_resource type="Script" uid="uid://1nx1ymbh0xaq" path="res://Player/V2/player.gd" id="1_otoor"]
+[ext_resource type="PackedScene" uid="uid://b65xibnyafbyg" path="res://Components/Character Skills/Movment/Dash/dash.tscn" id="2_16hyc"]
+[ext_resource type="PackedScene" uid="uid://bqt0wr6jjr4u6" path="res://Components/Character Skills/Movment/Slam/slam.tscn" id="3_1y287"]
+[ext_resource type="PackedScene" uid="uid://dr8170gfwl4ak" path="res://Components/Character Skills/Movment/Slide/slide.tscn" id="4_yxbqs"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_s3c3i"]
 
@@ -12,6 +15,7 @@ radius = 0.2
 
 [node name="Player" type="RigidBody3D" unique_id=1677145751 node_paths=PackedStringArray("ground_collision")]
 collision_layer = 2
+gravity_scale = 3.0
 lock_rotation = true
 contact_monitor = true
 max_contacts_reported = 10
@@ -34,3 +38,9 @@ shape = SubResource("CylinderShape3D_s3c3i")
 
 [node name="Camera3D" type="Camera3D" parent="." unique_id=232152764]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5219159, 2.3545394, 3.571763)
+
+[node name="Dash" parent="." unique_id=1232227137 instance=ExtResource("2_16hyc")]
+
+[node name="Slam" parent="." unique_id=1159101649 instance=ExtResource("3_1y287")]
+
+[node name="Slide" parent="." unique_id=1296251799 instance=ExtResource("4_yxbqs")]
