@@ -59,8 +59,11 @@ skill_cooldown_wait_time = 0.1
 
 [node name="Slam" parent="." unique_id=1052851894 node_paths=PackedStringArray("required_resource", "skill_owner") instance=ExtResource("5_8g4oa")]
 slam_speed = -100.0
+cost_per_use = null
 required_resource = NodePath("../Stamina")
+max_use_charges = null
 skill_owner = NodePath("..")
+is_cooldown_available = null
 skill_duration_wait_time = 0.1
 
 [node name="Slide" parent="." unique_id=1695121388 node_paths=PackedStringArray("required_resource", "skill_owner") instance=ExtResource("6_6ysni")]

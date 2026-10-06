@@ -2,40 +2,31 @@
 
 [ext_resource type="Script" uid="uid://1nx1ymbh0xaq" path="res://Player/V2/playerV2.gd" id="1_otoor"]
 [ext_resource type="PackedScene" uid="uid://ngtrgkdsuu31" path="res://Components/CharacterResource/CharacterResource.tscn" id="2_cqbqy"]
-[ext_resource type="PackedScene" uid="uid://xii7367hqpah" path="res://Player/v1/low_poly_dud.tscn" id="2_hymar"]
 [ext_resource type="PackedScene" uid="uid://d3lro6wfyjwaa" path="res://Components/Character Skills/Movment/Jump/jump.tscn" id="3_em7ct"]
 [ext_resource type="PackedScene" uid="uid://b65xibnyafbyg" path="res://Components/Character Skills/Movment/Dash/dash.tscn" id="4_16hyc"]
-[ext_resource type="PackedScene" uid="uid://bqt0wr6jjr4u6" path="res://Components/Character Skills/Movment/Slam/slam.tscn" id="5_yxbqs"]
-[ext_resource type="PackedScene" uid="uid://dr8170gfwl4ak" path="res://Components/Character Skills/Movment/Slide/slide.tscn" id="6_hymar"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_s3c3i"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_s3c3i"]
-radius = 0.25
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_s3c3i"]
 height = 0.15
 radius = 0.2
 
-[node name="Player" type="RigidBody3D" unique_id=1677145751 node_paths=PackedStringArray("ground_collision", "camera_pivot", "jump_skill", "dash_skill", "slide_skill", "slam_skill")]
+[node name="Player" type="RigidBody3D" unique_id=1677145751 node_paths=PackedStringArray("ground_collision", "camera_pivot", "jump_skill", "dash_skill")]
 collision_layer = 2
 gravity_scale = 3.0
 lock_rotation = true
 contact_monitor = true
-max_contacts_reported = 50
+max_contacts_reported = 10
 script = ExtResource("1_otoor")
 ground_collision = NodePath("GroundCollision")
 camera_pivot = NodePath("CameraPivot")
 jump_skill = NodePath("Jump")
 dash_skill = NodePath("Dash")
-slide_skill = NodePath("Slide")
-slam_skill = NodePath("Slam")
-
-[node name="LowPolyDud1_2" parent="." unique_id=1577442555 instance=ExtResource("2_hymar")]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1259150285]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-visible = false
 mesh = SubResource("CapsuleMesh_s3c3i")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=746030963]
@@ -63,16 +54,7 @@ is_cooldown_available = false
 skill_duration_wait_time = 0.1
 skill_cooldown_wait_time = 0.1
 
-[node name="Dash" parent="." unique_id=1232227137 node_paths=PackedStringArray("jump_skill", "skill_owner") instance=ExtResource("4_16hyc")]
+[node name="Dash" parent="." unique_id=1232227137 node_paths=PackedStringArray("skill_owner") instance=ExtResource("4_16hyc")]
 dash_speed = 50.0
-dash_damp = 10.0
-jump_skill = NodePath("../Jump")
 skill_owner = NodePath("..")
-skill_duration_wait_time = 0.5
-
-[node name="Slam" parent="." unique_id=1518465415 node_paths=PackedStringArray("skill_owner") instance=ExtResource("5_yxbqs")]
-skill_owner = NodePath("..")
-skill_duration_wait_time = 0.0
-
-[node name="Slide" parent="." unique_id=296901134 node_paths=PackedStringArray("skill_owner") instance=ExtResource("6_hymar")]
-skill_owner = NodePath("..")
+skill_duration_wait_time = 1.0

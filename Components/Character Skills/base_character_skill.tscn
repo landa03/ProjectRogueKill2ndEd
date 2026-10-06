@@ -6,6 +6,7 @@
 script = ExtResource("1_u3tsa")
 skill_category = 1
 cost_per_use = 0.0
+is_cooldown_available = false
 skill_duration_timer = NodePath("SkillDurationTimer")
 skill_duration_wait_time = 0.1
 skill_cooldown_timer = NodePath("SkillCooldownTimer")

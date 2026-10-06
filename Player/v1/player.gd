@@ -296,7 +296,7 @@ func _physics_process(delta: float) -> void:
 
 #func _process(delta: float) -> void:
 	#print(direction)
-
+#
 func _input(event):
 	#print(event is InputEventMouseMotion)
 	if event is InputEventMouseMotion:

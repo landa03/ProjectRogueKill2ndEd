@@ -4,12 +4,12 @@
 
 [node name="Slide" type="Node" unique_id=1232227137 node_paths=PackedStringArray("skill_duration_timer", "skill_cooldown_timer")]
 script = ExtResource("1_5t7j1")
+slide_speed = 50.0
 skill_category = 1
+max_use_charges = 1
 is_active_hold = true
 skill_duration_timer = NodePath("SkillDurationTimer")
-skill_duration_wait_time = 0.1
 skill_cooldown_timer = NodePath("SkillCooldownTimer")
-skill_cooldown_wait_time = 0.1
 
 [node name="SkillDurationTimer" type="Timer" parent="." unique_id=1323959907]
 wait_time = 0.1
