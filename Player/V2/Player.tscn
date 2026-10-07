@@ -63,16 +63,19 @@ is_cooldown_available = false
 skill_duration_wait_time = 0.1
 skill_cooldown_wait_time = 0.1
 
-[node name="Dash" parent="." unique_id=1232227137 node_paths=PackedStringArray("jump_skill", "skill_owner") instance=ExtResource("4_16hyc")]
+[node name="Dash" parent="." unique_id=1232227137 node_paths=PackedStringArray("jump_skill", "skill_instance", "skill_owner") instance=ExtResource("4_16hyc")]
 dash_speed = 50.0
 dash_damp = 10.0
 jump_skill = NodePath("../Jump")
+skill_instance = NodePath(".")
 skill_owner = NodePath("..")
 skill_duration_wait_time = 0.5
 
-[node name="Slam" parent="." unique_id=1518465415 node_paths=PackedStringArray("skill_owner") instance=ExtResource("5_yxbqs")]
+[node name="Slam" parent="." unique_id=1518465415 node_paths=PackedStringArray("skill_instance", "skill_owner") instance=ExtResource("5_yxbqs")]
+skill_instance = NodePath(".")
 skill_owner = NodePath("..")
 skill_duration_wait_time = 0.0
 
-[node name="Slide" parent="." unique_id=296901134 node_paths=PackedStringArray("skill_owner") instance=ExtResource("6_hymar")]
+[node name="Slide" parent="." unique_id=296901134 node_paths=PackedStringArray("skill_instance", "skill_owner") instance=ExtResource("6_hymar")]
+skill_instance = NodePath(".")
 skill_owner = NodePath("..")

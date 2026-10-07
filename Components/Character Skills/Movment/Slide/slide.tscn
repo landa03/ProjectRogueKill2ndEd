@@ -2,9 +2,10 @@
 
 [ext_resource type="Script" uid="uid://dhxq0e0lxy2l1" path="res://Components/Character Skills/Movment/Slide/slide.gd" id="1_5t7j1"]
 
-[node name="Slide" type="Node" unique_id=1232227137 node_paths=PackedStringArray("skill_duration_timer", "skill_cooldown_timer")]
+[node name="Slide" type="Node" unique_id=1232227137 node_paths=PackedStringArray("skill_instance", "skill_duration_timer", "skill_cooldown_timer")]
 script = ExtResource("1_5t7j1")
 slide_speed = 50.0
+skill_instance = NodePath(".")
 skill_category = 1
 max_use_charges = 1
 is_active_hold = true

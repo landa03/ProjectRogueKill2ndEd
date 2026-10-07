@@ -15,8 +15,10 @@ var move_direction : Vector3
 @export var ground_collision: Area3D
 var ground_collision_bodies_inside: int = 0
 var is_on_floor: bool = true
-
-@export var camera_rotation_sensitivity: float = 0.001
+##MOTION * SENSITIVITY
+@export var camera_rotation_mouse_sensitivity: float = 0.001
+##MOTION * SENSITIVITY
+@export var camera_rotation_joypad_sensitivity: float = 0.05
 @export var camera_pivot: Node3D
 
 @export var character_visuals : CharacterVisuals
@@ -37,7 +39,7 @@ func _ready() -> void:
 	#body_entered.connect(_on_body_entered)
 	#print("poop ", body_entered.is_connected(_on_body_entered), " ", contact_monitor)
 	#pass
-	ground_collision
+	#ground_collision
 	ground_collision.body_entered.connect(_on_ground_collision_body_entered)
 	ground_collision.body_exited.connect(_on_ground_collision_body_exited)
 	
@@ -53,17 +55,17 @@ func _on_ground_collision_body_exited(body:Node):
 	if ground_collision_bodies_inside < 0:
 		ground_collision_bodies_inside = 0
 	if ground_collision_bodies_inside < 1:
-		print("is of ground")
+		#print("is of ground")
 		gravity_scale = 3
 		curent_horizontal_linear_damp = 0
 		is_on_floor = false
-	print("is_on_floor = ", is_on_floor)
-	print("ground_collision_bodies_inside = ", ground_collision_bodies_inside)
+	#print("is_on_floor = ", is_on_floor)
+	#print("ground_collision_bodies_inside = ", ground_collision_bodies_inside)
 
 func _on_ground_collision_body_entered(body:Node):
 	ground_collision_bodies_inside = ground_collision_bodies_inside + 1
 	if ground_collision_bodies_inside > 0:
-		print("is on ground")
+		#print("is on ground")
 		gravity_scale = 0.5
 		linear_velocity.y = 0
 		#print("ground colition = ", body)
@@ -72,8 +74,8 @@ func _on_ground_collision_body_entered(body:Node):
 		is_on_floor = true
 		if slam_skill.is_skill_active:
 				slam_skill.skill_finished.emit()
-	print("is_on_floor = ", is_on_floor)
-	print("ground_collision_bodies_inside = ", ground_collision_bodies_inside)
+	#print("is_on_floor = ", is_on_floor)
+	#print("ground_collision_bodies_inside = ", ground_collision_bodies_inside)
 
 #func _on_body_entered(body:Node) :
 	#print("body")
@@ -123,8 +125,7 @@ func _physics_process(delta: float) -> void:
 			move_direction.z = clamp(move_direction.z, -movemnt_speed, 0)
 		if linear_velocity.z < -movemnt_speed:
 			move_direction.z = clamp(move_direction.z, 0, movemnt_speed)
-	#else:
-		#curent_horizontal_linear_damp = horizontal_linear_damp
+
 		
 		#self.apply_central_force(Vector3(move_direction.x * movemnt_acceleration,0,move_direction.y * movemnt_acceleration).rotated(Vector3(0,1,0), camera_pivot.rotation.y))
 		apply_central_force(Vector3(move_direction.x * movemnt_acceleration,0,move_direction.z * movemnt_acceleration))
@@ -165,9 +166,12 @@ func _physics_process(delta: float) -> void:
 		if slam_skill.is_skill_active:
 			slam_skill.skill_finished.emit()
 			
-	
+#	CAMERA ROTATION BY JOIPAD MOTION/
+	camera_pivot.rotation += Vector3(Input.get_axis("look_down", "look_up") * camera_rotation_joypad_sensitivity, Input.get_axis("look_right", "look_left") * camera_rotation_joypad_sensitivity, 0)
+#	/CAMERA ROTATION BY JOIPAD MOTION
 
 #TODO: fuking basis >:(
 func _input(event):
+	#print(event)
 	if event is InputEventMouseMotion:
-		camera_pivot.rotation += Vector3(-event.relative.y * camera_rotation_sensitivity, -event.relative.x * camera_rotation_sensitivity, 0)
+		camera_pivot.rotation += Vector3(-event.relative.y * camera_rotation_mouse_sensitivity, -event.relative.x * camera_rotation_mouse_sensitivity, 0)

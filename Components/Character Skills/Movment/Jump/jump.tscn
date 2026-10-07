@@ -2,8 +2,9 @@
 
 [ext_resource type="Script" uid="uid://chm8l3ra70pg3" path="res://Components/Character Skills/Movment/Jump/jump.gd" id="1_a2jx2"]
 
-[node name="Jump" type="Node" unique_id=370190519 node_paths=PackedStringArray("skill_duration_timer", "skill_cooldown_timer")]
+[node name="Jump" type="Node" unique_id=370190519 node_paths=PackedStringArray("skill_instance", "skill_duration_timer", "skill_cooldown_timer")]
 script = ExtResource("1_a2jx2")
+skill_instance = NodePath(".")
 skill_category = 1
 skill_duration_timer = NodePath("SkillDurationTimer")
 skill_cooldown_timer = NodePath("SkillCooldownTimer")

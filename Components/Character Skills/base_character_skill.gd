@@ -74,7 +74,7 @@ func skill_ready():
 	if skill_cooldown_timer:
 		skill_cooldown_timer.timeout.connect(_on_skill_cooldown_timer_timeout)
 		skill_cooldown_timer.wait_time = skill_cooldown_wait_time
-	skill_finished.connect(_on_skill_finished)
+	skill_finished.connect(_on_skill_finished.bind(skill_instance))
 	print(self.name, "_skill_finished.is_connected", " = ", skill_finished.is_connected(_on_skill_finished))
 	if is_active_hold:
 		skill_duration_timer.wait_time = 1
@@ -123,6 +123,7 @@ func activate_skill(delta:float = 1):
 	
 	
 func _on_skill_finished(instance: CharacterSkill):
+	print("is ", skill_instance, " is equal to ", self," = ", skill_instance == self)
 	if instance == skill_instance:
 		is_skill_active = false
 
