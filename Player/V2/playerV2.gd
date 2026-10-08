@@ -48,7 +48,10 @@ func interupt_skills_from_category(skill_category : CharacterSkill.SkillCategory
 	for character_skill in character_skills:
 		if character_skill.skill_category == skill_category and not character_skill == exeption:
 			character_skill.is_skill_active = false
-			character_skill.skill_finished.emit()
+			#character_skill.skill_finished.emit()
+			if character_skill.skill_finished_conected_callable:
+				character_skill.skill_finished_conected_callable.call()
+			character_skill._on_skill_finished()
 
 func _on_ground_collision_body_exited(body:Node):
 	ground_collision_bodies_inside = ground_collision_bodies_inside - 1
@@ -73,7 +76,11 @@ func _on_ground_collision_body_entered(body:Node):
 		jump_skill.current_use_charges = jump_skill.max_use_charges
 		is_on_floor = true
 		if slam_skill.is_skill_active:
-				slam_skill.skill_finished.emit()
+				#slam_skill.skill_finished.emit()
+				if slam_skill.skill_finished_conected_callable:
+					slam_skill.skill_finished_conected_callable.call()
+				#slam_skill.skill_finished.emit()
+				
 	#print("is_on_floor = ", is_on_floor)
 	#print("ground_collision_bodies_inside = ", ground_collision_bodies_inside)
 

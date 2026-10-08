@@ -10,12 +10,13 @@ extends CharacterSkill
 
 func _ready():
 	skill_ready()
-	skill_activated.connect(_on_skill_activated)
+	skill_activated_conected_callable = _on_skill_activated
+	#skill_activated.connect(_on_skill_activated)
 	#skill_finished.disconnect(_on_dash_skill_finished)
 
-func _on_skill_activated(skill_instance: CharacterSkill) -> void:
+#func _on_skill_activated(skill_instance: CharacterSkill) -> void:
+func _on_skill_activated() -> void:
 	print(self, "activated")
 	#print(self.current_use_charges)
 	#current_use_charges -= 1
-	if skill_instance == self:
-		skill_owner.apply_central_impulse(Vector3(0,jump_strength,0))
+	skill_owner.apply_central_impulse(Vector3(0,jump_strength,0))

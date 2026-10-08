@@ -24,7 +24,13 @@ lock_rotation = true
 contact_monitor = true
 max_contacts_reported = 50
 script = ExtResource("1_otoor")
+movemnt_speed = null
+movemnt_acceleration = null
+horizontal_linear_damp = null
+terminal_velocity = null
 ground_collision = NodePath("GroundCollision")
+camera_rotation_mouse_sensitivity = null
+camera_rotation_joypad_sensitivity = null
 camera_pivot = NodePath("CameraPivot")
 jump_skill = NodePath("Jump")
 dash_skill = NodePath("Dash")
@@ -58,19 +64,34 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5219159, 0.3545394, 3.57176
 
 [node name="Jump" parent="." unique_id=370190519 node_paths=PackedStringArray("skill_owner") instance=ExtResource("3_em7ct")]
 jump_strength = 30.0
+cost_per_use = null
+max_use_charges = null
 skill_owner = NodePath("..")
+is_active_hold = null
 is_cooldown_available = false
 skill_duration_wait_time = 0.1
 skill_cooldown_wait_time = 0.1
 
 [node name="Dash" parent="." unique_id=1232227137 node_paths=PackedStringArray("skill_owner") instance=ExtResource("4_16hyc")]
-dash_speed = 50.0
+dash_speed = null
 dash_damp = 10.0
+max_use_charges = null
 skill_owner = NodePath("..")
+is_active_hold = null
+is_cooldown_available = null
+skill_duration_wait_time = 0.5
 
 [node name="Slam" parent="." unique_id=1518465415 node_paths=PackedStringArray("skill_owner") instance=ExtResource("5_yxbqs")]
+slam_speed = null
+cost_per_use = null
+max_use_charges = null
 skill_owner = NodePath("..")
-skill_duration_wait_time = 0.0
+is_cooldown_available = null
+skill_duration_wait_time = null
 
 [node name="Slide" parent="." unique_id=296901134 node_paths=PackedStringArray("skill_owner") instance=ExtResource("6_hymar")]
+cost_per_use = null
 skill_owner = NodePath("..")
+is_cooldown_available = null
+skill_duration_wait_time = null
+skill_cooldown_wait_time = null

@@ -7,14 +7,20 @@ extends CharacterSkill
 var dash_direction: Vector3 = Vector3(0,0,-1)
 #TODO : la direccion no jala bien
 #@export var jump_skill: JumpSkill
+#var timer : float = 0.0
+#var timer_wait_time : float = 0.5
+
 
 func _ready() -> void:
 	skill_ready()
+	print(skill_duration_wait_time)
 	#skill_finished.connect(_on_dash_skill_finished)
 
 func _physics_process(delta: float) -> void:
+	skill_physics_process(delta)
 	if is_skill_active :
 		skill_owner.linear_velocity = dash_direction * dash_speed
+		#print(skill_duration_wait_time)
 
 #func _on_dash_skill_finished(skill_instance: CharacterSkill):
 	#pass
