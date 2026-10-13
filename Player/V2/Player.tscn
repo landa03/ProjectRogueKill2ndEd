@@ -17,7 +17,7 @@ radius = 0.25
 height = 0.15
 radius = 0.2
 
-[node name="Player" type="RigidBody3D" unique_id=1677145751 node_paths=PackedStringArray("ground_collision", "camera_pivot", "jump_skill", "dash_skill", "slide_skill", "slam_skill")]
+[node name="Player" type="RigidBody3D" unique_id=1677145751 node_paths=PackedStringArray("ground_collision", "camera_pivot", "character_visuals", "jump_skill", "dash_skill", "slide_skill", "slam_skill")]
 collision_layer = 2
 gravity_scale = 3.0
 lock_rotation = true
@@ -26,6 +26,7 @@ max_contacts_reported = 50
 script = ExtResource("1_otoor")
 ground_collision = NodePath("GroundCollision")
 camera_pivot = NodePath("CameraPivot")
+character_visuals = NodePath("LowPolyDud1_2")
 jump_skill = NodePath("Jump")
 dash_skill = NodePath("Dash")
 slide_skill = NodePath("Slide")
@@ -53,6 +54,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
 
 [node name="Camera3D" type="Camera3D" parent="CameraPivot" unique_id=232152764]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5219159, 0.3545394, 3.571763)
+current = true
 
 [node name="Stamina" parent="." unique_id=1062796947 instance=ExtResource("2_cqbqy")]
 change_rate = 10.0

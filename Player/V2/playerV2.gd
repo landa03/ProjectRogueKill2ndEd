@@ -22,6 +22,12 @@ var is_on_floor: bool = true
 @export var camera_pivot: Node3D
 
 @export var character_visuals : CharacterVisuals
+##The weight value in the rotations lerp, lerp(character_rotation, camera_rotation, value)
+@export var character_visuals_rotation_weight: float = 0.1
+
+var character_visual_rotation : float
+var moovment_direction_blend_amount : float
+
 
 @export var jump_skill: JumpSkill
 @export var dash_skill: DashSkill
@@ -96,8 +102,37 @@ func _physics_process(delta: float) -> void:
 	#print(linear_velocity)
 	#print(linear_damp)
 	
-#	PLAYER ROTATE TO CAMERA DIRECTION/
+#	CHARACTER_VISUALS ANIMATIONS/
+	if is_on_floor:
+		if linear_velocity.length() > 0.2 :
+			character_visuals.character_animation_tree.set("parameters/Transition Lower Half/transition_request", "Runing")
+			
+			
+			character_visual_rotation = atan2(-linear_velocity.x, -linear_velocity.z)
+			#character_visuals.global_rotation.y = character_visual_rotation
+			#moovment_direction_blend_amount = ((-character_visuals.rotation.y / (PI / 2)) / 2) + 0.5
+			moovment_direction_blend_amount = ((-(rotation.y - character_visual_rotation) / (PI / 2)) / 2) + 0.5
+			character_visuals.character_animation_tree.set("parameters/TimeScale Lower Half/scale", linear_velocity.length() / 10)#14 = max walking speed
+			
+			if abs(angle_difference(character_visual_rotation, rotation.y)) > 1.58:
+				#character_visuals.global_rotation.y = character_visual_rotation - PI
+				#moovment_direction_blend_amount = (((-character_visuals.rotation.y / (PI / 2)) / 2) + 0.5) * 1
+				moovment_direction_blend_amount = (((-(rotation.y - character_visual_rotation) / (PI / 2)) / 2) + 0.5) * 1
+				character_visuals.character_animation_tree.set("parameters/TimeScale Lower Half/scale", -(linear_velocity.length() / 10))#14 = max walking speed
+
+			character_visuals.character_animation_tree.set("parameters/Blend Movment Direction/blend_amount", moovment_direction_blend_amount)
+
 	
+			#character_visuals.character_animation_tree.set("parameters/TimeScale Lower Half/scale", 1)
+		else :
+			character_visuals.character_animation_tree.set("parameters/Transition Lower Half/transition_request", "Idle")
+			character_visuals.character_animation_tree.set("parameters/TimeScale Lower Half/scale", 1)
+#	/CHARACTER_VISUALS ANIMATIONS
+	
+#	PLAYER ROTATE TO CAMERA DIRECTION/
+	#character_visuals.rotate_y(camera_pivot.rotation.y)
+	character_visuals.rotation = lerp(character_visuals.rotation, Vector3(0,camera_pivot.rotation.y,0), character_visuals_rotation_weight)
+	#character_visuals.rotation = Vector3(0,camera_pivot.rotation.y,0)
 #	/PLAYER ROTATE TO CAMERA DIRECTION
 	
 #	TEMINAL VELOSITY/
