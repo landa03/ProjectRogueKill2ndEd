@@ -26,5 +26,5 @@ func _on_resource_amount_changed(old_value, new_value):
 func _physics_process(delta):
 	if should_recharge:
 		curent_resource_amount += change_rate * delta
-	if curent_resource_amount < max_resource_amount:
-		print(curent_resource_amount)
+	#if curent_resource_amount < max_resource_amount:
+		#print(curent_resource_amount)

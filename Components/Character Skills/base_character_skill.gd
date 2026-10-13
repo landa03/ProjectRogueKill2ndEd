@@ -64,7 +64,7 @@ func skill_ready():
 	#if not is_active_hold :
 	current_use_charges = max_use_charges
 	skill_duration_wait_time = skill_duration_timer
-	skill_cooldown_wait_time = skill_cooldown_timer
+	skill_cooldown_wait_time = skill_cooldown_timer #TODO
 	#if skill_duration_timer:
 		#skill_duration_timer.timeout.connect(_on_skill_duration_timer_timeout)
 		#skill_duration_timer.wait_time = skill_duration_wait_time
@@ -92,29 +92,30 @@ func skill_physics_process(delta: float):
 	if skill_duration_timer > skill_duration_wait_time:
 		skill_duration_wait_time += delta
 		skill_duration_timer_timeout_single_call = true
-		print("skill_duration_wait_time = ", skill_duration_wait_time)
+		#print("skill_duration_wait_time = ", skill_duration_wait_time)
 	elif skill_duration_timer_timeout_single_call:
 		_on_skill_duration_timer_timeout()
+		print(self,": _on_skill_duration_timer_timeout")
 		skill_duration_timer_timeout_single_call = false
-		print("once")
+		#print("once")
 	
-	if skill_cooldown_timer < skill_cooldown_wait_time and is_skill_cooldown_timer_active:
+	if skill_cooldown_timer > skill_cooldown_wait_time:
 		skill_cooldown_wait_time += delta
 		skill_cooldown_timer_timeout_single_call = true
-		print("skill_cooldown_wait_time = ", skill_cooldown_wait_time)
+		#print("skill_cooldown_wait_time = ", skill_cooldown_wait_time)
 	elif skill_cooldown_timer_timeout_single_call:
 		_on_skill_cooldown_timer_timeout()
+		print(self,": _on_skill_cooldown_timer_timeout")
 		skill_cooldown_timer_timeout_single_call = false
 
 func activate_skill(delta:float = 1):
-
-#	WARNING:is_active_hold not working
 	if required_resource == null:
 		#if is_active_hold:
 			#skill_duration_timer.start(0)
 		if is_skill_available:
 			print(self, "activate_skill")
 			current_use_charges -= 1
+			print(current_use_charges)
 			is_skill_active = true
 			#skill_activated.emit(skill_instance)
 			if skill_activated_conected_callable:
@@ -122,6 +123,8 @@ func activate_skill(delta:float = 1):
 			#skill_duration_timer.start(skill_duration_wait_time)
 			#is_skill_duration_timer_active = true
 			skill_duration_wait_time = 0
+			if not skill_cooldown_wait_time < skill_cooldown_timer:
+				skill_cooldown_wait_time = 0
 			#skill_cooldown_timer.start()
 		#if current_use_charges <= 0 :
 			#is_skill_available = false
@@ -133,6 +136,7 @@ func activate_skill(delta:float = 1):
 		if is_skill_available and required_resource.curent_resource_amount >= cost_per_use:
 			print(self, "activate_skill")
 			current_use_charges -= 1
+			print(self," current_use_charges = ",current_use_charges)
 			is_skill_active = true
 			#skill_activated.emit(skill_instance)
 			if skill_activated_conected_callable:
@@ -140,6 +144,8 @@ func activate_skill(delta:float = 1):
 			#skill_duration_timer.start(skill_duration_wait_time)
 			#is_skill_duration_timer_active = true
 			skill_duration_wait_time = 0
+			if not skill_cooldown_wait_time < skill_cooldown_timer:
+				skill_cooldown_wait_time = 0
 			#skill_cooldown_timer.start()
 			#required_resource.curent_resource_amount -= cost_per_use
 			required_resource.resource_amount_changed.emit(required_resource.curent_resource_amount, required_resource.curent_resource_amount - cost_per_use)
@@ -147,7 +153,8 @@ func activate_skill(delta:float = 1):
 			#is_skill_available = false
 		else:
 			#skill_not_available.emit(skill_instance)
-			skill_not_available_conected_callable.call()
+			if skill_not_available_conected_callable:
+				skill_not_available_conected_callable.call()
 	
 	
 #func _on_skill_finished(instance: CharacterSkill):
@@ -159,17 +166,19 @@ func _on_skill_finished():
 
 func _on_skill_duration_timer_timeout():
 	if is_cooldown_available:
+		print("is_cooldown_available = ", is_cooldown_available)
 		is_skill_cooldown_timer_active = false
 		#if current_use_charges < max_use_charges:
 			#is_skill_cooldown_timer_active = false
 	
-	if not is_active_hold and is_skill_active:
-		skill_cooldown_wait_time = 0
+	#if not is_active_hold and is_skill_active:
+		#skill_cooldown_wait_time = 0
 		#skill_finished.emit(skill_instance)
 		_on_skill_finished()
 		if skill_finished_conected_callable:
 			skill_finished_conected_callable.call()
 	elif is_active_hold and is_skill_active:
+		print("is_active_hold = ", is_active_hold)
 		if required_resource == null:
 			activate_skill()
 		elif required_resource.curent_resource_amount >= cost_per_use:
@@ -183,3 +192,4 @@ func _on_skill_duration_timer_timeout():
 func _on_skill_cooldown_timer_timeout():
 	if current_use_charges < max_use_charges :
 		current_use_charges += 1
+		#print(current_use_charges)

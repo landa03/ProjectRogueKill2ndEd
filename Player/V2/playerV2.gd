@@ -48,6 +48,8 @@ func interupt_skills_from_category(skill_category : CharacterSkill.SkillCategory
 	for character_skill in character_skills:
 		if character_skill.skill_category == skill_category and not character_skill == exeption:
 			character_skill.is_skill_active = false
+			if character_skill.is_active_hold:
+				character_skill._on_skill_cooldown_timer_timeout()
 			#character_skill.skill_finished.emit()
 			if character_skill.skill_finished_conected_callable:
 				character_skill.skill_finished_conected_callable.call()
@@ -153,6 +155,7 @@ func _physics_process(delta: float) -> void:
 		if dash_skill.is_skill_available:
 			interupt_skills_from_category(CharacterSkill.SkillCategory.MOVMENT, dash_skill)
 		dash_skill.activate_skill()
+		
 	
 	if Input.is_action_just_pressed("slide"):
 		if is_on_floor:
@@ -169,9 +172,20 @@ func _physics_process(delta: float) -> void:
 			
 	if Input.is_action_just_released("slide"):
 		if slide_skill.is_skill_active:
-			slide_skill.skill_finished.emit()
+			slide_skill.is_skill_active = false
+			slide_skill._on_skill_cooldown_timer_timeout()
 		if slam_skill.is_skill_active:
-			slam_skill.skill_finished.emit()
+			slam_skill.is_skill_active = false
+			slam_skill._on_skill_cooldown_timer_timeout()
+			
+	
+	#if Input.is_action_just_released("slide"):
+		#if slide_skill.is_skill_active:
+			#if slide_skill.skill_finished_conected_callable:
+				#slide_skill.skill_finished_conected_callable.call()
+		#if slam_skill.is_skill_active:
+			#if slam_skill.skill_finished_conected_callable:
+				#slam_skill.skill_finished_conected_callable.call()
 			
 #	CAMERA ROTATION BY JOIPAD MOTION/
 	camera_pivot.rotation += Vector3(Input.get_axis("look_down", "look_up") * camera_rotation_joypad_sensitivity, Input.get_axis("look_right", "look_left") * camera_rotation_joypad_sensitivity, 0)

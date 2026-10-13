@@ -2,20 +2,8 @@
 
 [ext_resource type="Script" uid="uid://dwfgxui7atguy" path="res://Components/Character Skills/Movment/Slam/slam.gd" id="1_8iee1"]
 
-[node name="Slam" type="Node" unique_id=1232227137 node_paths=PackedStringArray("skill_instance", "skill_duration_timer", "skill_cooldown_timer")]
+[node name="Slam" type="Node" unique_id=1232227137]
 script = ExtResource("1_8iee1")
-skill_instance = NodePath(".")
 skill_category = 1
+max_use_charges = 1
 is_active_hold = true
-skill_duration_timer = NodePath("SkillDurationTimer")
-skill_duration_wait_time = 1.0
-skill_cooldown_timer = NodePath("SkillCooldownTimer")
-skill_cooldown_wait_time = 0.1
-
-[node name="SkillDurationTimer" type="Timer" parent="." unique_id=1323959907]
-wait_time = 0.1
-one_shot = true
-
-[node name="SkillCooldownTimer" type="Timer" parent="." unique_id=387148827]
-wait_time = 0.1
-one_shot = true
