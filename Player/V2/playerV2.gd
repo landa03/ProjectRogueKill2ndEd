@@ -1,7 +1,7 @@
 extends RigidBody3D
 
-@export var movemnt_speed: float = 25
-@export var movemnt_acceleration: float = 100
+@export var movement_speed: float = 25
+@export var movement_acceleration: float = 100
 
 @export var horizontal_linear_damp: float = 0.5 #ground_friction
 var curent_horizontal_linear_damp: float = 0
@@ -103,36 +103,45 @@ func _physics_process(delta: float) -> void:
 	#print(linear_damp)
 	
 #	CHARACTER_VISUALS ANIMATIONS/
+	var linear_velocity_horizontal_angle: float
+	var visual_movment_angle: float
 	if is_on_floor:
-		if linear_velocity.length() > 0.2 :
+		if linear_velocity.length() > 0.2:
 			character_visuals.character_animation_tree.set("parameters/Transition Lower Half/transition_request", "Runing")
-			
-			
-			character_visual_rotation = atan2(-linear_velocity.x, -linear_velocity.z)
-			#character_visuals.global_rotation.y = character_visual_rotation
-			#moovment_direction_blend_amount = ((-character_visuals.rotation.y / (PI / 2)) / 2) + 0.5
-			moovment_direction_blend_amount = ((-(rotation.y - character_visual_rotation) / (PI / 2)) / 2) + 0.5
-			character_visuals.character_animation_tree.set("parameters/TimeScale Lower Half/scale", linear_velocity.length() / 10)#14 = max walking speed
-			
-			if abs(angle_difference(character_visual_rotation, rotation.y)) > 1.58:
-				#character_visuals.global_rotation.y = character_visual_rotation - PI
-				#moovment_direction_blend_amount = (((-character_visuals.rotation.y / (PI / 2)) / 2) + 0.5) * 1
-				moovment_direction_blend_amount = (((-(rotation.y - character_visual_rotation) / (PI / 2)) / 2) + 0.5) * 1
-				character_visuals.character_animation_tree.set("parameters/TimeScale Lower Half/scale", -(linear_velocity.length() / 10))#14 = max walking speed
-
+			linear_velocity_horizontal_angle = atan2(-linear_velocity.x, -linear_velocity.z)
+			visual_movment_angle = angle_difference(character_visuals.rotation.y, linear_velocity_horizontal_angle)
+			moovment_direction_blend_amount = ((visual_movment_angle / (-PI / 2)) / 2) + 0.5
+			print(moovment_direction_blend_amount)
 			character_visuals.character_animation_tree.set("parameters/Blend Movment Direction/blend_amount", moovment_direction_blend_amount)
 
-	
+	#if is_on_floor:
+		#if linear_velocity.length() > 0.2 :
+			#character_visuals.character_animation_tree.set("parameters/Transition Lower Half/transition_request", "Runing")
+			#
+			#
+			#character_visual_rotation = atan2(-linear_velocity.x, -linear_velocity.z)
+			##character_visuals.global_rotation.y = character_visual_rotation
+			##moovment_direction_blend_amount = ((-character_visuals.rotation.y / (PI / 2)) / 2) + 0.5
+			#moovment_direction_blend_amount = ((-(rotation.y - character_visual_rotation) / (PI / 2)) / 2) + 0.5
+			#character_visuals.character_animation_tree.set("parameters/TimeScale Lower Half/scale", linear_velocity.length() / 10)#14 = max walking speed
+			#
+			#if abs(angle_difference(character_visual_rotation, rotation.y)) > 1.58:
+				##character_visuals.global_rotation.y = character_visual_rotation - PI
+				##moovment_direction_blend_amount = (((-character_visuals.rotation.y / (PI / 2)) / 2) + 0.5) * 1
+				#moovment_direction_blend_amount = (((-(rotation.y - character_visual_rotation) / (PI / 2)) / 2) + 0.5) * 1
+				#character_visuals.character_animation_tree.set("parameters/TimeScale Lower Half/scale", -(linear_velocity.length() / 10))#14 = max walking speed
+#
+			#character_visuals.character_animation_tree.set("parameters/Blend Movment Direction/blend_amount", moovment_direction_blend_amount)
+#
+	#
+			##character_visuals.character_animation_tree.set("parameters/TimeScale Lower Half/scale", 1)
+		#else :
+			#character_visuals.character_animation_tree.set("parameters/Transition Lower Half/transition_request", "Idle")
 			#character_visuals.character_animation_tree.set("parameters/TimeScale Lower Half/scale", 1)
-		else :
-			character_visuals.character_animation_tree.set("parameters/Transition Lower Half/transition_request", "Idle")
-			character_visuals.character_animation_tree.set("parameters/TimeScale Lower Half/scale", 1)
 #	/CHARACTER_VISUALS ANIMATIONS
 	
 #	PLAYER ROTATE TO CAMERA DIRECTION/
-	#character_visuals.rotate_y(camera_pivot.rotation.y)
 	character_visuals.rotation = lerp(character_visuals.rotation, Vector3(0,camera_pivot.rotation.y,0), character_visuals_rotation_weight)
-	#character_visuals.rotation = Vector3(0,camera_pivot.rotation.y,0)
 #	/PLAYER ROTATE TO CAMERA DIRECTION
 	
 #	TEMINAL VELOSITY/
@@ -156,23 +165,23 @@ func _physics_process(delta: float) -> void:
 #	BASIC MOVMENT/
 	move_direction.x = Input.get_axis("move_left", "move_right")
 	move_direction.z = Input.get_axis("move_forward", "move_back")
-	#linear_velocity = clamp(linear_velocity, Vector3(-1,-1,-1) * movemnt_speed, Vector3(1,1,1) * movemnt_speed)
+	#linear_velocity = clamp(linear_velocity, Vector3(-1,-1,-1) * movement_speed, Vector3(1,1,1) * movement_speed)
 	move_direction = move_direction.rotated(Vector3(0,1,0), camera_pivot.rotation.y)
 	if move_direction != Vector3.ZERO:
 		#curent_horizontal_linear_damp = 0
 		#move_direction = move_direction.normalized()
-		if linear_velocity.x > movemnt_speed:
-			move_direction.x = clamp(move_direction.x, -movemnt_speed, 0)
-		if linear_velocity.x < -movemnt_speed:
-			move_direction.x = clamp(move_direction.x, 0, movemnt_speed)
-		if linear_velocity.z > movemnt_speed:
-			move_direction.z = clamp(move_direction.z, -movemnt_speed, 0)
-		if linear_velocity.z < -movemnt_speed:
-			move_direction.z = clamp(move_direction.z, 0, movemnt_speed)
+		if linear_velocity.x > movement_speed:
+			move_direction.x = clamp(move_direction.x, -movement_speed, 0)
+		if linear_velocity.x < -movement_speed:
+			move_direction.x = clamp(move_direction.x, 0, movement_speed)
+		if linear_velocity.z > movement_speed:
+			move_direction.z = clamp(move_direction.z, -movement_speed, 0)
+		if linear_velocity.z < -movement_speed:
+			move_direction.z = clamp(move_direction.z, 0, movement_speed)
 
 		
-		#self.apply_central_force(Vector3(move_direction.x * movemnt_acceleration,0,move_direction.y * movemnt_acceleration).rotated(Vector3(0,1,0), camera_pivot.rotation.y))
-		apply_central_force(Vector3(move_direction.x * movemnt_acceleration,0,move_direction.z * movemnt_acceleration))
+		#self.apply_central_force(Vector3(move_direction.x * movement_acceleration,0,move_direction.y * movement_acceleration).rotated(Vector3(0,1,0), camera_pivot.rotation.y))
+		apply_central_force(Vector3(move_direction.x * movement_acceleration,0,move_direction.z * movement_acceleration))
 	#if ground_collision.has_overlapping_bodies() :
 		#if Input.is_action_just_pressed("jump"):
 			#jump_skill.activate_skill()
