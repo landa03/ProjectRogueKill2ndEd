@@ -36,6 +36,9 @@ var moovment_direction_blend_amount : float
 
 @onready var character_skills: Array[CharacterSkill] = [jump_skill, dash_skill, slide_skill, slam_skill]
 
+var linear_velocity_horizontal_angle: float
+var visual_movment_angle: float
+
 #si el punto con el que colisiona el personaje esta abajo de el personaje
 func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -89,55 +92,32 @@ func _on_ground_collision_body_entered(body:Node):
 					slam_skill.skill_finished_conected_callable.call()
 				#slam_skill.skill_finished.emit()
 				
-	#print("is_on_floor = ", is_on_floor)
-	#print("ground_collision_bodies_inside = ", ground_collision_bodies_inside)
 
-#func _on_body_entered(body:Node) :
-	#print("body")
-	#if is_zero_approx(linear_velocity.y):
-		#print("bonck")
-	#print(ray_cast_downwards.target_position)
+#TODO : weapon pickop, add weapon to inventory, equip weapon
 
 func _physics_process(delta: float) -> void:
 	#print(linear_velocity)
 	#print(linear_damp)
 	
 #	CHARACTER_VISUALS ANIMATIONS/
-	var linear_velocity_horizontal_angle: float
-	var visual_movment_angle: float
 	if is_on_floor:
-		if linear_velocity.length() > 0.2:
+		if linear_velocity.length() > 0:
 			character_visuals.character_animation_tree.set("parameters/Transition Lower Half/transition_request", "Runing")
 			linear_velocity_horizontal_angle = atan2(-linear_velocity.x, -linear_velocity.z)
 			visual_movment_angle = angle_difference(character_visuals.rotation.y, linear_velocity_horizontal_angle)
-			moovment_direction_blend_amount = ((visual_movment_angle / (-PI / 2)) / 2) + 0.5
-			print(moovment_direction_blend_amount)
+			#print(visual_movment_angle, " > PI/2 = ", abs(visual_movment_angle) > PI/2, )
+			#if abs(visual_movment_angle) > 1.58:
+			if abs(visual_movment_angle) > 1.7:
+				moovment_direction_blend_amount = ((visual_movment_angle / (-PI / 2)) / 2) - 0.5
+				character_visuals.character_animation_tree.set("parameters/TimeScale Lower Half/scale", -(linear_velocity.length() / 10))#14 = max walking speed
+			else:
+				moovment_direction_blend_amount = ((visual_movment_angle / (-PI / 2)) / 2) + 0.5
+				character_visuals.character_animation_tree.set("parameters/TimeScale Lower Half/scale", linear_velocity.length() / 10)#14 = max walking speed
+			#print(moovment_direction_blend_amount)
 			character_visuals.character_animation_tree.set("parameters/Blend Movment Direction/blend_amount", moovment_direction_blend_amount)
-
-	#if is_on_floor:
-		#if linear_velocity.length() > 0.2 :
-			#character_visuals.character_animation_tree.set("parameters/Transition Lower Half/transition_request", "Runing")
-			#
-			#
-			#character_visual_rotation = atan2(-linear_velocity.x, -linear_velocity.z)
-			##character_visuals.global_rotation.y = character_visual_rotation
-			##moovment_direction_blend_amount = ((-character_visuals.rotation.y / (PI / 2)) / 2) + 0.5
-			#moovment_direction_blend_amount = ((-(rotation.y - character_visual_rotation) / (PI / 2)) / 2) + 0.5
-			#character_visuals.character_animation_tree.set("parameters/TimeScale Lower Half/scale", linear_velocity.length() / 10)#14 = max walking speed
-			#
-			#if abs(angle_difference(character_visual_rotation, rotation.y)) > 1.58:
-				##character_visuals.global_rotation.y = character_visual_rotation - PI
-				##moovment_direction_blend_amount = (((-character_visuals.rotation.y / (PI / 2)) / 2) + 0.5) * 1
-				#moovment_direction_blend_amount = (((-(rotation.y - character_visual_rotation) / (PI / 2)) / 2) + 0.5) * 1
-				#character_visuals.character_animation_tree.set("parameters/TimeScale Lower Half/scale", -(linear_velocity.length() / 10))#14 = max walking speed
-#
-			#character_visuals.character_animation_tree.set("parameters/Blend Movment Direction/blend_amount", moovment_direction_blend_amount)
-#
-	#
-			##character_visuals.character_animation_tree.set("parameters/TimeScale Lower Half/scale", 1)
-		#else :
-			#character_visuals.character_animation_tree.set("parameters/Transition Lower Half/transition_request", "Idle")
-			#character_visuals.character_animation_tree.set("parameters/TimeScale Lower Half/scale", 1)
+		else :
+			character_visuals.character_animation_tree.set("parameters/Transition Lower Half/transition_request", "Idle")
+			character_visuals.character_animation_tree.set("parameters/TimeScale Lower Half/scale", 1)
 #	/CHARACTER_VISUALS ANIMATIONS
 	
 #	PLAYER ROTATE TO CAMERA DIRECTION/
