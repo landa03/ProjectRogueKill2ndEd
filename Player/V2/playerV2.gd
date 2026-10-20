@@ -26,8 +26,7 @@ var is_on_floor: bool = true
 @export var character_visuals_rotation_weight: float = 0.1
 
 var character_visual_rotation : float
-var moovment_direction_blend_amount : float
-
+var movment_direction_blend_amount : float
 
 @export var jump_skill: JumpSkill
 @export var dash_skill: DashSkill
@@ -38,6 +37,14 @@ var moovment_direction_blend_amount : float
 
 var linear_velocity_horizontal_angle: float
 var visual_movment_angle: float
+
+@export var weapon_inventory : Array [Weapon]
+@export var interaction_area : Area3D
+@export var main_interaction_detector : RayCast3D
+@export var main_interaction_detector_length : float = 50
+@export var equipped_weapon : Weapon
+@export var dbugui : Node3D
+
 
 #si el punto con el que colisiona el personaje esta abajo de el personaje
 func _ready() -> void:
@@ -94,10 +101,17 @@ func _on_ground_collision_body_entered(body:Node):
 				
 
 #TODO : weapon pickop, add weapon to inventory, equip weapon
-
+#sen(Theta)* h=co
+#cos(Theta)* h=ca
 func _physics_process(delta: float) -> void:
 	#print(linear_velocity)
 	#print(linear_damp)
+
+	main_interaction_detector.target_position = $CameraPivot/Camera3D/Marker3D.position
+	#print(main_interaction_detector.target_position)
+	dbugui.global_position = main_interaction_detector.target_position
+	if main_interaction_detector.is_colliding():
+		print(main_interaction_detector.get_collider())
 	
 #	CHARACTER_VISUALS ANIMATIONS/
 	if is_on_floor:
@@ -105,16 +119,15 @@ func _physics_process(delta: float) -> void:
 			character_visuals.character_animation_tree.set("parameters/Transition Lower Half/transition_request", "Runing")
 			linear_velocity_horizontal_angle = atan2(-linear_velocity.x, -linear_velocity.z)
 			visual_movment_angle = angle_difference(character_visuals.rotation.y, linear_velocity_horizontal_angle)
-			#print(visual_movment_angle, " > PI/2 = ", abs(visual_movment_angle) > PI/2, )
 			#if abs(visual_movment_angle) > 1.58:
 			if abs(visual_movment_angle) > 1.7:
-				moovment_direction_blend_amount = ((visual_movment_angle / (-PI / 2)) / 2) - 0.5
+				movment_direction_blend_amount = ((visual_movment_angle / (-PI / 2)) / 2) - 0.5
 				character_visuals.character_animation_tree.set("parameters/TimeScale Lower Half/scale", -(linear_velocity.length() / 10))#14 = max walking speed
 			else:
-				moovment_direction_blend_amount = ((visual_movment_angle / (-PI / 2)) / 2) + 0.5
+				movment_direction_blend_amount = ((visual_movment_angle / (-PI / 2)) / 2) + 0.5
 				character_visuals.character_animation_tree.set("parameters/TimeScale Lower Half/scale", linear_velocity.length() / 10)#14 = max walking speed
-			#print(moovment_direction_blend_amount)
-			character_visuals.character_animation_tree.set("parameters/Blend Movment Direction/blend_amount", moovment_direction_blend_amount)
+			#print(movment_direction_blend_amount)
+			character_visuals.character_animation_tree.set("parameters/Blend Movment Direction/blend_amount", movment_direction_blend_amount)
 		else :
 			character_visuals.character_animation_tree.set("parameters/Transition Lower Half/transition_request", "Idle")
 			character_visuals.character_animation_tree.set("parameters/TimeScale Lower Half/scale", 1)

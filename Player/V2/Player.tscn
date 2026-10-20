@@ -17,7 +17,9 @@ radius = 0.25
 height = 0.15
 radius = 0.2
 
-[node name="Player" type="RigidBody3D" unique_id=1677145751 node_paths=PackedStringArray("ground_collision", "camera_pivot", "character_visuals", "jump_skill", "dash_skill", "slide_skill", "slam_skill")]
+[sub_resource type="SphereMesh" id="SphereMesh_s3c3i"]
+
+[node name="Player" type="RigidBody3D" unique_id=1677145751 node_paths=PackedStringArray("ground_collision", "camera_pivot", "character_visuals", "jump_skill", "dash_skill", "slide_skill", "slam_skill", "main_interaction_detector", "dbugui")]
 collision_layer = 2
 gravity_scale = 3.0
 lock_rotation = true
@@ -31,6 +33,9 @@ jump_skill = NodePath("Jump")
 dash_skill = NodePath("Dash")
 slide_skill = NodePath("Slide")
 slam_skill = NodePath("Slam")
+main_interaction_detector = NodePath("CameraPivot/Camera3D/RayCast3D")
+main_interaction_detector_length = 10.0
+dbugui = NodePath("CameraPivot/Camera3D/MeshInstance3D2")
 
 [node name="LowPolyDud1_2" parent="." unique_id=1577442555 instance=ExtResource("2_hymar")]
 
@@ -55,6 +60,18 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
 [node name="Camera3D" type="Camera3D" parent="CameraPivot" unique_id=232152764]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5219159, 0.3545394, 3.571763)
 current = true
+
+[node name="RayCast3D" type="RayCast3D" parent="CameraPivot/Camera3D" unique_id=810275605]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00080913305, -0.00046372414, 0.0006785393)
+target_position = Vector3(0, 0, 0)
+debug_shape_custom_color = Color(1, 0, 0, 1)
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="CameraPivot/Camera3D" unique_id=1920065960]
+transform = Transform3D(1, 0, 0, 0, 1.1924881e-08, -1, 0, 1, 1.1924881e-08, -0.00080913305, -0.00046372414, -11.449816)
+mesh = SubResource("SphereMesh_s3c3i")
+
+[node name="Marker3D" type="Marker3D" parent="CameraPivot/Camera3D" unique_id=95020205]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -11)
 
 [node name="Stamina" parent="." unique_id=1062796947 instance=ExtResource("2_cqbqy")]
 change_rate = 10.0
