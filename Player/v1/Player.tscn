@@ -54,8 +54,6 @@ shape = SubResource("BoxShape3D_s3c3i")
 [node name="Dash" parent="." unique_id=1232227137 node_paths=PackedStringArray("skill_owner") instance=ExtResource("4_ddoul")]
 dash_speed = 300.0
 skill_owner = NodePath("..")
-skill_duration_wait_time = 0.1
-skill_cooldown_wait_time = 0.1
 
 [node name="Slam" parent="." unique_id=1052851894 node_paths=PackedStringArray("required_resource", "skill_owner") instance=ExtResource("5_8g4oa")]
 slam_speed = -100.0
@@ -64,13 +62,14 @@ required_resource = NodePath("../Stamina")
 max_use_charges = null
 skill_owner = NodePath("..")
 is_cooldown_available = null
-skill_duration_wait_time = 0.1
 
 [node name="Slide" parent="." unique_id=1695121388 node_paths=PackedStringArray("required_resource", "skill_owner") instance=ExtResource("6_6ysni")]
 slide_speed = 100.0
 cost_per_use = 10.0
 required_resource = NodePath("../Stamina")
 skill_owner = NodePath("..")
+skill_duration_timer = 1.0
+skill_cooldown_timer = 1.0
 
 [node name="Stamina" parent="." unique_id=1062796947 instance=ExtResource("7_vlldt")]
 max_resource_amount = 300.0

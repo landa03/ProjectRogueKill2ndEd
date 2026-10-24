@@ -43,8 +43,9 @@ var visual_movment_angle: float
 @export var main_interaction_detector : RayCast3D
 @export var main_interaction_detector_length : float = 50
 @export var equipped_weapon : Weapon
-@export var dbugui : Node3D
 
+@export var interaction_raycast: RayCast3D
+@export var interaction_raycast_marker: Marker3D
 
 #si el punto con el que colisiona el personaje esta abajo de el personaje
 func _ready() -> void:
@@ -106,12 +107,6 @@ func _on_ground_collision_body_entered(body:Node):
 func _physics_process(delta: float) -> void:
 	#print(linear_velocity)
 	#print(linear_damp)
-
-	main_interaction_detector.target_position = $CameraPivot/Camera3D/Marker3D.position
-	#print(main_interaction_detector.target_position)
-	dbugui.global_position = main_interaction_detector.target_position
-	if main_interaction_detector.is_colliding():
-		print(main_interaction_detector.get_collider())
 	
 #	CHARACTER_VISUALS ANIMATIONS/
 	if is_on_floor:
@@ -233,3 +228,12 @@ func _input(event):
 	#print(event)
 	if event is InputEventMouseMotion:
 		camera_pivot.rotation += Vector3(-event.relative.y * camera_rotation_mouse_sensitivity, -event.relative.x * camera_rotation_mouse_sensitivity, 0)
+		
+#	INTERACTION RAYCAST/
+	var that_one_thing: Object
+	interaction_raycast.target_position = interaction_raycast_marker.position
+	if interaction_raycast.get_collider():
+		that_one_thing = interaction_raycast.get_collider()
+		print(that_one_thing is Interactable)
+		#print(interaction_raycast.get_collider().get_class())
+#	/INTERACTION RAYCAST

@@ -2,6 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://cc3c304pk7vvs" path="res://Components/Interactables/Weapon/ranged_weapon.tscn" id="2_ekipt"]
 [ext_resource type="PackedScene" uid="uid://dccrmgi3x1i4e" path="res://Player/V2/Player.tscn" id="2_ie4ub"]
+[ext_resource type="PackedScene" uid="uid://dqkhl8e2xndox" path="res://Testing/InteractableBlock.tscn" id="3_ie4ub"]
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_4osw0"]
 
@@ -29,7 +30,7 @@ mesh = SubResource("QuadMesh_4osw0")
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 3.6855707, 0)
 
 [node name="Blok" type="StaticBody3D" parent="." unique_id=10096196]
-transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, -17.414015)
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 20, 0, -17.414015)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Blok" unique_id=61442014]
 shape = SubResource("BoxShape3D_kkogj")
@@ -94,7 +95,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1.0000001, 0, 0, 0)
 mesh = SubResource("BoxMesh_ekipt")
 
 [node name="Blok2" type="StaticBody3D" parent="." unique_id=1813557320]
-transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 10, -17.414015)
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 20, 10, -17.414015)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Blok2" unique_id=375459990]
 shape = SubResource("BoxShape3D_kkogj")
@@ -103,7 +104,7 @@ shape = SubResource("BoxShape3D_kkogj")
 mesh = SubResource("BoxMesh_ekipt")
 
 [node name="Blok3" type="StaticBody3D" parent="." unique_id=415071319]
-transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 24.045965, -17.414015)
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 20, 24.045965, -17.414015)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Blok3" unique_id=406072281]
 shape = SubResource("BoxShape3D_kkogj")
@@ -162,6 +163,9 @@ shape = SubResource("BoxShape3D_kkogj")
 mesh = SubResource("BoxMesh_ekipt")
 
 [node name="RangedWeapon" parent="." unique_id=295167970 instance=ExtResource("2_ekipt")]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0.55890465, 0.1664561, -14.815918)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0.55890465, 0.06373653, -14.815918)
 
 [node name="Player" parent="." unique_id=1677145751 instance=ExtResource("2_ie4ub")]
+
+[node name="InteractableBlock" parent="." unique_id=906350627 instance=ExtResource("3_ie4ub")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.390934, 0, -4.304617)

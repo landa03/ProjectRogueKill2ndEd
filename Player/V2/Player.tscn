@@ -17,9 +17,9 @@ radius = 0.25
 height = 0.15
 radius = 0.2
 
-[sub_resource type="SphereMesh" id="SphereMesh_s3c3i"]
+[sub_resource type="PlaneMesh" id="PlaneMesh_s3c3i"]
 
-[node name="Player" type="RigidBody3D" unique_id=1677145751 node_paths=PackedStringArray("ground_collision", "camera_pivot", "character_visuals", "jump_skill", "dash_skill", "slide_skill", "slam_skill", "main_interaction_detector", "dbugui")]
+[node name="Player" type="RigidBody3D" unique_id=1677145751 node_paths=PackedStringArray("ground_collision", "camera_pivot", "character_visuals", "jump_skill", "dash_skill", "slide_skill", "slam_skill", "main_interaction_detector", "interaction_raycast", "interaction_raycast_marker")]
 collision_layer = 2
 gravity_scale = 3.0
 lock_rotation = true
@@ -33,9 +33,10 @@ jump_skill = NodePath("Jump")
 dash_skill = NodePath("Dash")
 slide_skill = NodePath("Slide")
 slam_skill = NodePath("Slam")
-main_interaction_detector = NodePath("CameraPivot/Camera3D/RayCast3D")
+main_interaction_detector = NodePath("CameraPivot/Camera3D/InteractionRayCast3D")
 main_interaction_detector_length = 10.0
-dbugui = NodePath("CameraPivot/Camera3D/MeshInstance3D2")
+interaction_raycast = NodePath("CameraPivot/Camera3D/InteractionRayCast3D")
+interaction_raycast_marker = NodePath("CameraPivot/Camera3D/InteractionMarker3D")
 
 [node name="LowPolyDud1_2" parent="." unique_id=1577442555 instance=ExtResource("2_hymar")]
 
@@ -61,17 +62,16 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5219159, 0.3545394, 3.571763)
 current = true
 
-[node name="RayCast3D" type="RayCast3D" parent="CameraPivot/Camera3D" unique_id=810275605]
+[node name="InteractionRayCast3D" type="RayCast3D" parent="CameraPivot/Camera3D" unique_id=810275605]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00080913305, -0.00046372414, 0.0006785393)
-target_position = Vector3(0, 0, 0)
-debug_shape_custom_color = Color(1, 0, 0, 1)
+target_position = Vector3(0, 0, -8.5)
 
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="CameraPivot/Camera3D" unique_id=1920065960]
-transform = Transform3D(1, 0, 0, 0, 1.1924881e-08, -1, 0, 1, 1.1924881e-08, -0.00080913305, -0.00046372414, -11.449816)
-mesh = SubResource("SphereMesh_s3c3i")
+[node name="InteractionMarker3D" type="Marker3D" parent="CameraPivot/Camera3D" unique_id=95020205]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -8.241573)
 
-[node name="Marker3D" type="Marker3D" parent="CameraPivot/Camera3D" unique_id=95020205]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -11)
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CameraPivot/Camera3D/InteractionMarker3D" unique_id=183137202]
+transform = Transform3D(0.14142136, 2.5605538e-09, 0.14142135, 0.14142135, -6.181723e-09, -0.14142136, 2.5605538e-09, 0.2, -6.181723e-09, 0, 0, 0)
+mesh = SubResource("PlaneMesh_s3c3i")
 
 [node name="Stamina" parent="." unique_id=1062796947 instance=ExtResource("2_cqbqy")]
 change_rate = 10.0
