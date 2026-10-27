@@ -36,7 +36,7 @@ func destroy_projectile():
 #	TODO: hecer que explote si es explosivo
 	
 func on_time_limit_timer_timeout():
-	print("time out")
+	#print("time out")
 	destroy_projectile()
 	
 func on_body_entered (body: Node):
@@ -45,11 +45,11 @@ func on_body_entered (body: Node):
 			child.receive_damage(hazard.faction, hazard.damage_type, hazard.dmage_amount)
 			
 	if current_bounces >= bounce_limit:
-		print("pop")
+		#print("pop")
 		destroy_projectile()
 	else :
 		current_bounces += 1
-		print(current_bounces, " boing")
+		#print(current_bounces, " boing")
 	
 func _physics_process(delta: float) -> void:
 	apply_central_force(movment_direction * speed)

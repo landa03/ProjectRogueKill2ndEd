@@ -8,6 +8,7 @@
 [sub_resource type="SphereMesh" id="SphereMesh_s3c3i"]
 
 [node name="Projectil" type="RigidBody3D" unique_id=118986489 node_paths=PackedStringArray("mesh_instance", "collision_shape", "time_limit_timer", "hazard")]
+collision_layer = 13
 script = ExtResource("1_lrl6f")
 mesh_instance = NodePath("MeshInstance3D")
 collision_shape = NodePath("CollisionShape3D")

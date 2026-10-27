@@ -1,2 +1,4 @@
 collision layer 1: terrain, walls, etc.
 collision layer 2: interactables
+collision layer 3: player, characters, anything that can take damage
+collision layer 4: hazards, damage stuff, bullets

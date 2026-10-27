@@ -9,7 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://dr8170gfwl4ak" path="res://Components/Character Skills/Movment/Slide/slide.tscn" id="6_hymar"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_uw1c7"]
-size = Vector3(1.4, 1.7, 2)
+size = Vector3(1.6, 1.7, 2.3)
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_s3c3i"]
 
@@ -23,7 +23,8 @@ radius = 0.2
 [sub_resource type="PlaneMesh" id="PlaneMesh_s3c3i"]
 
 [node name="Player" type="RigidBody3D" unique_id=1677145751 node_paths=PackedStringArray("ground_collision", "camera_pivot", "character_visuals", "jump_skill", "dash_skill", "slide_skill", "slam_skill", "interaction_area", "main_interaction_detector", "main_interaction_detector_marker")]
-collision_layer = 2
+collision_layer = 4
+collision_mask = 5
 gravity_scale = 3.0
 lock_rotation = true
 contact_monitor = true
@@ -47,7 +48,7 @@ collision_layer = 0
 collision_mask = 2
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="LowPolyDud1_2/InteractionArea" unique_id=497518253]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.9604645e-08, 0.85, -0.79999995)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.9604645e-08, 0.85, -0.7499999)
 shape = SubResource("BoxShape3D_uw1c7")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1259150285]

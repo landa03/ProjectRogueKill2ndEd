@@ -61,16 +61,16 @@ func _ready():
 	# Makes your mouse disappear from the screen
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	character_visuals.character_animation_tree.animation_finished.connect(play_animation_after_jump)
-	slam_skill.skill_activated.connect(interupt_skills_from_category.bind(CharacterSkill.SkillCategory.MOVMENT, slam_skill))
-	slam_skill.skill_activated.connect(set_is_afected_by_gravity.bind(false))
-	slam_skill.skill_finished.connect(set_is_afected_by_gravity.bind(true))
+	#slam_skill.skill_activated.connect(interupt_skills_from_category.bind(CharacterSkill.SkillCategory.MOVMENT, slam_skill))
+	#slam_skill.skill_activated.connect(set_is_afected_by_gravity.bind(false))
+	#slam_skill.skill_finished.connect(set_is_afected_by_gravity.bind(true))
 	
 	dash_skill.required_resource = stamina_resource
 	
-	for skill in character_skills:
-		if skill.skill_category == dash_skill.SkillCategory.MOVMENT:
-			skill.skill_activated.connect(set_is_any_movment_skill_active.bind(true))
-			skill.skill_finished.connect(set_is_any_movment_skill_active.bind(false))
+	#for skill in character_skills:
+		#if skill.skill_category == dash_skill.SkillCategory.MOVMENT:
+			#skill.skill_activated.connect(set_is_any_movment_skill_active.bind(true))
+			#skill.skill_finished.connect(set_is_any_movment_skill_active.bind(false))
 			
 	
 

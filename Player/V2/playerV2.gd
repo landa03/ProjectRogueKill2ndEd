@@ -44,6 +44,7 @@ var visual_movment_angle: float
 @export var main_interaction_detector: RayCast3D
 @export var main_interaction_detector_marker: Marker3D
 
+#TODO: fat raycast to stinky ground so it do da step up
 
 #si el punto con el que colisiona el personaje esta abajo de el personaje
 func _ready() -> void:
@@ -65,6 +66,18 @@ func add_weapon_to_inventory(weapon : Weapon) :
 	weapon.reparent(character_visuals.back_attachment)
 	weapon.position = character_visuals.back_attachment.position
 	weapon.rotation = Vector3(0,0,0) #stored_position (deve venir del weapon)
+
+
+func swap_weapon() :
+	if equipped_weapon != null :
+		add_weapon_to_inventory(equipped_weapon)
+		if equipped_weapon.second_hand_position != null:
+			character_visuals.left_hand_ik.influence = 1
+	weapon_inventory[0].reparent(character_visuals.right_hand_attachment)
+	weapon_inventory[0].position = character_visuals.right_hand_attachment.position
+	weapon_inventory[0].rotation = Vector3(90,-90,0) #held_position (deve venir del weapon)
+	equipped_weapon = weapon_inventory[0]
+	weapon_inventory.remove_at(0)
 
 
 func interupt_skills_from_category(skill_category : CharacterSkill.SkillCategory, exeption : CharacterSkill):
@@ -94,8 +107,8 @@ func _on_ground_collision_body_entered(body:Node):
 	ground_collision_bodies_inside = ground_collision_bodies_inside + 1
 	if ground_collision_bodies_inside > 0:
 		#print("is on ground")
-		gravity_scale = 0.5
-		linear_velocity.y = 0
+		gravity_scale = 0
+		linear_velocity.y = -0.1
 		#print("ground colition = ", body)
 		curent_horizontal_linear_damp = horizontal_linear_damp
 		jump_skill.current_use_charges = jump_skill.max_use_charges
@@ -217,6 +230,18 @@ func _physics_process(delta: float) -> void:
 			slam_skill._on_skill_cooldown_timer_timeout()
 			
 	
+	
+	if Input.is_action_just_pressed("swap_weapon"):
+		if weapon_inventory.size() > 0:
+			swap_weapon()
+			
+	if Input.is_action_just_pressed("held_item_action_1"):
+		print("click bitch")
+		if equipped_weapon:
+			equipped_weapon.atak()
+			
+			
+	
 	#if Input.is_action_just_released("slide"):
 		#if slide_skill.is_skill_active:
 			#if slide_skill.skill_finished_conected_callable:
@@ -228,6 +253,15 @@ func _physics_process(delta: float) -> void:
 #	CAMERA ROTATION BY JOIPAD MOTION/
 	camera_pivot.rotation += Vector3(Input.get_axis("look_down", "look_up") * camera_rotation_joypad_sensitivity, Input.get_axis("look_right", "look_left") * camera_rotation_joypad_sensitivity, 0)
 #	/CAMERA ROTATION BY JOIPAD MOTION
+
+	if equipped_weapon != null :
+		#equipped_weapon.basis = Basis.from_euler(camera.global_rotation)
+		equipped_weapon.global_rotation = camera_pivot.global_rotation
+		if equipped_weapon.second_hand_position != null :
+			#character_visuals.left_hand_ik.deterministic = true
+			character_visuals.left_hand_ik.global_position = equipped_weapon.second_hand_position.global_position
+		#else :
+			#character_visuals.left_hand_ik.deterministic = false
 
 func _input(event):
 	#print(event)
@@ -243,6 +277,9 @@ func _input(event):
 				if body.is_in_group("Weapon") :
 					add_weapon_to_inventory(body)
 #	/INTERACTION INPUT
+	
+	
+	
 
 #	INTERACTION RAYCAST/
 #TODO
