@@ -8,6 +8,9 @@
 [ext_resource type="PackedScene" uid="uid://bqt0wr6jjr4u6" path="res://Components/Character Skills/Movment/Slam/slam.tscn" id="5_yxbqs"]
 [ext_resource type="PackedScene" uid="uid://dr8170gfwl4ak" path="res://Components/Character Skills/Movment/Slide/slide.tscn" id="6_hymar"]
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_uw1c7"]
+size = Vector3(1.4, 1.7, 2)
+
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_s3c3i"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_s3c3i"]
@@ -19,7 +22,7 @@ radius = 0.2
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_s3c3i"]
 
-[node name="Player" type="RigidBody3D" unique_id=1677145751 node_paths=PackedStringArray("ground_collision", "camera_pivot", "character_visuals", "jump_skill", "dash_skill", "slide_skill", "slam_skill", "main_interaction_detector", "interaction_raycast", "interaction_raycast_marker")]
+[node name="Player" type="RigidBody3D" unique_id=1677145751 node_paths=PackedStringArray("ground_collision", "camera_pivot", "character_visuals", "jump_skill", "dash_skill", "slide_skill", "slam_skill", "interaction_area", "main_interaction_detector", "main_interaction_detector_marker")]
 collision_layer = 2
 gravity_scale = 3.0
 lock_rotation = true
@@ -33,12 +36,19 @@ jump_skill = NodePath("Jump")
 dash_skill = NodePath("Dash")
 slide_skill = NodePath("Slide")
 slam_skill = NodePath("Slam")
+interaction_area = NodePath("LowPolyDud1_2/InteractionArea")
 main_interaction_detector = NodePath("CameraPivot/Camera3D/InteractionRayCast3D")
-main_interaction_detector_length = 10.0
-interaction_raycast = NodePath("CameraPivot/Camera3D/InteractionRayCast3D")
-interaction_raycast_marker = NodePath("CameraPivot/Camera3D/InteractionMarker3D")
+main_interaction_detector_marker = NodePath("CameraPivot/Camera3D/InteractionMarker3D")
 
 [node name="LowPolyDud1_2" parent="." unique_id=1577442555 instance=ExtResource("2_hymar")]
+
+[node name="InteractionArea" type="Area3D" parent="LowPolyDud1_2" unique_id=1274865263]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="LowPolyDud1_2/InteractionArea" unique_id=497518253]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.9604645e-08, 0.85, -0.79999995)
+shape = SubResource("BoxShape3D_uw1c7")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1259150285]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)

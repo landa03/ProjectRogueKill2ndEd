@@ -10,7 +10,7 @@ var curent_horizontal_linear_damp: float = 0
 
 @export var terminal_velocity: float = 150
 
-var move_direction : Vector3
+var move_direction: Vector3
 
 @export var ground_collision: Area3D
 var ground_collision_bodies_inside: int = 0
@@ -21,12 +21,12 @@ var is_on_floor: bool = true
 @export var camera_rotation_joypad_sensitivity: float = 0.05
 @export var camera_pivot: Node3D
 
-@export var character_visuals : CharacterVisuals
+@export var character_visuals: CharacterVisuals
 ##The weight value in the rotations lerp, lerp(character_rotation, camera_rotation, value)
 @export var character_visuals_rotation_weight: float = 0.1
 
-var character_visual_rotation : float
-var movment_direction_blend_amount : float
+var character_visual_rotation: float
+var movment_direction_blend_amount: float
 
 @export var jump_skill: JumpSkill
 @export var dash_skill: DashSkill
@@ -38,14 +38,12 @@ var movment_direction_blend_amount : float
 var linear_velocity_horizontal_angle: float
 var visual_movment_angle: float
 
-@export var weapon_inventory : Array [Weapon]
-@export var interaction_area : Area3D
-@export var main_interaction_detector : RayCast3D
-@export var main_interaction_detector_length : float = 50
-@export var equipped_weapon : Weapon
+@export var equipped_weapon: Weapon
+@export var weapon_inventory: Array [Weapon]
+@export var interaction_area: Area3D
+@export var main_interaction_detector: RayCast3D
+@export var main_interaction_detector_marker: Marker3D
 
-@export var interaction_raycast: RayCast3D
-@export var interaction_raycast_marker: Marker3D
 
 #si el punto con el que colisiona el personaje esta abajo de el personaje
 func _ready() -> void:
@@ -60,6 +58,14 @@ func _ready() -> void:
 	ground_collision.body_entered.connect(_on_ground_collision_body_entered)
 	ground_collision.body_exited.connect(_on_ground_collision_body_exited)
 	
+	
+func add_weapon_to_inventory(weapon : Weapon) :
+	weapon_inventory.append(weapon)
+	weapon.is_interactable = false
+	weapon.reparent(character_visuals.back_attachment)
+	weapon.position = character_visuals.back_attachment.position
+	weapon.rotation = Vector3(0,0,0) #stored_position (deve venir del weapon)
+
 
 func interupt_skills_from_category(skill_category : CharacterSkill.SkillCategory, exeption : CharacterSkill):
 	for character_skill in character_skills:
@@ -110,7 +116,7 @@ func _physics_process(delta: float) -> void:
 	
 #	CHARACTER_VISUALS ANIMATIONS/
 	if is_on_floor:
-		if linear_velocity.length() > 0:
+		if linear_velocity.length() > 0.1:
 			character_visuals.character_animation_tree.set("parameters/Transition Lower Half/transition_request", "Runing")
 			linear_velocity_horizontal_angle = atan2(-linear_velocity.x, -linear_velocity.z)
 			visual_movment_angle = angle_difference(character_visuals.rotation.y, linear_velocity_horizontal_angle)
@@ -223,17 +229,27 @@ func _physics_process(delta: float) -> void:
 	camera_pivot.rotation += Vector3(Input.get_axis("look_down", "look_up") * camera_rotation_joypad_sensitivity, Input.get_axis("look_right", "look_left") * camera_rotation_joypad_sensitivity, 0)
 #	/CAMERA ROTATION BY JOIPAD MOTION
 
-#TODO: fuking basis >:(
 func _input(event):
 	#print(event)
 	if event is InputEventMouseMotion:
 		camera_pivot.rotation += Vector3(-event.relative.y * camera_rotation_mouse_sensitivity, -event.relative.x * camera_rotation_mouse_sensitivity, 0)
 		
+#	INTERACTION INPUT/
+	if Input.is_action_just_pressed("interact"):
+		for body in interaction_area.get_overlapping_bodies() :
+			print("is interactable? : ", body.is_in_group("Interactable"), ", ", "is weapon? : ", body.is_in_group("Weapon"))
+			print(body.get_class())
+			if body.is_in_group("Interactable") :
+				if body.is_in_group("Weapon") :
+					add_weapon_to_inventory(body)
+#	/INTERACTION INPUT
+
 #	INTERACTION RAYCAST/
-	var that_one_thing: Object
-	interaction_raycast.target_position = interaction_raycast_marker.position
-	if interaction_raycast.get_collider():
-		that_one_thing = interaction_raycast.get_collider()
-		print(that_one_thing is Interactable)
+#TODO
+	#var that_one_thing: Object
+	#main_interaction_detector.target_position = main_interaction_detector_marker.position
+	#if main_interaction_detector.get_collider():
+		#that_one_thing = main_interaction_detector.get_collider()
+		#print(that_one_thing is Interactable)
 		#print(interaction_raycast.get_collider().get_class())
 #	/INTERACTION RAYCAST

@@ -1,0 +1,2 @@
+collision layer 1: terrain, walls, etc.
+collision layer 2: interactables
