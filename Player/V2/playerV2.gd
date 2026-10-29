@@ -44,6 +44,9 @@ var visual_movment_angle: float
 @export var main_interaction_detector: RayCast3D
 @export var main_interaction_detector_marker: Marker3D
 
+@export var step_up_colider: ShapeCast3D
+@export var step_up_height: float = 5
+
 #TODO: fat raycast to stinky ground so it do da step up
 
 #si el punto con el que colisiona el personaje esta abajo de el personaje
@@ -120,12 +123,19 @@ func _on_ground_collision_body_entered(body:Node):
 				#slam_skill.skill_finished.emit()
 				
 
-#TODO : weapon pickop, add weapon to inventory, equip weapon
-#sen(Theta)* h=co
-#cos(Theta)* h=ca
+
+
 func _physics_process(delta: float) -> void:
 	#print(linear_velocity)
 	#print(linear_damp)
+#	el radio / posision de la deteccion deve de depender de la valosidad
+#	STEP UP/
+	if Vector2(linear_velocity.x,linear_velocity.z).length() > 0.1 or move_direction != Vector3.ZERO:
+		step_up_colider.target_position = Vector3(linear_velocity.x/20,-1,linear_velocity.z/20)
+		if step_up_colider.collide_with_bodies:
+			if step_up_colider.get_collision_point(0).y > global_position.y and step_up_colider.get_collision_point(0).y < global_position.y + step_up_height:
+				global_position.y = lerp(global_position.y, step_up_colider.get_collision_point(0).y, 0.6)
+#	/STEP UP
 	
 #	CHARACTER_VISUALS ANIMATIONS/
 	if is_on_floor:
