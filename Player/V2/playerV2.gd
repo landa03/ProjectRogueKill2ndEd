@@ -131,7 +131,7 @@ func _physics_process(delta: float) -> void:
 #	el radio / posision de la deteccion deve de depender de la valosidad
 #	STEP UP/
 	if Vector2(linear_velocity.x,linear_velocity.z).length() > 0.1 or move_direction != Vector3.ZERO:
-		step_up_colider.target_position = Vector3(linear_velocity.x/20,-1,linear_velocity.z/20)
+		step_up_colider.target_position = Vector3((linear_velocity.x / 30) + move_direction.x,-1,(linear_velocity.z / 30) + move_direction.z)
 		if step_up_colider.collide_with_bodies:
 			if step_up_colider.get_collision_point(0).y > global_position.y and step_up_colider.get_collision_point(0).y < global_position.y + step_up_height:
 				global_position.y = lerp(global_position.y, step_up_colider.get_collision_point(0).y, 0.6)

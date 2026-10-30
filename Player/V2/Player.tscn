@@ -24,6 +24,7 @@ radius = 0.2
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_sd720"]
 height = 1.9
+radius = 0.24
 
 [node name="Player" type="RigidBody3D" unique_id=1677145751 node_paths=PackedStringArray("ground_collision", "camera_pivot", "character_visuals", "jump_skill", "dash_skill", "slide_skill", "slam_skill", "interaction_area", "main_interaction_detector", "main_interaction_detector_marker", "step_up_colider")]
 collision_layer = 4
@@ -66,6 +67,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CapsuleShape3D_s3c3i")
 
 [node name="GroundCollision" type="Area3D" parent="." unique_id=218087748]
+collision_layer = 0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="GroundCollision" unique_id=2091818845]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.025000036, 0)
@@ -105,6 +107,7 @@ dash_damp = 10.0
 cost_per_use = 50.0
 required_resource = NodePath("../Stamina")
 skill_owner = NodePath("..")
+skill_duration_timer = 0.1
 
 [node name="Slam" parent="." unique_id=1518465415 node_paths=PackedStringArray("skill_owner") instance=ExtResource("5_yxbqs")]
 skill_owner = NodePath("..")
