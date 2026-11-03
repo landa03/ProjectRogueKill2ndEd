@@ -9,8 +9,10 @@ var curent_horizontal_linear_damp: float = 0
 #@export var jump_strength: float = 20
 
 @export var terminal_velocity: float = 150
+@export var gravity: float = 3
 
 var move_direction: Vector3
+var clamped_move_direction: Vector3
 
 @export var ground_collision: Area3D
 var ground_collision_bodies_inside: int = 0
@@ -47,7 +49,7 @@ var visual_movment_angle: float
 @export var step_up_colider: ShapeCast3D
 @export var step_up_height: float = 5
 
-#TODO: fat raycast to stinky ground so it do da step up
+#TODO: aislar el movimiento como api
 
 #si el punto con el que colisiona el personaje esta abajo de el personaje
 func _ready() -> void:
@@ -100,7 +102,7 @@ func _on_ground_collision_body_exited(body:Node):
 		ground_collision_bodies_inside = 0
 	if ground_collision_bodies_inside < 1:
 		#print("is of ground")
-		gravity_scale = 3
+		gravity_scale = gravity
 		curent_horizontal_linear_damp = 0
 		is_on_floor = false
 	#print("is_on_floor = ", is_on_floor)
@@ -110,7 +112,7 @@ func _on_ground_collision_body_entered(body:Node):
 	ground_collision_bodies_inside = ground_collision_bodies_inside + 1
 	if ground_collision_bodies_inside > 0:
 		#print("is on ground")
-		gravity_scale = 0
+		gravity_scale = 0.3
 		linear_velocity.y = -0.1
 		#print("ground colition = ", body)
 		curent_horizontal_linear_damp = horizontal_linear_damp
@@ -126,7 +128,6 @@ func _on_ground_collision_body_entered(body:Node):
 
 
 func _physics_process(delta: float) -> void:
-	#print(linear_velocity)
 	#print(linear_damp)
 #	el radio / posision de la deteccion deve de depender de la valosidad
 #	STEP UP/
@@ -168,10 +169,12 @@ func _physics_process(delta: float) -> void:
 #	/TEMINAL VELOSITY
 
 #	MY DAMP/
+	#if move_direction.x == 0:
 	if linear_velocity.x > 0:
 		linear_velocity.x -= curent_horizontal_linear_damp
 	if linear_velocity.x < 0:
 		linear_velocity.x += curent_horizontal_linear_damp
+	#if move_direction.z == 0:
 	if linear_velocity.z > 0:
 		linear_velocity.z -= curent_horizontal_linear_damp
 	if linear_velocity.z < 0:
@@ -182,23 +185,30 @@ func _physics_process(delta: float) -> void:
 #	BASIC MOVMENT/
 	move_direction.x = Input.get_axis("move_left", "move_right")
 	move_direction.z = Input.get_axis("move_forward", "move_back")
-	#linear_velocity = clamp(linear_velocity, Vector3(-1,-1,-1) * movement_speed, Vector3(1,1,1) * movement_speed)
 	move_direction = move_direction.rotated(Vector3(0,1,0), camera_pivot.rotation.y)
+	
+	var move_direction_2: Vector3
+	move_direction_2.x = Input.get_axis("move_left", "move_right")
+	move_direction_2.z = Input.get_axis("move_forward", "move_back")
+	move_direction_2 = move_direction_2.rotated(Vector3(0,1,0), camera_pivot.rotation.y)
+	
+	#linear_velocity = clamp(linear_velocity, Vector3(-1,-1,-1) * movement_speed, Vector3(1,1,1) * movement_speed)
 	if move_direction != Vector3.ZERO:
+		clamped_move_direction = move_direction
 		#curent_horizontal_linear_damp = 0
 		#move_direction = move_direction.normalized()
 		if linear_velocity.x > movement_speed:
-			move_direction.x = clamp(move_direction.x, -movement_speed, 0)
+			clamped_move_direction.x = clamp(clamped_move_direction.x, -movement_speed, 0)
 		if linear_velocity.x < -movement_speed:
-			move_direction.x = clamp(move_direction.x, 0, movement_speed)
+			clamped_move_direction.x = clamp(clamped_move_direction.x, 0, movement_speed)
 		if linear_velocity.z > movement_speed:
-			move_direction.z = clamp(move_direction.z, -movement_speed, 0)
+			clamped_move_direction.z = clamp(clamped_move_direction.z, -movement_speed, 0)
 		if linear_velocity.z < -movement_speed:
-			move_direction.z = clamp(move_direction.z, 0, movement_speed)
+			clamped_move_direction.z = clamp(clamped_move_direction.z, 0, movement_speed)
 
 		
 		#self.apply_central_force(Vector3(move_direction.x * movement_acceleration,0,move_direction.y * movement_acceleration).rotated(Vector3(0,1,0), camera_pivot.rotation.y))
-		apply_central_force(Vector3(move_direction.x * movement_acceleration,0,move_direction.z * movement_acceleration))
+		apply_central_force(Vector3(clamped_move_direction.x * movement_acceleration,0,clamped_move_direction.z * movement_acceleration))
 	#if ground_collision.has_overlapping_bodies() :
 		#if Input.is_action_just_pressed("jump"):
 			#jump_skill.activate_skill()
@@ -210,7 +220,7 @@ func _physics_process(delta: float) -> void:
 		
 	if Input.is_action_just_pressed("dash"):
 		#print(Vector3(move_direction.x,0,move_direction.y).length())
-		if move_direction.length() < 0.25:
+		if move_direction.length() < 0.05:
 			move_direction = Vector3(0,0,-1).rotated(Vector3(0,1,0), camera_pivot.rotation.y)
 		dash_skill.dash_direction = move_direction
 		if dash_skill.is_skill_available:

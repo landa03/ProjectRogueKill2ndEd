@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://v742rkw7lur7"]
+
+[ext_resource type="Script" uid="uid://dfrft2oip0178" path="res://NPCs/Enemies/base_enemie.gd" id="1_jdecw"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_s3c3i"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_s3c3i"]
+
+[node name="BaseEnemie" type="RigidBody3D" unique_id=524115287]
+script = ExtResource("1_jdecw")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=2078278565]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_s3c3i")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=139391436]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("CapsuleMesh_s3c3i")
