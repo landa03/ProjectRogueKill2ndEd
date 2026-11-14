@@ -26,7 +26,7 @@ radius = 0.2
 height = 1.8
 radius = 0.24
 
-[node name="Player" type="RigidBody3D" unique_id=1677145751 node_paths=PackedStringArray("ground_collision", "camera_pivot", "character_visuals", "jump_skill", "dash_skill", "slide_skill", "slam_skill", "interaction_area", "main_interaction_detector", "main_interaction_detector_marker", "step_up_colider")]
+[node name="Player" type="RigidBody3D" unique_id=1677145751 node_paths=PackedStringArray("ground_collision", "camera_pivot", "character_visuals", "jump_skill", "dash_skill", "slide_skill", "slam_skill", "interaction_area", "main_interaction_detector", "main_interaction_detector_marker", "step_up_colider") groups=["Ally"]]
 collision_layer = 4
 collision_mask = 5
 collision_priority = 0.0

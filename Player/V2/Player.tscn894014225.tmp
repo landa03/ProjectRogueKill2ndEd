@@ -103,11 +103,10 @@ is_cooldown_available = false
 skill_duration_timer = 1.0
 skill_cooldown_timer = 1.0
 
-[node name="Dash" parent="." unique_id=1232227137 node_paths=PackedStringArray("required_resource", "skill_owner") instance=ExtResource("4_16hyc")]
+[node name="Dash" parent="." unique_id=1232227137 node_paths=PackedStringArray("skill_owner") instance=ExtResource("4_16hyc")]
 dash_speed = 50.0
 dash_damp = 10.0
 cost_per_use = 50.0
-required_resource = NodePath("../Stamina")
 skill_owner = NodePath("..")
 skill_duration_timer = 0.1
 

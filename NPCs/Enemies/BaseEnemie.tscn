@@ -6,8 +6,18 @@
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_s3c3i"]
 
-[node name="BaseEnemie" type="RigidBody3D" unique_id=524115287]
+[sub_resource type="SphereShape3D" id="SphereShape3D_s3c3i"]
+radius = 10.0
+
+[node name="BaseNPC" type="RigidBody3D" unique_id=524115287 node_paths=PackedStringArray("nav_agent", "detection_area") groups=["Enemies"]]
+collision_layer = 4
+collision_mask = 5
+can_sleep = false
+lock_rotation = true
+contact_monitor = true
 script = ExtResource("1_jdecw")
+nav_agent = NodePath("NavigationAgent3D")
+detection_area = NodePath("DetectionArea3D")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=2078278565]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -16,3 +26,12 @@ shape = SubResource("CapsuleShape3D_s3c3i")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=139391436]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 mesh = SubResource("CapsuleMesh_s3c3i")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=516531331]
+
+[node name="DetectionArea3D" type="Area3D" parent="." unique_id=873960904]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="DetectionArea3D" unique_id=271804646]
+shape = SubResource("SphereShape3D_s3c3i")

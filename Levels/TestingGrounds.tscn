@@ -14,6 +14,14 @@ size = Vector2(50, 50)
 
 [sub_resource type="BoxMesh" id="BoxMesh_s3c3i"]
 
+[sub_resource type="NavigationMesh" id="NavigationMesh_5guys"]
+vertices = PackedVector3Array(-3.5599995, 0.5, -37.335, -1.3099995, 0.5, -37.585, -1.3099995, 0.5, -39.085, -24.81, 0.5, -39.085, -24.81, 0.5, -21.835, -3.5599995, 0.5, -22.085, 11.440001, 0.5, -29.585, 11.690001, 0.5, -25.585, 16.44, 0.5, -25.585, 6.4400005, 0.5, -37.585, 24.69, 0.5, -39.085, 16.69, 0.5, -22.835, 24.69, 0.5, -22.835, 6.6900005, 0.5, -29.585, -2.5599995, 4.5, -36.585, -2.5599995, 4.5, -21.335, -2.0599995, 4.5, -36.335, 6.6900005, 4, -27.085, 6.6900005, 1.5, -22.585, 10.440001, 2, -22.835, 10.690001, 4.5, -28.585, 9.170038, 2.5, -24.577038, 5.4400005, 4.5, -36.085, 5.6900005, 4.5, -28.835, 5.6900005, 4.5, -36.585, 5.6900005, 4.5, -27.085, 5.4400005, 4.5, -21.335, -1.3099995, 0.5, -22.335, 4.4400005, 0.75, -22.335, 4.4400005, 2.5, -35.335, -1.3099995, 2.5, -35.335, -1.3099995, 2.5, -25.223888, 4.4400005, 2.5, -26.668331, 10.690001, 0.5, -20.335, 6.4400005, 0.5, -20.335, 24.69, 0.5, 39.165, 16.44, 0.5, -20.335, 4.4400005, 0.5, -20.585, -1.5599995, 0.5, -20.335, -24.81, 0.5, 39.165, -3.3099995, 0.5, -20.335)
+polygons = [PackedInt32Array(1, 0, 2), PackedInt32Array(2, 0, 3), PackedInt32Array(5, 4, 0), PackedInt32Array(0, 4, 3), PackedInt32Array(8, 7, 6), PackedInt32Array(1, 2, 9), PackedInt32Array(9, 2, 10), PackedInt32Array(12, 11, 8), PackedInt32Array(6, 13, 9), PackedInt32Array(8, 6, 12), PackedInt32Array(12, 6, 10), PackedInt32Array(10, 6, 9), PackedInt32Array(16, 15, 14), PackedInt32Array(19, 21, 20), PackedInt32Array(20, 21, 17), PackedInt32Array(17, 21, 18), PackedInt32Array(18, 21, 19), PackedInt32Array(24, 23, 22), PackedInt32Array(25, 23, 17), PackedInt32Array(17, 23, 20), PackedInt32Array(22, 16, 24), PackedInt32Array(24, 16, 14), PackedInt32Array(25, 26, 23), PackedInt32Array(23, 26, 22), PackedInt32Array(27, 31, 28), PackedInt32Array(28, 31, 32), PackedInt32Array(32, 31, 29), PackedInt32Array(29, 31, 30), PackedInt32Array(18, 19, 34), PackedInt32Array(34, 19, 33), PackedInt32Array(33, 36, 35), PackedInt32Array(28, 37, 27), PackedInt32Array(27, 37, 38), PackedInt32Array(35, 34, 33), PackedInt32Array(37, 34, 38), PackedInt32Array(38, 34, 35), PackedInt32Array(38, 35, 39), PackedInt32Array(11, 12, 36), PackedInt32Array(36, 12, 35), PackedInt32Array(5, 40, 4), PackedInt32Array(4, 40, 39), PackedInt32Array(39, 40, 38)]
+agent_max_climb = 0.5
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_u8dxk"]
+size = Vector2(50.62, 79.17)
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_380o1"]
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_3qwge"]
@@ -325,7 +333,15 @@ shape = SubResource("BoxShape3D_s3c3i")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 mesh = SubResource("BoxMesh_s3c3i")
 
-[node name="GridMap" type="GridMap" parent="." unique_id=1832399257]
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="." unique_id=1448999955]
+navigation_mesh = SubResource("NavigationMesh_5guys")
+navigation_layers = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D" unique_id=1938060922]
+visible = false
+mesh = SubResource("PlaneMesh_u8dxk")
+
+[node name="GridMap" type="GridMap" parent="NavigationRegion3D" unique_id=1832399257]
 mesh_library = SubResource("MeshLibrary_ie4ub")
 cell_size = Vector3(1, 1, 1)
 cell_scale = 0.5
@@ -334,5 +350,5 @@ data = {
 }
 metadata/_editor_floor_ = Vector3(0, -1, 0)
 
-[node name="BaseEnemie" parent="." unique_id=524115287 instance=ExtResource("4_aqwcr")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.871204, 0.99999905, -3.2967072)
+[node name="BaseNPC" parent="." unique_id=524115287 instance=ExtResource("4_aqwcr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21.152906, 0, -29.688309)
