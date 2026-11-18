@@ -25,7 +25,7 @@ extends RigidBody3D
 #	ATACK ENEMIE
 
 @export var nav_agent: NavigationAgent3D
-var current_location: Vector3
+#var current_location: Vector3
 var next_location: Vector3
 var new_velosity: Vector3
 
@@ -36,6 +36,11 @@ var character_to_attack: RigidBody3D
 @export var roam_range: float = 10
 var initial_position: Vector3
 
+var is_navegation_timer_mid_cycle: bool = false
+@export var is_navegation_timer_one_shot: bool = false
+var navegation_timer_time: float = 0
+@export var navegation_timer_wait_time: float = 1
+
 func _ready() -> void:
 	nav_agent.target_position = Vector3(0,0,0)
 	detection_area.body_entered.connect(_on_body_entered_detection_area)
@@ -44,6 +49,27 @@ func _ready() -> void:
 	
 func aaaaa():
 	print("aofenkbnnoiun")
+
+func navegation_timer_timeout():
+	is_navegation_timer_mid_cycle = false
+	if character_to_attack:
+		#nav_agent.target_position = character_to_attack.global_position
+		nav_agent.set_target_position(character_to_attack.global_position)
+
+	else:
+		nav_agent.target_position.x = initial_position.x + randf_range(-roam_range, roam_range)
+		nav_agent.target_position.z = initial_position.z + randf_range(-roam_range, roam_range)
+		nav_agent.target_position.y = initial_position.y + 1
+	
+	next_location = nav_agent.get_next_path_position()
+	new_velosity = (next_location - global_position).normalized() * speed
+	
+	linear_velocity.x = new_velosity.x
+	linear_velocity.z = new_velosity.z
+	print("ring ring", navegation_timer_time)
+	print("nav_agent.target_position = ", nav_agent.target_position)
+	print("nav_agent.get_next_path_position() = ", nav_agent.get_next_path_position())
+	print("global_position = ", global_position)
 
 func _on_body_entered_detection_area(body):
 	if body is RigidBody3D:
@@ -56,21 +82,36 @@ func _on_body_entered_detection_area(body):
 		
 		
 func _physics_process(delta: float) -> void:
-	print("next_location = ", next_location)
-	print("current_location = ", current_location)
-	current_location = global_position
-	#next_location = nav_agent.get_next_path_position()
-	next_location = nav_agent.target_position
-	new_velosity = (next_location - current_location).normalized() * speed
-	
-	linear_velocity.x = new_velosity.x
-	linear_velocity.z = new_velosity.z
-	if character_to_attack:
-		nav_agent.target_position = character_to_attack.global_position
+#	NAVEGATION_TIMER/
+	if navegation_timer_time < navegation_timer_wait_time:
+		#print("navegation_timer_time = ",navegation_timer_time)
+		navegation_timer_time = navegation_timer_time + delta
+		is_navegation_timer_mid_cycle = true
+	elif is_navegation_timer_mid_cycle and is_navegation_timer_one_shot:
+		is_navegation_timer_mid_cycle = false
+		navegation_timer_timeout()
 	else:
-		nav_agent.target_position.x = initial_position.x + randf_range(-roam_range, roam_range)
-		nav_agent.target_position.z = initial_position.z + randf_range(-roam_range, roam_range)
-		nav_agent.target_position.y = initial_position.y
+		navegation_timer_time = 0
+		navegation_timer_timeout()
+		
+#	/NAVEGATION_TIMER
+	#print("nav_agent.get_next_path_position() = ", nav_agent.get_next_path_position())
+	#nav_agent.get_next_path_position()
+	#print("next_location = ", next_location)
+	#print("current_location = ", current_location)
+	#next_location = nav_agent.target_position
+	#current_location = global_position
+	#next_location = nav_agent.get_next_path_position()
+	#new_velosity = (next_location - global_position).normalized() * speed
+	#
+	#linear_velocity.x = new_velosity.x
+	#linear_velocity.z = new_velosity.z
+	#if character_to_attack:
+		#nav_agent.target_position = character_to_attack.global_position
+	#else:
+		#nav_agent.target_position.x = initial_position.x + randf_range(-roam_range, roam_range)
+		#nav_agent.target_position.z = initial_position.z + randf_range(-roam_range, roam_range)
+		#nav_agent.target_position.y = initial_position.y
 		
 	
 func update_target_location(target_location: Vector3):
