@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://v742rkw7lur7"]
 
 [ext_resource type="Script" uid="uid://dfrft2oip0178" path="res://NPCs/Enemies/base_enemie.gd" id="1_jdecw"]
+[ext_resource type="PackedScene" uid="uid://c2ambxwkvfm0x" path="res://Components/Health points/health_points.tscn" id="2_0wxtv"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_s3c3i"]
 
@@ -18,6 +19,8 @@ contact_monitor = true
 script = ExtResource("1_jdecw")
 nav_agent = NodePath("NavigationAgent3D")
 detection_area = NodePath("DetectionArea3D")
+speed = 10
+navegation_timer_wait_time = 0.2
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=2078278565]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -35,3 +38,6 @@ collision_mask = 4
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="DetectionArea3D" unique_id=271804646]
 shape = SubResource("SphereShape3D_s3c3i")
+
+[node name="HealthPoints" parent="." unique_id=1405834907 instance=ExtResource("2_0wxtv")]
+parent_faction = 1

@@ -24,16 +24,17 @@ extends RigidBody3D
 #	HELP ALIE
 #	ATACK ENEMIE
 
+enum NavegationState {ROAMING, INVESTIGATE, ATACK, DEFEND}
+var current_navegation_state: NavegationState = NavegationState.ROAMING
+
 @export var nav_agent: NavigationAgent3D
-#var current_location: Vector3
+@export var detection_area: Area3D
+@export var roam_range: float = 10
+@export var speed = 3
+
 var next_location: Vector3
 var new_velosity: Vector3
-
-var speed = 3
-
-@export var detection_area: Area3D
-var character_to_attack: RigidBody3D
-@export var roam_range: float = 10
+var character_to_attack: RigidBody3D #TODO: dosnt have to be a RigidBody3D, just a node3D
 var initial_position: Vector3
 
 var is_navegation_timer_mid_cycle: bool = false
@@ -45,10 +46,7 @@ func _ready() -> void:
 	nav_agent.target_position = Vector3(0,0,0)
 	detection_area.body_entered.connect(_on_body_entered_detection_area)
 	initial_position = global_position
-	nav_agent.path_changed.connect(aaaaa)
 	
-func aaaaa():
-	print("aofenkbnnoiun")
 
 func navegation_timer_timeout():
 	is_navegation_timer_mid_cycle = false
@@ -74,9 +72,11 @@ func navegation_timer_timeout():
 func _on_body_entered_detection_area(body):
 	if body is RigidBody3D:
 		print("body is RigidBody3D")
+#		TODO: make it work based on hp not in group
 		for group in body.get_groups():
 			if group == "Ally":
 				print("body is Ally")
+				change_state(NavegationState.ATACK)
 				character_to_attack = body
 				#update_target_location(body.global_position)
 		
@@ -95,24 +95,12 @@ func _physics_process(delta: float) -> void:
 		navegation_timer_timeout()
 		
 #	/NAVEGATION_TIMER
-	#print("nav_agent.get_next_path_position() = ", nav_agent.get_next_path_position())
-	#nav_agent.get_next_path_position()
-	#print("next_location = ", next_location)
-	#print("current_location = ", current_location)
-	#next_location = nav_agent.target_position
-	#current_location = global_position
-	#next_location = nav_agent.get_next_path_position()
-	#new_velosity = (next_location - global_position).normalized() * speed
-	#
-	#linear_velocity.x = new_velosity.x
-	#linear_velocity.z = new_velosity.z
-	#if character_to_attack:
-		#nav_agent.target_position = character_to_attack.global_position
-	#else:
-		#nav_agent.target_position.x = initial_position.x + randf_range(-roam_range, roam_range)
-		#nav_agent.target_position.z = initial_position.z + randf_range(-roam_range, roam_range)
-		#nav_agent.target_position.y = initial_position.y
-		
 	
-func update_target_location(target_location: Vector3):
-	nav_agent.target_position = target_location
+func change_state(new_state: NavegationState):
+#	ATACK
+#	DEFEND
+#	INVESTIGATE
+#	ROAM
+	match new_state:
+		NavegationState.ATACK:
+			current_navegation_state = NavegationState.ATACK
