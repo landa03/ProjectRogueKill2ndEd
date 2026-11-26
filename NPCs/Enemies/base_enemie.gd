@@ -98,9 +98,13 @@ func _physics_process(delta: float) -> void:
 	
 func change_state(new_state: NavegationState):
 #	ATACK
+#		enemie is detected and enemie is in atack_range 
 #	DEFEND
+#		enemie is detected and enemie is not in atack_range and alie is in range (or somthing)
 #	INVESTIGATE
+#		enemie was detected (isnt detected, was)
 #	ROAM
+#		no enemie is detecter and enemie_detected_timer on time_out
 	match new_state:
 		NavegationState.ATACK:
 			current_navegation_state = NavegationState.ATACK
