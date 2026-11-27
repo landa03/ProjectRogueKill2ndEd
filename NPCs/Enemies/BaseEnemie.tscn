@@ -41,3 +41,5 @@ shape = SubResource("SphereShape3D_s3c3i")
 
 [node name="HealthPoints" parent="." unique_id=1405834907 instance=ExtResource("2_0wxtv")]
 parent_faction = 1
+openent_factions = Array[int]([0])
+alied_factions = Array[int]([1])

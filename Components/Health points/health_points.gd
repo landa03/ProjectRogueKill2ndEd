@@ -4,10 +4,13 @@ extends Node
 @export var max_health_points : float
 var current_health_points : float
 
-enum Faction{ALLY, ENEMY_1, ENVIRONMENT}
+enum Faction{FACTION_1, FACTION_2, ENVIRONMENT}
 #enum DamageType{SLASHING, PIERCING, BLUDGEONING}
 
 @export var parent_faction : Faction
+
+@export var openent_factions: Array[HealthPoints.Faction]
+@export var alied_factions: Array[HealthPoints.Faction]
 
 func _ready():
 	current_health_points = max_health_points

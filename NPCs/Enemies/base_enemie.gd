@@ -24,13 +24,15 @@ extends RigidBody3D
 #	HELP ALIE
 #	ATACK ENEMIE
 
-enum NavegationState {ROAMING, INVESTIGATE, ATACK, DEFEND}
+enum NavegationState {ROAMING, INVESTIGATE, ATACK, DEFEND, UNKNOWN}
 var current_navegation_state: NavegationState = NavegationState.ROAMING
 
 @export var nav_agent: NavigationAgent3D
 @export var detection_area: Area3D
-@export var roam_range: float = 10
+@export var roam_range: float = 30
 @export var speed = 3
+@export var healthpoints: HealthPoints
+@export var atack_range: float = 10
 
 var next_location: Vector3
 var new_velosity: Vector3
@@ -64,18 +66,30 @@ func navegation_timer_timeout():
 	
 	linear_velocity.x = new_velosity.x
 	linear_velocity.z = new_velosity.z
-	print("ring ring", navegation_timer_time)
-	print("nav_agent.target_position = ", nav_agent.target_position)
-	print("nav_agent.get_next_path_position() = ", nav_agent.get_next_path_position())
-	print("global_position = ", global_position)
+	#print("ring ring", navegation_timer_time)
+	#print("nav_agent.target_position = ", nav_agent.target_position)
+	#print("nav_agent.get_next_path_position() = ", nav_agent.get_next_path_position())
+	#print("global_position = ", global_position)
 
-func _on_body_entered_detection_area(body):
+var faction_entities_inside_detection_area: Array[Node3D]
+
+
+func _on_body_entered_detection_area(body: Node3D):
+	for node in body.get_children():
+		if node is HealthPoints:
+			#if !enemies_inside_detection_area.has(body) and node.Faction != healthpoints.Faction and openent_factions.any(is_alied_faction):
+			if !faction_entities_inside_detection_area.has(body):
+				faction_entities_inside_detection_area.append(body)
+				print(faction_entities_inside_detection_area)
+				print("it can bleed!!")
+			
+		
 	if body is RigidBody3D:
-		print("body is RigidBody3D")
+		#print("body is RigidBody3D")
 #		TODO: make it work based on hp not in group
 		for group in body.get_groups():
 			if group == "Ally":
-				print("body is Ally")
+				#print("body is Ally")
 				change_state(NavegationState.ATACK)
 				character_to_attack = body
 				#update_target_location(body.global_position)
@@ -106,5 +120,20 @@ func change_state(new_state: NavegationState):
 #	ROAM
 #		no enemie is detecter and enemie_detected_timer on time_out
 	match new_state:
+		NavegationState.UNKNOWN:
+			for body in detection_area.get_overlapping_bodies():
+				for node in body.get_children():
+					if node is HealthPoints:
+						for faction in healthpoints.openent_factions:
+							if node.Faction == faction:
+								if global_position.distance_to(body.global_position) <= atack_range:
+									new_state = NavegationState.ATACK
+								else:
+									new_state = NavegationState.INVESTIGATE
+						for faction in healthpoints.alied_factions:
+							if node.Faction == faction:
+								pass
+								
+					#faction_entitie
 		NavegationState.ATACK:
 			current_navegation_state = NavegationState.ATACK

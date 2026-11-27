@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://b65xibnyafbyg" path="res://Components/Character Skills/Movment/Dash/dash.tscn" id="4_16hyc"]
 [ext_resource type="PackedScene" uid="uid://bqt0wr6jjr4u6" path="res://Components/Character Skills/Movment/Slam/slam.tscn" id="5_yxbqs"]
 [ext_resource type="PackedScene" uid="uid://dr8170gfwl4ak" path="res://Components/Character Skills/Movment/Slide/slide.tscn" id="6_hymar"]
+[ext_resource type="PackedScene" uid="uid://c2ambxwkvfm0x" path="res://Components/Health points/health_points.tscn" id="8_jm58w"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_uw1c7"]
 size = Vector3(1.6, 1.7, 2.3)
@@ -122,3 +123,5 @@ skill_cooldown_timer = 1.0
 [node name="ShapeCast3D" type="ShapeCast3D" parent="." unique_id=1190364578]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
 shape = SubResource("CylinderShape3D_sd720")
+
+[node name="HealthPoints" parent="." unique_id=1405834907 instance=ExtResource("8_jm58w")]
